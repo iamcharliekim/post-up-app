@@ -1,0 +1,26 @@
+.search-games-wrapper {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-bottom: 2px solid black;
+}
+
+.search-games-wrapper input {
+    width: 60%;
+    margin-right: 5px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 15px
+}
+
+.search-games-wrapper button {
+    font-size: 14px;
+    border: 1px solid gray;
+    border-radius: 15px;
+    padding: 10px;
+}

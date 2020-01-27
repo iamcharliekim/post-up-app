@@ -1,0 +1,25 @@
+.navbar {
+    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid black;
+  padding: 10px;
+}
+
+.logo {
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 10px;
+    margin-left: 10px
+  }
+  
+  .nav-links-wrapper {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    margin-right: 10px
+  }
+  

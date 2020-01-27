@@ -1,0 +1,153 @@
+.create-game-wrapper {
+    width: 90%
+}
+
+header {
+    padding: 0
+}
+
+h4 {
+    margin-bottom: 0
+}
+
+form {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 15px;
+    font-size: 14px;
+    margin-top: 0
+}
+
+fieldset {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.form-row {
+    width: 100%;
+    display: flex;
+    margin: 5px auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch
+}
+
+.form-row input {
+    margin-top: 5px
+}
+
+.form-row select {
+    margin-top: 5px
+}
+
+.map-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.map {
+    width: 100%;
+    height: 250px;
+    /* height: 200px; */
+    background-color: lightgray;
+    padding-top: 40px;
+    position: relative;
+}
+
+.map-search {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    background-color: white;
+    color: black;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+
+.map-txt {
+  width: 100%;
+  text-align: center;
+  margin-top: 50px
+}
+
+.street {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start
+}
+.street input {
+    width: 100%
+}
+
+.address {
+    width: 100%;
+}
+
+.address-manual {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+
+.address-manual h3 {
+    margin-bottom: 10px
+}
+
+.citystatezip {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center
+}
+
+.city, .state {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start
+}
+
+.city {
+    margin-right: 20px
+}
+
+.state input{
+    width: 100%
+}
+
+.zip {
+    width: 100%;
+    display: flex; 
+    flex-direction: column;
+}
+
+
+.btns-panel {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 5px;
+    margin-top: 15px
+}
+
+.btns-panel button {
+    width: 48%;
+}
+
+button {
+    cursor: pointer
+}

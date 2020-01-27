@@ -1,0 +1,31 @@
+.places-autocomplete {
+    width: 100%
+}
+
+.places-search-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    border-bottom: 1px solid black;
+}
+
+.places-search-input {
+    padding: 10px;
+    font-size: 16px;
+}
+
+.places-suggestions-wrapper {
+    z-index: 10
+}
+
+.suggestions-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-size: 16px;
+
+}

@@ -5,34 +5,43 @@ import GoogleMapsComponent from '../GoogleMapsComponent/GoogleMapsComponent'
 
 export default class GamesListItem extends React.Component {
     state = {
-        rsvpCount: ''
+        rsvpCount: '',
+        disableCheckInBtn: false,
+        disableCheckOutBtn: true
     }
 
-
-
-
     componentDidMount(){
-        console.log('gamesList', this.props.selectedGame)
-        console.log(this.props.gameId)
-        GamesApiService.postIncrementGameAttendance({game_id: this.props.gameId})
-        .then(rsvpCount => {
-            console.log('gameToIncrement', rsvpCount)
+        // get and set rsvpCount
+        GamesApiService.getAttendanceCount(this.props.gameId)
+            .then(rsvpCount => {
+                this.setState({rsvpCount})
+            })
 
-            this.setState({rsvpCount})
-        })
-
+        // check and see if user is already attending and update check-in/out btn's disabled state 
+        GamesApiService.getGameAttendance(this.props.gameId)
+            .then(userIsAttending => {           
+                if (userIsAttending){
+                    this.setState({disableCheckInBtn: true, disableCheckOutBtn: false})
+                } 
+            })
     }
 
     incrementGameAttendance(e){
-
-        console.log('incrementGameAttendance()', this.props.gameId)
         e.preventDefault()
 
-        GamesApiService.postIncrementGameAttendance({game_id: this.props.gameId})
+        GamesApiService.postGameAttendance({game_id: this.props.gameId})
             .then(rsvpCount => {
-                console.log('gameToIncrement', rsvpCount)
+                this.setState({rsvpCount, disableCheckInBtn: true, disableCheckOutBtn: false})
+            })
+    }
 
-                this.setState({rsvpCount})
+    decrementGameAttendance(e){
+        e.preventDefault()
+
+        GamesApiService.deleteGameAttendance(this.props.gameId)
+            .then(rsvpCount => {
+                console.log(rsvpCount)
+                this.setState({rsvpCount, disableCheckInBtn: false, disableCheckOutBtn: true})
             })
     }
 
@@ -71,7 +80,8 @@ export default class GamesListItem extends React.Component {
 
                         <div className="rsvp">{this.state.rsvpCount} <i>players attending</i></div>
                         <div className="rsvp-attending">
-                            <button onClick={(e)=>this.incrementGameAttendance(e)}> Check-in</button>
+                            <button onClick={(e)=>this.incrementGameAttendance(e)} disabled={this.state.disableCheckInBtn}> Check-in</button>
+                            <button onClick={(e)=>this.decrementGameAttendance(e)} disabled={this.state.disableCheckOutBtn}> Check-out</button>
                         </div>
                     </div>
             </React.Fragment>

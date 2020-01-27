@@ -1,10 +1,9 @@
 import React from 'react';
-import PlacesAutocomplete, {geocodeByAddress, getLatLng, geocodeByPlaceId} from 'react-places-autocomplete';
+import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete';
 import './GoogleAutocomplete.css'
 
 export default function GoogleAutocomplete(props) {
     const [address, setAddress] = React.useState('')
-    const [coordinates, setCoordinates] = React.useState({lat: null, lng: null})
 
     const handleSelect = async value => {
         const results = await geocodeByAddress(value)
@@ -19,7 +18,6 @@ export default function GoogleAutocomplete(props) {
         })
 
         setAddress(value)
-        setCoordinates(latLng)
         props.onSetAddress(value, zipCode, latLng)
     }
 
@@ -43,7 +41,9 @@ export default function GoogleAutocomplete(props) {
                                 <div className="places-suggestions-wrapper">
                                     {loading ? <div>...loading</div> : null}
 
-                                    { suggestions.map((suggestion)=> {
+                                    { 
+
+                                    suggestions.map((suggestion)=> {
                                         const style ={
                                             backgroundColor: suggestion.active ? 'lightgray' : 'white'
                                         }
@@ -53,13 +53,10 @@ export default function GoogleAutocomplete(props) {
                                                 {suggestion.description}
                                             </div>
                                         );
+                                    })
 
-                                        })
                                     }
                                 </div>
-
-
-
                        </div>
                     )}
             </PlacesAutocomplete>

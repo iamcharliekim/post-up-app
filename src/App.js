@@ -13,17 +13,8 @@ import CreateGames from './CreateGames/CreateGames';
 
 
 export default class App extends React.Component {
-  state = {
-    
-  }
-
-   componentDidMount(){
-     console.log('TEST')
-   }
-
 
   render(){
-    console.log('testing')
     return (
       <BrowserRouter>
       <main className='App'>

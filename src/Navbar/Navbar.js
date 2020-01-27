@@ -5,20 +5,12 @@ import TokenService from '../Services/TokenService';
 import { withRouter } from 'react-router-dom'
 
 class Navbar extends React.Component {
-
-    componentDidMount(){
-        console.log(this.props)
-    }
-
     onSignOut = (e) => {
-        console.log(this.props.history)
         TokenService.clearAuthToken()
-
     }
 
     render() {
         let navLinks
-        console.log(TokenService.hasAuthToken())
 
         if (!TokenService.hasAuthToken()) {
             navLinks = [<Link to="/sign-in" key="1">Sign-In</Link>, <Link to="/sign-up" key="2">Sign-Up</Link>] 
@@ -37,9 +29,7 @@ class Navbar extends React.Component {
                             return link
                         }) }
                     </div>
-
                 </nav>
-                
         );
     }
 }

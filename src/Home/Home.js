@@ -16,7 +16,6 @@ export default class Home extends React.Component {
         }
     }
 
-
     componentDidMount(){
         this._isMounted = true
 
@@ -38,7 +37,6 @@ export default class Home extends React.Component {
             navigator.geolocation.getCurrentPosition((position)=> {
                 if (this._isMounted){
                     this.setState({userCoords: { lat: position.coords.latitude, lng: position.coords.longitude}})
-                    console.log(this.state)
                 }
             })
         } else {
@@ -54,31 +52,23 @@ export default class Home extends React.Component {
         return (
             <React.Fragment>
                 <Search/>
-
-                
-
                 <div className="games-list">
-
-                {this.state.games.map((game, i) => {
-                    console.log('Home.js', game)
-                    return <GamesListItem 
-                                gamename={game.game_name} 
-                                gamedate={game.game_date}
-                                gametime={game.game_time}
-                                gamestreet={game.game_street}
-                                gamecity={game.game_city}
-                                gamestate = {game.game_state}
-                                gamezip = {game.game_zip}
-                                gamelat = {game.game_lat}
-                                gamelng = {game.game_lng}
-
-                                key={i} 
-                                gameId={game.id}
-
-                                selectedGame={this.state.games}
-                    />
-
-                })}
+                    {this.state.games.map((game, i) => {
+                        return <GamesListItem 
+                                    gamename={game.game_name} 
+                                    gamedate={game.game_date}
+                                    gametime={game.game_time}
+                                    gamestreet={game.game_street}
+                                    gamecity={game.game_city}
+                                    gamestate = {game.game_state}
+                                    gamezip = {game.game_zip}
+                                    gamelat = {game.game_lat}
+                                    gamelng = {game.game_lng}
+                                    key={i} 
+                                    gameId={game.id}
+                                    selectedGame={[game]}
+                        />
+                    })}
                 </div>
             </React.Fragment>
         );

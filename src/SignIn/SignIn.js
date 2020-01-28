@@ -14,13 +14,8 @@ export default class SignIn extends React.Component {
     onSubmitHandler = (e) => {
         e.preventDefault()
         const {username, password} = e.target
-
-        console.log(username.value, password.value)
-
         const user = {user_name: username.value, password: password.value }
         
-        console.log(user)
-
         AuthApiService.loginUser(user)
             .then(res => {
                 if (!res.ok){
@@ -35,17 +30,12 @@ export default class SignIn extends React.Component {
                 
             })
             .catch(res => {
-                console.log(res.error)
                 this.setState({error: res.error})
             })
     }
 
     userNameHandler = (e) => {
-        console.log(e.target.value)
-
         this.setState({username: e.target.value})
-
-        console.log(this.state)
     }
 
     passwordHandler = (e) => {

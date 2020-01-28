@@ -1,0 +1,6 @@
+.date-time-picker-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: stretch;
+    align-items: flex-start;
+}

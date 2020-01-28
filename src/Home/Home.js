@@ -24,9 +24,9 @@ export default class Home extends React.Component {
         let games;
 
         if (this.props.location.pathname === '/my-games'){
-            games = this.context.myGames
+            games = this.context.myGames.filter(game => game.game_name.includes(this.context.searchString))
         } else {
-            games = this.context.games
+            games = this.context.games.filter(game => game.game_name.includes(this.context.searchString))
         }
 
         return (

@@ -7,8 +7,6 @@ function Map(props){
     const [selectedGame, setSelectedGame ] = useState(null);
     const userContext = useContext(Context)
 
-    console.log(props)
-
     let center;
 
     if (!props.gamesList[0].game_lat){

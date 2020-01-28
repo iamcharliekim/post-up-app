@@ -4,6 +4,7 @@ import GamesApiService from '../Services/GamesApiService';
 import GoogleAutocomplete from '../GoogleAutocomplete/GoogleAutocomplete';
 import Context from '../Context/Context';
 import GoogleMapsComponent from '../GoogleMapsComponent/GoogleMapsComponent';
+import DateTimePicker from '../DateTimePicker/DateTimePicker';
 
 export default class CreateGames extends React.Component {
 
@@ -30,12 +31,9 @@ static contextType = Context
     }
 
     componentDidMount(){
-        console.log('CONTEXT:', this.context)
     }
 
     onSetAddress = (address, zipCode, coors) => {
-        console.log(coors)
-
         let addy = address.split(',')
 
         let game_street = addy[0]
@@ -57,20 +55,18 @@ static contextType = Context
             zoom: 10
 
         })
-
-        console.log(this.state)
     }
 
     gameNameHandler = (e) => {
         this.setState({game_name: e.target.value})
     }
     
-    gameDateHandler = (e) => {
-        this.setState({game_date: e.target.value})
+    gameDateHandler = (date) => {
+        this.setState({game_date: date})
     }
 
-    gameTimeHandler = (e) => {
-        this.setState({game_time: e.target.value})
+    gameTimeHandler = (date) => {
+        this.setState({game_time: date})
     }
 
     gameStreetHandler = (e) => {
@@ -91,8 +87,6 @@ static contextType = Context
 
     mapSearchHandler = (e) => {
         this.setState({mapSearchQuery: e.target.value})
-        console.log(this.state.mapSearchQuery)
-
     }
 
     onSubmitHandler = (e) => {
@@ -113,6 +107,7 @@ static contextType = Context
         if (!this.state.game_coors){
             let geocodeAddress = `${this.state.game_street} ${this.state.game_city} ${this.state.game_state} ${this.state.game_zip}`
             let parsedGeoCodeAddress = geocodeAddress.split(' ').join('+')
+
             // add game-coors 
             let googleGetCoorsURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${parsedGeoCodeAddress}&key=${this.state.mapsApiKey}`
 
@@ -125,8 +120,6 @@ static contextType = Context
             }).then(coors => {
                 newGame.game_lat = coors.results[0].geometry.location.lat
                 newGame.game_lng = coors.results[0].geometry.location.lng
-
-                console.log('manualFillNewGame', newGame)
 
                 GamesApiService.postGame(newGame)
                 .then(res => {
@@ -149,8 +142,6 @@ static contextType = Context
                 })
             })
         } else {
-            console.log('autofillNewGame', newGame)
-
             GamesApiService.postGame(newGame)
             .then(res => {
                 newGame.id = res[0].id
@@ -186,7 +177,7 @@ static contextType = Context
                                 <input type="text" placeholder="Give your game a name" onInput={this.gameNameHandler}/>
                             </div>
 
-                            <div className="form-row">
+                            {/* <div className="form-row">
                                 <label htmlFor="">Date:</label>
                                 <input type="date" onInput={this.gameDateHandler}/>
                             </div>        
@@ -194,7 +185,15 @@ static contextType = Context
                             <div className="form-row">
                                 <label htmlFor="">Time:</label>
                                 <input type="text" onInput={this.gameTimeHandler}/>
-                            </div>  
+                            </div>   */}
+
+                            <div className="form-row">
+                                <DateTimePicker
+                                    gameTimeHandler={this.gameTimeHandler}
+                                    gameDateHandler={this.gameDateHandler}
+                                
+                                />
+                            </div>
 
                             <div className="map-row">
                                 <h3>Pick a court:</h3>

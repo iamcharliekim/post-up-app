@@ -2,15 +2,24 @@ import React from 'react';
 import './GamesListItem.css'
 import GamesApiService from '../Services/GamesApiService';
 import GoogleMapsComponent from '../GoogleMapsComponent/GoogleMapsComponent'
+import Moment from 'react-moment';
+import 'moment-timezone';
+import Context from '../Context/Context'
+
 
 export default class GamesListItem extends React.Component {
+    static contextType = Context
+
     state = {
         rsvpCount: '',
         disableCheckInBtn: false,
-        disableCheckOutBtn: true
+        disableCheckOutBtn: true,
+        gameAddressString: '',
     }
 
     componentDidMount(){
+        this.formatAddressURI()
+
         // get and set rsvpCount
         GamesApiService.getAttendanceCount(this.props.gameId)
             .then(rsvpCount => {
@@ -40,9 +49,15 @@ export default class GamesListItem extends React.Component {
 
         GamesApiService.deleteGameAttendance(this.props.gameId)
             .then(rsvpCount => {
-                console.log(rsvpCount)
                 this.setState({rsvpCount, disableCheckInBtn: false, disableCheckOutBtn: true})
             })
+    }
+
+    formatAddressURI = () => {
+        let geocodeAddress = `${this.props.gamestreet}${this.props.gamecity}${this.props.gamestate} ${this.props.gamezip}`
+        let parsedGeoCodeAddress = geocodeAddress.split(' ').join('+')
+        this.setState({gameAddressString: parsedGeoCodeAddress})
+
     }
 
     render() {
@@ -51,9 +66,16 @@ export default class GamesListItem extends React.Component {
                 <div className="games-search-result">
                         <h1>{this.props.gamename}</h1>
                         <div className="game-when">
-                        <span className="game-date">{this.props.gamedate}</span>
+                        <span className="game-date">
+                            <Moment format={"dddd, MMMM Do YYYY, h:mm A"}>
+                                {this.props.gamedate}
+
+                            </Moment>
+                        </span>
                         
-                        <span className="game-time">{this.props.gametime}</span>
+                        {/* <span className="game-time">
+
+                        </span> */}
                         </div>
                         <div className="" style={{width: '100%', height: '100%'}}>
 
@@ -74,7 +96,7 @@ export default class GamesListItem extends React.Component {
                         </div>
 
                         <div className="address">
-                            <a href="www.google.com">
+                            <a href={`https://www.google.com/maps/dir/?api=1&origin=${this.context.userCoords.lat},${this.context.userCoords.lng}&destination=${this.state.gameAddressString}`}>
                                 <span>{`${this.props.gamestreet} ${this.props.gamecity} ${this.props.gamestate} ${this.props.gamezip}`}</span>
                             </a>
                         </div>

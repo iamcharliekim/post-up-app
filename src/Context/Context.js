@@ -6,11 +6,15 @@ const Context = React.createContext({
     updateUserCoords: ()=> {},
     updateTesting: ()=> {},
     onSetAddress: ()=> {},
+    getUserCoords: ()=> {},
     games: [],
     userCoords: {
-        lat: 39.2453574, lng: -77.28408639999999
+        lat: null, lng: null
     },
     myGames: [],
+
+    searchString: '',
+    searchGames: ()=> {},
 })
 
 export default Context

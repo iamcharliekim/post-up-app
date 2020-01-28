@@ -14,27 +14,22 @@ export default class SignUp extends React.Component {
 
     firstNameHandler = (e) => {
         this.setState({first_name: e.target.value})
-        console.log(this.state)
     }
 
     lastNameHandler = (e) => {
         this.setState({last_name: e.target.value})
-        console.log(this.state)
     }
 
     emailHandler = (e) => {
         this.setState({email: e.target.value})
-        console.log(this.state)
     }
 
     userNameHandler = (e) => {
         this.setState({user_name: e.target.value})
-        console.log(this.state)
     }
 
     passwordHandler = (e) => {
         this.setState({password: e.target.value})
-        console.log(this.state)
     }
 
     onSubmitHandler = (e) => {

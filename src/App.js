@@ -20,25 +20,16 @@ export default class App extends React.Component {
     games: [],
     myGames: [],
     userCoords: {
-        lat: this.context.userCoords.lat,
-        lng: this.context.userCoords.lng
+        lat: null,
+        lng: null
     },
+    searchString: ''
   }
 
   componentDidMount(){
-    console.log(this.context)
-    console.log(this.state)
+    // GET USER-COORDS
+    this.getUserCoords();
 
-    // GET USER'S COORDS
-    // if (navigator.geolocation){
-    //   navigator.geolocation.getCurrentPosition((position)=> {              
-    //           let userCoords =  {lat: position.coords.latitude, lng: position.coords.longitude}
-    //           this.setState({userCoords})
-    //           console.log(this.state)
-    //       })
-    //   } else {
-    //     console.log('Geolocation is not supported by this browser')
-    // }
 
     // GET ALL GAMES
     GamesApiService.getAllGames()
@@ -53,6 +44,11 @@ export default class App extends React.Component {
       })
   }
 
+  searchGames = (e) => {
+
+    this.setState({searchString: e.target.value})
+  }
+
   updateGames = (games) => {
     this.setState({games})
   }
@@ -65,6 +61,20 @@ export default class App extends React.Component {
     this.setState({myGames})
   }
 
+  getUserCoords = () => {
+      if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition((position)=> {              
+          this.setState({userCoords: {
+            lat: position.coords.latitude, 
+            lng: position.coords.longitude
+          }
+        })
+      })
+    } else {
+      console.log('Geolocation is not supported by this browser')
+    }
+  }
+
   
 
   render(){
@@ -73,7 +83,10 @@ export default class App extends React.Component {
       updateMyGames: this.updateMyGames,
       games: this.state.games,
       myGames: this.state.myGames,
+      getUserCoords: this.getUserCoords,
       userCoords: this.state.userCoords,
+      searchGames: this.searchGames,
+      searchString: this.state.searchString
 
     }
 

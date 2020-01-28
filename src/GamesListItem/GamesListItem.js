@@ -62,9 +62,10 @@ export default class GamesListItem extends React.Component {
                             loadingElement={<div style={{ height: '100%'}}/>}
                             containerElement={<div style={{ height: '400px'}}/>}
                             mapElement={<div style={{height: '100%'}}/>}
-                            lat={this.props.gamelat}
-                            lng={this.props.gamelng}
+                            lat={+this.props.gamelat}
+                            lng={+this.props.gamelng}
                             gamesList={this.props.selectedGame}
+                            zoom={10}
 
                         />
                         

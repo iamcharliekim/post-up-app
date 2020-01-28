@@ -25,12 +25,12 @@ static contextType = Context
         game_lat: null,
         game_lng: null,
         game_coors: null,
-        selectedGame: ''
+        selectedGame: '',
+        zoom: 8
     }
 
     componentDidMount(){
-        
-
+        console.log('CONTEXT:', this.context)
     }
 
     onSetAddress = (address, zipCode, coors) => {
@@ -54,6 +54,7 @@ static contextType = Context
             game_lat,
             game_lng,
             game_coors, 
+            zoom: 10
 
         })
 
@@ -129,6 +130,17 @@ static contextType = Context
 
                 GamesApiService.postGame(newGame)
                 .then(res => {
+                    newGame.id = res[0].id
+                    newGame.created_by = res[0].created_by
+
+                    const gamesCopy = [...this.context.games]
+                    gamesCopy.push(newGame)
+                    this.context.updateGames(gamesCopy)
+
+                    const myGamesCopy = [...this.context.myGames]
+                    myGamesCopy.push(newGame)
+                    this.context.updateMyGames(myGamesCopy)
+
                     this.props.history.push('/home')
 
                 })
@@ -141,6 +153,17 @@ static contextType = Context
 
             GamesApiService.postGame(newGame)
             .then(res => {
+                newGame.id = res[0].id
+                newGame.created_by = res[0].created_by
+
+                const gamesCopy = [...this.context.games]
+                gamesCopy.push(newGame)
+                this.context.updateGames(gamesCopy)
+
+                const myGamesCopy = [...this.context.myGames]
+                myGamesCopy.push(newGame)
+                this.context.updateMyGames(myGamesCopy)
+                
                 this.props.history.push('/home')
 
             })
@@ -151,100 +174,96 @@ static contextType = Context
 
     }
 
-
     render() {
-
+  
         return (
-            <React.Fragment>
-                <div className="create-game-wrapper">
-                    <header><h4>Create a game!</h4></header>
-                    <form onSubmit={this.onSubmitHandler}>
-                        <div className="form-row">
-                            <label htmlFor="">Name:</label>
-                            <input type="text" placeholder="Give your game a name" onInput={this.gameNameHandler}/>
-                        </div>
-
-                        <div className="form-row">
-                            <label htmlFor="">Date:</label>
-                            <input type="date" onInput={this.gameDateHandler}/>
-                        </div>        
-            
-                        <div className="form-row">
-                            <label htmlFor="">Time:</label>
-                            <input type="text" onInput={this.gameTimeHandler}/>
-                        </div>  
-
-                        <div className="map-row">
-                            <h3>Pick a court:</h3>
-                            <div className="map">
-                                <div className="map-search">
-                                    <GoogleAutocomplete onSetAddress = {this.onSetAddress}/>
-                                </div>
-
-                            { this.state.game_coors ?
-                                <GoogleMapsComponent
-                                    loadingElement={<div style={{ height: '100%'}}/>}
-                                    containerElement={<div style={{ height: '100%'}}/>}
-                                    mapElement={<div style={{height: '100%'}}/>}
-                                    lat={+this.state.game_lat}
-                                    lng={+this.state.game_lng}
-                                    gamesList={[{
-                                        id: 'sometingUnique',
-                                        game_name: this.state.game_name,
-                                        game_date: this.state.game_date,
-                                        game_time: this.state.game_time,
-                                        game_street:this.state.game_street,
-                                        game_city: this.state.game_city,
-                                        game_state: this.state.game_state,
-                                        game_zip: this.state.game_zip,
-                                        game_lat: +this.state.game_lat,
-                                        game_lng: +this.state.game_lng,
-                                        lat: +this.state.game_lat,
-                                        lng: +this.state.game_lng,
-                                    }]}                          
-                                
-                                /> : null
-                                }
-
-                                
+                <React.Fragment>
+                    <div className="create-game-wrapper">
+                        <header><h4>Create a game!</h4></header>
+                        <form onSubmit={this.onSubmitHandler}>
+                            <div className="form-row">
+                                <label htmlFor="">Name:</label>
+                                <input type="text" placeholder="Give your game a name" onInput={this.gameNameHandler}/>
                             </div>
-                        </div>
 
+                            <div className="form-row">
+                                <label htmlFor="">Date:</label>
+                                <input type="date" onInput={this.gameDateHandler}/>
+                            </div>        
                 
-                        <div className="address-manual">
-                            <h3>Address:</h3>
-
-                            <div className="form-row street">
-                                <label htmlFor="">Street:</label>
-                                <input type="text" onChange={this.gameStreetHandler} value={this.state.game_street}/>
-                            </div>                      
-                            
-                            <div className="citystatezip">
-                                <div className="form-row city">
-                                    <label htmlFor="">City:</label>
-                                    <input type="text" onChange={this.gameCityHandler} value={this.state.game_city}/>
-                                </div>
-                                <div className="form-row state">
-                                    <label htmlFor="">State:</label>
-                                    <input type="text" onChange={this.gameStateHandler} value={this.state.game_state}/>
-                                </div>
+                            <div className="form-row">
+                                <label htmlFor="">Time:</label>
+                                <input type="text" onInput={this.gameTimeHandler}/>
                             </div>  
 
-                            <div className="form-row zip">
-                                <label htmlFor="">Zip-code:</label>
-                                <input type="text" onChange={this.gameZipHandler} value={this.state.game_zip}/>
+                            <div className="map-row">
+                                <h3>Pick a court:</h3>
+                                <div className="map">
+                                    <div className="map-search">
+                                        <GoogleAutocomplete onSetAddress = {this.onSetAddress}/>
+                                    </div>
+
+                                {/* { this.state.game_coors ? */}
+                                    <GoogleMapsComponent
+                                        loadingElement={<div style={{ height: '100%'}}/>}
+                                        containerElement={<div style={{ height: '100%'}}/>}
+                                        mapElement={<div style={{height: '100%'}}/>}
+                                        lat={this.context.userCoords.lat}
+                                        lng={this.context.userCoords.lng}
+                                        gamesList={[{
+                                            id: 'sometingUnique',
+                                            game_name: this.state.game_name,
+                                            game_date: this.state.game_date,
+                                            game_time: this.state.game_time,
+                                            game_street:this.state.game_street,
+                                            game_city: this.state.game_city,
+                                            game_state: this.state.game_state,
+                                            game_zip: this.state.game_zip,
+                                            game_lat: +this.state.game_lat,
+                                            game_lng: +this.state.game_lng,
+                                        }]}
+                                        zoom={this.state.zoom}                          
+                                    
+                                    /> 
+
+                                </div>
                             </div>
-                        </div>
+
+                    
+                            <div className="address-manual">
+                                <h3>Address:</h3>
+
+                                <div className="form-row street">
+                                    <label htmlFor="">Street:</label>
+                                    <input type="text" onChange={this.gameStreetHandler} value={this.state.game_street}/>
+                                </div>                      
+                                
+                                <div className="citystatezip">
+                                    <div className="form-row city">
+                                        <label htmlFor="">City:</label>
+                                        <input type="text" onChange={this.gameCityHandler} value={this.state.game_city}/>
+                                    </div>
+                                    <div className="form-row state">
+                                        <label htmlFor="">State:</label>
+                                        <input type="text" onChange={this.gameStateHandler} value={this.state.game_state}/>
+                                    </div>
+                                </div>  
+
+                                <div className="form-row zip">
+                                    <label htmlFor="">Zip-code:</label>
+                                    <input type="text" onChange={this.gameZipHandler} value={this.state.game_zip}/>
+                                </div>
+                            </div>
 
 
-                        <div className="btns-panel">
-                            <button type="submit">Submit</button>
-                            <button>Cancel</button>
-                        </div> 
-                        
-                    </form>    
-                </div>        
-            </React.Fragment>
+                            <div className="btns-panel">
+                                <button type="submit">Submit</button>
+                                <button>Cancel</button>
+                            </div> 
+                            
+                        </form>    
+                    </div>        
+                </React.Fragment>
         );
     }
 }

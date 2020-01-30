@@ -27,10 +27,33 @@ static contextType = Context
         game_lng: null,
         game_coors: null,
         selectedGame: '',
-        zoom: 8
+        zoom: 8,
+
+        path: this.props.location.pathname,
+        game_id: +this.props.match.params.game_id,
+        edit_game: false,
+        gameToEdit: {}
+
     }
 
     componentDidMount(){
+        if (this.state.game_id){
+            let game = this.context.games.find(game => game.id === this.state.game_id)
+            console.log(game)
+
+            this.setState({
+                edit_game: true,
+                game_name: game.game_name,
+                game_date: game.game_date,
+                game_time: game.game_time,
+                game_street:game.game_street,
+                game_city: game.game_city,
+                game_state: game.game_state,
+                game_zip: game.game_zip,
+                game_lat: game.game_lat,
+                game_lng: game.game_lng
+            })
+        }
     }
 
     onSetAddress = (address, zipCode, coors) => {
@@ -108,60 +131,67 @@ static contextType = Context
             let geocodeAddress = `${this.state.game_street} ${this.state.game_city} ${this.state.game_state} ${this.state.game_zip}`
             let parsedGeoCodeAddress = geocodeAddress.split(' ').join('+')
 
-            // add game-coors 
-            let googleGetCoorsURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${parsedGeoCodeAddress}&key=${this.state.mapsApiKey}`
-
-            fetch(googleGetCoorsURL).then(res => {
-                if(res.status ===200){
-                    return res.json()
-                } else {
-                    throw new Error(res.statusText)
-                }
-            }).then(coors => {
-                newGame.game_lat = coors.results[0].geometry.location.lat
-                newGame.game_lng = coors.results[0].geometry.location.lng
-
-                GamesApiService.postGame(newGame)
+            GamesApiService.getCoordinates(parsedGeoCodeAddress, this.state.mapsApiKey)
+                .then(coors => {
+                    newGame.game_lat = coors.results[0].geometry.location.lat
+                    newGame.game_lng = coors.results[0].geometry.location.lng
+                })
+        }
+        
+        if (this.state.edit_game){
+            // PUT-GAME
+            GamesApiService.putGame(this.state.game_id, newGame)
                 .then(res => {
-                    newGame.id = res[0].id
-                    newGame.created_by = res[0].created_by
-
-                    const gamesCopy = [...this.context.games]
-                    gamesCopy.push(newGame)
-                    this.context.updateGames(gamesCopy)
-
-                    const myGamesCopy = [...this.context.myGames]
-                    myGamesCopy.push(newGame)
-                    this.context.updateMyGames(myGamesCopy)
-
-                    this.props.history.push('/home')
-
+                    console.log('PUTGAMERES', res)
+                    this.updateGame(res)
                 })
                 .catch(res => {
                     this.setState({error: res.error})
                 })
-            })
         } else {
             GamesApiService.postGame(newGame)
             .then(res => {
-                newGame.id = res[0].id
-                newGame.created_by = res[0].created_by
-
-                const gamesCopy = [...this.context.games]
-                gamesCopy.push(newGame)
-                this.context.updateGames(gamesCopy)
-
-                const myGamesCopy = [...this.context.myGames]
-                myGamesCopy.push(newGame)
-                this.context.updateMyGames(myGamesCopy)
-                
-                this.props.history.push('/home')
-
+                this.addNewGame(newGame, res) 
             })
             .catch(res => {
                 this.setState({error: res.error})
             })
         }
+
+
+        
+    }
+
+    
+
+    addNewGame = (newGame, res) => {
+        newGame.id = res[0].id
+        newGame.created_by = res[0].created_by
+
+        const gamesCopy = [...this.context.games]
+        gamesCopy.push(newGame)
+        this.context.updateGames(gamesCopy)
+
+        const myGamesCopy = [...this.context.myGames]
+        myGamesCopy.push(newGame)
+        this.context.updateMyGames(myGamesCopy)
+
+        this.props.history.push('/home')
+    }
+
+    updateGame = (editedGame) => {
+        const gamesCopy = [...this.context.games]
+        const gameIndex = gamesCopy.findIndex(game => game.id === editedGame.id)
+        gamesCopy[gameIndex] = editedGame
+        this.context.updateGames(gamesCopy)
+
+        const myGamesCopy = [...this.context.myGames]
+        const myGameIndex = myGamesCopy.findIndex(game => game.id === editedGame.id)
+        myGamesCopy[myGameIndex] = editedGame
+        this.context.updateMyGames(myGamesCopy)
+
+
+        this.props.history.push('/home')
 
     }
 
@@ -174,7 +204,7 @@ static contextType = Context
                         <form onSubmit={this.onSubmitHandler}>
                             <div className="form-row">
                                 <label htmlFor="">Name:</label>
-                                <input type="text" placeholder="Give your game a name" onInput={this.gameNameHandler}/>
+                                <input type="text" placeholder="Give your game a name" onChange={this.gameNameHandler} value={this.state.game_name}/>
                             </div>
 
                             {/* <div className="form-row">

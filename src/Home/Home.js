@@ -8,8 +8,11 @@ export default class Home extends React.Component {
     static contextType = Context
     _isMounted = false
 
+
+
     state = {
         error: null,
+        pathName:this.props.location.pathname
     }
 
     componentDidMount(){
@@ -26,7 +29,9 @@ export default class Home extends React.Component {
         if (this.props.location.pathname === '/my-games'){
             games = this.context.myGames.filter(game => game.game_name.includes(this.context.searchString))
         } else {
+            console.log(this.context.searchString)
             games = this.context.games.filter(game => game.game_name.includes(this.context.searchString))
+            console.log(games)
         }
 
         return (
@@ -34,7 +39,8 @@ export default class Home extends React.Component {
                     <Search/>
                     <div className="games-list">
                         {games.map((game, i) => {
-                            return <GamesListItem 
+                            console.log(game)
+                            return  <GamesListItem 
                                         gamename={game.game_name} 
                                         gamedate={game.game_date}
                                         gametime={game.game_time}
@@ -47,6 +53,7 @@ export default class Home extends React.Component {
                                         key={i} 
                                         gameId={game.id}
                                         selectedGame={[game]}
+                                        pathname={this.state.pathName}
                             />
                         })}
                     </div>

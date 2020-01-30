@@ -62,6 +62,22 @@ const GamesApiService = {
           )
     },
 
+    putGame(game_id, game){
+      return fetch(`${config.API_ENDPOINT}/games/${game_id}`, {
+          method: 'PUT',
+          headers: {
+            'content-type': 'application/json',
+            'Authorization': `bearer ${TokenService.getAuthToken()}`
+          },
+          body: JSON.stringify(game),
+        })
+          .then(res =>
+            (!res.ok)
+              ? res.json().then(e => Promise.reject(e))
+              : res.json()
+          )
+    },
+
     deleteGame(game_id){
       return fetch(`${config.API_ENDPOINT}/games/${game_id}`, {
           method: 'DELETE',
@@ -73,13 +89,28 @@ const GamesApiService = {
           .then(res =>
             (!res.ok)
               ? res.json().then(e => Promise.reject(e))
-              : res.json()
+              : res
           )
     },
 
     // POST_UP_GAMES_ATTENDANCE METHODS
     getAttendanceCount(game_id){
         return fetch(`${config.API_ENDPOINT}/games/attendance/rsvp/${game_id}`, {
+            method: 'GET',
+            headers: {
+              'content-type': 'application/json',
+              'authorization': `bearer ${TokenService.getAuthToken()}`
+            }
+        })
+            .then(res => 
+                (!res.ok)
+                    ? res.json().then(e => Promise.reject(e))
+                    : res.json()
+                )
+    },    
+    
+    getUserName(user_id){
+        return fetch(`${config.API_ENDPOINT}/user/${user_id}`, {
             method: 'GET',
             headers: {
               'content-type': 'application/json',
@@ -138,6 +169,20 @@ const GamesApiService = {
             : res.json()
         )
     },
+
+    getCoordinates(parsedGeoCodeAddress, apiKey){
+      let googleGetCoorsURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${parsedGeoCodeAddress}&key=${apiKey}`
+      return fetch(googleGetCoorsURL).then(res => {
+          if(res.status ===200){
+              return res.json()
+          } else {
+              throw new Error(res.statusText)
+          }
+      })
+  }
+
 }
+
+
 
 export default GamesApiService

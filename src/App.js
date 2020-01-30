@@ -11,6 +11,8 @@ import Home from './Home/Home'
 import CreateGames from './CreateGames/CreateGames';
 import Context from './Context/Context'
 import GamesApiService from './Services/GamesApiService';
+import GamesListItem from './GamesListItem/GamesListItem';
+import GamesPage from './GamesPage/GamesPage';
 
 
 export default class App extends React.Component {
@@ -104,8 +106,10 @@ export default class App extends React.Component {
             <Route path="/sign-in" exact component={SignIn}/>
             <Route path="/home" exact component={Home}/>
             <Route path="/my-games" exact component={Home}/>
+            <Route path="/edit-games/:game_id" exact component={CreateGames}/>
             <Route path="/landing" exact component={Landing}/>
             <Route path="/create-games" exact component={CreateGames}/>
+            <Route path="/games/:game_id" exact component={GamesListItem}/>
       
       
             {/* <Footer/> */}

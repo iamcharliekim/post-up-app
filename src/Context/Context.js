@@ -14,7 +14,12 @@ const Context = React.createContext({
     myGames: [],
 
     searchString: '',
-    searchGames: ()=> {},
+    onSearchGames: ()=> {},
+    filterGames: () => {},
+    filteredGames: [],
+
+    comments: [],
+    addComment: ()=> {}
 })
 
 export default Context

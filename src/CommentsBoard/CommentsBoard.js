@@ -1,86 +1,69 @@
 import React from 'react';
 import './CommentsBoard.css'
-import CommentsService from '../Services/CommentsService';
+import CommentsService from './CommentsService';
+import Comment from '../Comment/Comment';
+import Context from '../Context/Context'
+import moment from 'moment'
+
 
 export default class CommentsBoard extends React.Component {
+    static contextType = Context
+    
     state = {
+        game_id: this.props.game_id,
         comment: '',
-
+        comments: []
     }
 
     componentDidMount(){
-        console.log(this.props)
+        // FILTER COMMENTS BY game_id
+        let gameComments = this.context.comments.filter((comment)=> comment.game_id === this.state.game_id)
+        this.setState({comments: gameComments})
+    }
+
+    commentHandler = (e) => {
+        this.setState({comment: e.target.value})
     }
 
     onSubmitComment = (e) => {
         e.preventDefault()
 
+        let commentObj = {
+            user_name: '',
+            comment: this.state.comment,
+            game_id: this.props.game_id,
+            date_created: (moment(moment.now()).format())
+        }
+
         //POST-request comment 
-        CommentsService.postComment(this.state.comment, this.props.game_id)
-            .then(res => {
-                console.log('postComment() response:', res)
+        CommentsService.postComment(commentObj, this.props.game_id)
+            .then(comment => {
+                this.context.addComment(comment)
+
+                let commentsCopy = [...this.state.comments]
+                commentsCopy.push(comment)
+                this.setState({comments: commentsCopy})
             })
-        
     }
 
-
     render() {
-
         return (
                 <div className="comments">
-                    <h2>239 Comments</h2>
+                    <h2>{this.state.comments.length} Comments</h2>
                     <div className="user-comments-wrapper">
                         <textarea 
                             className="comment-text-area" 
-                            onChange={this.onSubmitComment}
+                            onChange={this.commentHandler}
+                            value={this.state.comment}
                             />
                         <div className="comments-btn-wrapper">
-                            <button className="submit-comment-btn">Submit</button>
+                            <button className="submit-comment-btn" onClick={this.onSubmitComment}>Submit</button>
                         </div>
                     </div>
 
                     <div className="user-comments">
-                        <div className="user-comment">
-                            <div className="user-comment-row-1">
-                                <h4 className="user-name">newlybewly</h4>
-                                <span className="user-commented-time">
-                                    2 hours ago
-                                </span>
-                            </div>
-                            <span className="comment-text">Is everyone gonna be there?</span>
-                        </div>                        
-                        
-                        <div className="user-comment">
-                            <div className="user-comment-row-1">
-                                <h4 className="user-name">iamcharliekim</h4>
-                                <span className="user-commented-time">
-                                    5 hours ago
-                                </span>
-                            </div>
-                            <span className="comment-text">Can't wait!</span>
-                        </div>       
-
-                        <div className="user-comment">
-                            <div className="user-comment-row-1">
-                                <h4 className="user-name">jun923</h4>
-                                <span className="user-commented-time">2 days ago</span>
-                            </div>
-                            <span className="comment-text">ima smoke alll yall!!! </span>
-                        </div>                        
-                        
-                        <div className="user-comment">
-                            <div className="user-comment-row-1">
-                                <h4 className="user-name">cwkim3</h4>
-                                <span className="user-commented-time">
-                                    1 week ago
-                                </span>
-                            </div>
-                            <span className="comment-text">8==========D ~~~~~</span>
-                        </div>                        
-                        
-      
+                        {  this.state.comments ? this.state.comments.map((comment, i) => <Comment key={i} userComment={comment}/>) : null }           
                     </div>
-
                 </div>
         );
     }

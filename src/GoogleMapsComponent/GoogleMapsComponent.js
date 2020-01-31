@@ -20,9 +20,9 @@ function Map(props){
 
             {
             
-                props.gamesList.map((game) => {
+                props.gamesList.map((game, i) => {
                     return <Marker 
-                                key={game.id}
+                                key={i}
                                 position={{lat: +game.game_lat, lng: +game.game_lng}}
                                 onClick={()=> setSelectedGame(game)}
                                 />

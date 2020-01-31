@@ -12,7 +12,8 @@ import CreateGames from './CreateGames/CreateGames';
 import Context from './Context/Context'
 import GamesApiService from './Services/GamesApiService';
 import GamesListItem from './GamesListItem/GamesListItem';
-import GamesPage from './GamesPage/GamesPage';
+import CommentsService from './CommentsBoard/CommentsService';
+import Search from './Search/Search';
 
 
 export default class App extends React.Component {
@@ -21,6 +22,7 @@ export default class App extends React.Component {
   state = {
     games: [],
     myGames: [],
+    comments: [],
     userCoords: {
         lat: null,
         lng: null
@@ -32,23 +34,38 @@ export default class App extends React.Component {
     // GET USER-COORDS
     this.getUserCoords();
 
-
     // GET ALL GAMES
     GamesApiService.getAllGames()
       .then(games => {
-        this.setState({games})
+        if(games){
+          this.setState({games})
+        }
       })
 
     // GET USER'S GAMES
     GamesApiService.getGamesByUserId()
       .then(myGames => {
-        this.setState({myGames})
+        if (myGames){
+          this.setState({myGames})
+        }
+      })
+
+    // GET ALL COMMENTS
+    CommentsService.getComments()
+      .then(comments => {
+        this.setState({comments})
+
       })
   }
 
-  searchGames = (e) => {
-
+  onSearchGames = (e) => {
     this.setState({searchString: e.target.value})
+  }
+
+  addComment = (comment) => {
+    const commentsCopy = [...this.state.comments]
+    commentsCopy.push(comment)
+    this.setState({comments: commentsCopy})
   }
 
   updateGames = (games) => {
@@ -76,7 +93,6 @@ export default class App extends React.Component {
       console.log('Geolocation is not supported by this browser')
     }
   }
-
   
 
   render(){
@@ -87,9 +103,8 @@ export default class App extends React.Component {
       myGames: this.state.myGames,
       getUserCoords: this.getUserCoords,
       userCoords: this.state.userCoords,
-      searchGames: this.searchGames,
-      searchString: this.state.searchString
-
+      comments: this.state.comments,
+      addComment: this.addComment,
     }
 
     return (
@@ -100,8 +115,7 @@ export default class App extends React.Component {
       
             { TokenService.hasAuthToken() ? <Redirect to='/home'/> : <Redirect to='/sign-in'/> }
             
-      
-      
+
             <Route path="/sign-up" exact component={SignUp}/>
             <Route path="/sign-in" exact component={SignIn}/>
             <Route path="/home" exact component={Home}/>

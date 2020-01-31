@@ -3,7 +3,7 @@ import TokenService from '../Services/TokenService'
 
 
 const CommentsService = {
-    getComments(game_id){
+    getComments(){
         return fetch(`${config.API_ENDPOINT}/games/comments`, {
             method: 'GET',
             headers: {
@@ -18,7 +18,7 @@ const CommentsService = {
                 )
     },
 
-    postComment(comment, game_id){
+    postComment(comment){
       return fetch(`${config.API_ENDPOINT}/games/comments`, {
           method: 'POST',
           headers: {

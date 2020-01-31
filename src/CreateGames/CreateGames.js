@@ -7,7 +7,6 @@ import GoogleMapsComponent from '../GoogleMapsComponent/GoogleMapsComponent';
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
 
 export default class CreateGames extends React.Component {
-
 static contextType = Context
 
     state = {
@@ -39,7 +38,6 @@ static contextType = Context
     componentDidMount(){
         if (this.state.game_id){
             let game = this.context.games.find(game => game.id === this.state.game_id)
-            console.log(game)
 
             this.setState({
                 edit_game: true,
@@ -133,6 +131,7 @@ static contextType = Context
 
             GamesApiService.getCoordinates(parsedGeoCodeAddress, this.state.mapsApiKey)
                 .then(coors => {
+                    console.log(coors)
                     newGame.game_lat = coors.results[0].geometry.location.lat
                     newGame.game_lng = coors.results[0].geometry.location.lng
                 })
@@ -142,7 +141,6 @@ static contextType = Context
             // PUT-GAME
             GamesApiService.putGame(this.state.game_id, newGame)
                 .then(res => {
-                    console.log('PUTGAMERES', res)
                     this.updateGame(res)
                 })
                 .catch(res => {
@@ -158,8 +156,6 @@ static contextType = Context
             })
         }
 
-
-        
     }
 
     
@@ -167,7 +163,6 @@ static contextType = Context
     addNewGame = (newGame, res) => {
         newGame.id = res[0].id
         newGame.created_by = res[0].created_by
-
         const gamesCopy = [...this.context.games]
         gamesCopy.push(newGame)
         this.context.updateGames(gamesCopy)
@@ -175,7 +170,6 @@ static contextType = Context
         const myGamesCopy = [...this.context.myGames]
         myGamesCopy.push(newGame)
         this.context.updateMyGames(myGamesCopy)
-
         this.props.history.push('/home')
     }
 
@@ -189,8 +183,6 @@ static contextType = Context
         const myGameIndex = myGamesCopy.findIndex(game => game.id === editedGame.id)
         myGamesCopy[myGameIndex] = editedGame
         this.context.updateMyGames(myGamesCopy)
-
-
         this.props.history.push('/home')
 
     }
@@ -207,21 +199,10 @@ static contextType = Context
                                 <input type="text" placeholder="Give your game a name" onChange={this.gameNameHandler} value={this.state.game_name}/>
                             </div>
 
-                            {/* <div className="form-row">
-                                <label htmlFor="">Date:</label>
-                                <input type="date" onInput={this.gameDateHandler}/>
-                            </div>        
-                
-                            <div className="form-row">
-                                <label htmlFor="">Time:</label>
-                                <input type="text" onInput={this.gameTimeHandler}/>
-                            </div>   */}
-
                             <div className="form-row">
                                 <DateTimePicker
                                     gameTimeHandler={this.gameTimeHandler}
                                     gameDateHandler={this.gameDateHandler}
-                                
                                 />
                             </div>
 
@@ -232,7 +213,6 @@ static contextType = Context
                                         <GoogleAutocomplete onSetAddress = {this.onSetAddress}/>
                                     </div>
 
-                                {/* { this.state.game_coors ? */}
                                     <GoogleMapsComponent
                                         loadingElement={<div style={{ height: '100%'}}/>}
                                         containerElement={<div style={{ height: '100%'}}/>}
@@ -240,7 +220,6 @@ static contextType = Context
                                         lat={this.context.userCoords.lat}
                                         lng={this.context.userCoords.lng}
                                         gamesList={[{
-                                            id: 'sometingUnique',
                                             game_name: this.state.game_name,
                                             game_date: this.state.game_date,
                                             game_time: this.state.game_time,
@@ -252,7 +231,6 @@ static contextType = Context
                                             game_lng: +this.state.game_lng,
                                         }]}
                                         zoom={this.state.zoom}                          
-                                    
                                     /> 
 
                                 </div>

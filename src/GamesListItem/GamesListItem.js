@@ -18,25 +18,16 @@ class GamesListItem extends React.Component {
         rsvpCount: '',
         disableCheckInBtn: false,
         disableCheckOutBtn: true,
-        pathname: this.props.pathname,
         addressString: '',
-
+        pathname: this.props.pathname,
         gamesPage: this.props.location.state,
-
-        game_name: !this.props.location.state ? this.props.gamename : this.props.location.state.gamesList[0].game_name,
-        game_street: !this.props.location.state ? this.props.gamestreet : this.props.location.state.gamesList[0].game_street,
-        game_city: !this.props.location.state ? this.props.gamecity : this.props.location.state.gamesList[0].game_city,
-        game_state: !this.props.location.state ? this.props.gamestate : this.props.location.state.gamesList[0].game_state,
-        game_zip: !this.props.location.state ? this.props.gamezip : this.props.location.state.gamesList[0].game_zip,
-
-
-        selectedGame: !this.props.location.state ? this.props.selectedGame : this.props.location.state.gamesList,    
-        game_id: !this.props.location.state ? +this.props.gameId : this.props.location.state.gamesList[0].id,
-        game_lat: !this.props.location.state ? this.props.game_lat : this.props.location.state.lat,
-        game_lng: !this.props.location.state ? this.props.game_lng : this.props.location.state.lng,
 
         attendance: null,
         rosterList: null,
+
+        selectedGame: !this.props.location.state ? this.props.selectedGame : this.props.location.state.gamesList,    
+        game: this.props.location.state ? this.props.location.state.gamesList[0] : this.props.game 
+
     }
 
     componentDidMount(){
@@ -44,6 +35,7 @@ class GamesListItem extends React.Component {
 
         if (gameObj){ 
             this.setState({
+                game: gameObj.gamesList[0],
                 selectedGame: gameObj.gamesList,
                 game_lat: +gameObj.lat,
                 game_lng: +gameObj.lng
@@ -53,31 +45,28 @@ class GamesListItem extends React.Component {
         this.formatAddressURI()
 
         // get and set rsvpCount
-        GamesApiService.getAttendanceCount(this.state.game_id)
+        GamesApiService.getAttendanceCount(this.state.game.id)
             .then(rsvpCount => {
                 this.setState({rsvpCount})
             })
 
         // check and see if user is already attending and update check-in/out btn's disabled state 
-        GamesApiService.getGameAttendance(this.state.game_id)
+        GamesApiService.getGameAttendance(this.state.game.id)
             .then(game => {     
                 if (game){
-                    console.log(game)
-
                     let userIsAttending = game.attendance.find(user => user.attending_user === +game.user_id)
-                    console.log(userIsAttending)
 
-                    if(userIsAttending){
+                    if (userIsAttending){
                         this.setState({disableCheckInBtn: true, disableCheckOutBtn: false})
                     }
 
                     this.setState({attendance: game.attendance})
 
                     const rosterList = []
+
                     game.attendance.forEach(game=> {
                         GamesApiService.getUserName(game.attending_user)
                             .then(username => {
-                                console.log(username.username)
                                 rosterList.push({
                                     username: username.username,
                                     id: +game.attending_user
@@ -86,37 +75,29 @@ class GamesListItem extends React.Component {
                     })
 
                     this.setState({rosterList})
-
-                    console.log(this.state)
-
-                } 
+                }
+                
             })
-
-
-
 
     }
 
-    incrementGameAttendance(e){
+    incrementRoster(e){
         e.preventDefault()
         e.stopPropagation()
 
-        GamesApiService.postGameAttendance({game_id: this.state.game_id})
+        GamesApiService.postGameAttendance({game_id: this.state.game.id})
             .then(userObj => {
-                console.log(userObj)
                 let rosterCopy= [...this.state.rosterList]
-
                 rosterCopy.push(userObj)
-
-                this.setState({rsvpCount: this.state.rsvpCount + 1, disableCheckInBtn: true, disableCheckOutBtn: false, rosterList: rosterCopy})
+                this.setState({rsvpCount: this.state.rsvpCount + 1, disableCheckInBtn: true, disableCheckOutBtn: false, rosterList: rosterCopy})                
             })
     }
 
-    decrementGameAttendance(e){
+    decrementRoster(e){
         e.preventDefault()
         e.stopPropagation()
 
-        GamesApiService.deleteGameAttendance(this.state.game_id)
+        GamesApiService.deleteGameAttendance(this.state.game.id)
             .then(userObj => {
                 let rosterCopy= [...this.state.rosterList]
 
@@ -125,10 +106,12 @@ class GamesListItem extends React.Component {
 
                 this.setState({rsvpCount: this.state.rsvpCount -1, disableCheckInBtn: false, disableCheckOutBtn: true, rosterList: rosterCopy})
             })
+
+
     }
 
     formatAddressURI = () => {
-        let geocodeAddress = `${this.state.game_street}${this.state.game_city}${this.state.game_state} ${this.state.game_zip}`
+        let geocodeAddress = `${this.state.game.game_street}${this.state.game.game_city}${this.state.game.game_state} ${this.state.game.game_zip}`
         let parsedGeoCodeAddress = geocodeAddress.split(' ').join('+')
         this.setState({gameAddressString: parsedGeoCodeAddress})
     }
@@ -136,10 +119,7 @@ class GamesListItem extends React.Component {
     editGame = (e) => { 
         e.preventDefault()
         e.stopPropagation()
-
-        console.log('editGame()')
         this.props.history.push(`/edit-games/${this.props.selectedGame[0].id}`)
-
     }
 
     deleteGame = (e) => { 
@@ -160,12 +140,12 @@ class GamesListItem extends React.Component {
             })
     }
 
-    openGame = (game_id) => {
+    openGame = () => {
         if (!this.state.gamesPage){
-            let gamesList = this.context.games.filter(game => game.id === +this.props.gameId)
+            let gamesList = this.context.games.filter(game => game.id === +this.state.game.id)
 
             this.props.history.push({
-                pathname: `/games/${this.props.gameId}`,
+                pathname: `/games/${this.state.game.id}`,
                 state: {
                     gamesList: gamesList,
                     lat: +gamesList[0].game_lat,
@@ -179,30 +159,24 @@ class GamesListItem extends React.Component {
     showRoster = (e) => {
         e.preventDefault()
         e.stopPropagation()
-
         this.setState({showRoster: !this.state.showRoster})
-
-        console.log('show roster')
-        console.log(this.state.rosterList)
     }
+
+
     render() {
         let rosterList;
-        if (this.state.rosterList){
-             rosterList = this.state.rosterList.map((username, i) => {
-            return <li key={i}>{username.username}</li>
-        })
-        }
+        rosterList = this.state.rosterList ?  this.state.rosterList.map((username, i) => <li key={i}>{username.username}</li>) : null 
+        
 
-        console.log(this.props.location.state , this.state.game_name)
         return (
             <React.Fragment>
-                <div className={!this.state.gamesPage ? "games-search-result" : "games-page"} onClick={()=>this.openGame(this.props.gameId)}> 
+                <div className={!this.state.gamesPage ? "games-search-result" : "games-page"} onClick={this.openGame}> 
   
-                        <h1>{this.state.game_name}</h1>
+                        <h1>{this.state.game.game_name}</h1>
                         <div className="game-when">
                         <span className="game-date">
                             <Moment format={"dddd, MMMM Do YYYY, h:mm A"}>
-                                {this.props.gamedate}
+                                {this.state.game.game_date}
 
                             </Moment>
                         </span>
@@ -218,8 +192,8 @@ class GamesListItem extends React.Component {
                             loadingElement={<div style={{ height: '100%'}}/>}
                             containerElement={<div style={{ height: '400px'}}/>}
                             mapElement={<div style={{height: '100%'}}/>}
-                            lat={+this.state.game_lat}
-                            lng={+this.state.game_lng}
+                            lat={+this.state.game.game_lat}
+                            lng={+this.state.game.game_lng}
                             gamesList={this.state.selectedGame}
                             zoom={10}
 
@@ -231,7 +205,7 @@ class GamesListItem extends React.Component {
 
                         <div className="address">
                             <a href={`https://www.google.com/maps/dir/?api=1&origin=${this.context.userCoords.lat},${this.context.userCoords.lng}&destination=${this.state.gameAddressString}`} target="_blank" rel="noopener noreferrer">
-                                <span>{`${this.state.game_street} ${this.state.game_city} ${this.state.game_city} ${this.state.game_zip}`}</span>
+                                <span>{`${this.state.game.game_street} ${this.state.game.game_city} ${this.state.game.game_state} ${this.state.game.game_zip}`}</span>
                             </a>
                         </div>
 
@@ -242,8 +216,8 @@ class GamesListItem extends React.Component {
                         </ul>
 
                         <div className="rsvp-attending">
-                            <button onClick={(e)=>this.incrementGameAttendance(e)} disabled={this.state.disableCheckInBtn}> Check-in</button>
-                            <button onClick={(e)=>this.decrementGameAttendance(e)} disabled={this.state.disableCheckOutBtn}> Check-out</button>
+                            <button onClick={(e)=>this.incrementRoster(e)} disabled={this.state.disableCheckInBtn}> Check-in</button>
+                            <button onClick={(e)=>this.decrementRoster(e)} disabled={this.state.disableCheckOutBtn}> Check-out</button>
                             {
                                 this.state.pathname === '/my-games' ?
                                 <div className="edit-games-btns-wrapper">
@@ -258,7 +232,7 @@ class GamesListItem extends React.Component {
                             this.state.gamesPage ? 
                             
                                 <CommentsBoard
-                                    game_id={this.state.game_id}
+                                    game_id={this.state.game.id}
                                 />                    
                              : null
 

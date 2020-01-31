@@ -1,5 +1,5 @@
 import React from 'react';
-import './SignIn.css'
+import styles from './SignIn.module.css'
 import TokenService from '../Services/TokenService'
 import AuthApiService from '../Services/AuthApiService';
 
@@ -65,8 +65,8 @@ export default class SignIn extends React.Component {
                             <input type="password" id="password" onChange={this.passwordHandler} value={this.state.password}/>
                         </label> 
 
-                        <div className="btns-div">
-                            <button className="sign-in-btn">Sign In</button>
+                        <div className={styles["btns-div"]}>
+                            <button className={styles["sign-in-btn"]}>Sign In</button>
                         </div>
                     </fieldset>
                 </form>

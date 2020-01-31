@@ -1,5 +1,5 @@
 import React from 'react';
-import './Search.css'
+import styles from'./Search.module.css'
 import Context from '../Context/Context'
 
 export default class Search extends React.Component {
@@ -10,7 +10,7 @@ export default class Search extends React.Component {
     render() {
         return (
             <React.Fragment>
-            <div className="search-games-wrapper">
+            <div className={styles["search-games-wrapper"]}>
                     <input 
                         type="text" 
                         placeholder="Search for games" 

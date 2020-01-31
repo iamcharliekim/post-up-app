@@ -1,5 +1,5 @@
 import React from 'react';
-import './Navbar.css';
+import styles from './Navbar.module.css';
 import { Link } from 'react-router-dom'
 import TokenService from '../Services/TokenService';
 import { withRouter } from 'react-router-dom'
@@ -19,12 +19,12 @@ class Navbar extends React.Component {
         }
 
         return (
-                <nav className="navbar">
-                    <Link to="/landing" className="logo">
+                <nav className={styles["navbar"]}>
+                    <Link to="/landing" className={styles["logo"]}>
                         <div>Logo</div> 
                     </Link>
 
-                    <div className="nav-links-wrapper">
+                    <div className={styles["nav-links-wrapper"]}>
                         { navLinks.map(link => {
                             return link
                         }) }

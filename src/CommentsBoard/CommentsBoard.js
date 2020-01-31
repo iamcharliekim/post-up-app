@@ -1,5 +1,5 @@
 import React from 'react';
-import './CommentsBoard.css'
+import styles from './CommentsBoard.module.css'
 import CommentsService from './CommentsService';
 import Comment from '../Comment/Comment';
 import Context from '../Context/Context'
@@ -48,20 +48,20 @@ export default class CommentsBoard extends React.Component {
 
     render() {
         return (
-                <div className="comments">
+                <div className={styles["comments"]}>
                     <h2>{this.state.comments.length} Comments</h2>
-                    <div className="user-comments-wrapper">
+                    <div className={styles["user-comments-wrapper"]}>
                         <textarea 
-                            className="comment-text-area" 
+                            className={styles["comment-text-area"]}
                             onChange={this.commentHandler}
                             value={this.state.comment}
                             />
-                        <div className="comments-btn-wrapper">
-                            <button className="submit-comment-btn" onClick={this.onSubmitComment}>Submit</button>
+                        <div className={styles["comments-btn-wrapper"]}>
+                            <button className={styles["submit-comment-btn"]} onClick={this.onSubmitComment}>Submit</button>
                         </div>
                     </div>
 
-                    <div className="user-comments">
+                    <div className={styles["user-comments"]}>
                         {  this.state.comments ? this.state.comments.map((comment, i) => <Comment key={i} userComment={comment}/>) : null }           
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import './Home.css'
+import styles from './Home.module.css'
 import Search from '../Search/Search';
 import GamesListItem from '../GamesListItem/GamesListItem';
 import Context from '../Context/Context'
@@ -36,7 +36,7 @@ export default class Home extends React.Component {
 
         return (
                 <React.Fragment>
-                    <div className="games-list">
+                    <div className={styles["games-list"]}>
                         {games.map((game, i) => {
                             return  <GamesListItem 
 

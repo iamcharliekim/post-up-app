@@ -1,5 +1,5 @@
 import React from 'react';
-import './SignUp.css'
+import styles from './SignUp.module.css'
 import AuthApiService from '../../src/Services/AuthApiService';
 
 
@@ -91,8 +91,8 @@ export default class SignUp extends React.Component {
                             <input type="password" id="password" onInput={this.passwordHandler}/>
                         </label> 
 
-                        <div className="btns-div">
-                            <button className="sign-up-btn">Sign Up</button>
+                        <div className={styles["btns-div"]}>
+                            <button className={styles["sign-up-btn"]}>Sign Up</button>
                         </div>
                     </fieldset>
                 </form>            

@@ -5,7 +5,6 @@ import { Route } from 'react-router-dom'
 import SignUp from './SignUp/SignUp';
 import Landing from './Landing/Landing';
 import SignIn from './SignIn/SignIn';
-import './App.css'
 import TokenService from './Services/TokenService';
 import Home from './Home/Home'
 import CreateGames from './CreateGames/CreateGames';
@@ -13,7 +12,7 @@ import Context from './Context/Context'
 import GamesApiService from './Services/GamesApiService';
 import GamesListItem from './GamesListItem/GamesListItem';
 import CommentsService from './CommentsBoard/CommentsService';
-import Search from './Search/Search';
+import styles from './App.module.css'
 
 
 export default class App extends React.Component {
@@ -110,7 +109,7 @@ export default class App extends React.Component {
     return (
       <BrowserRouter>
         <Context.Provider value={contextVal}>
-          <main className='App'>
+          <main className={styles["App"]}>
             <Navbar loggedIn={TokenService.hasAuthToken()}/>
       
             { TokenService.hasAuthToken() ? <Redirect to='/home'/> : <Redirect to='/sign-in'/> }

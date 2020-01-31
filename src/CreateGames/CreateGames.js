@@ -1,5 +1,5 @@
 import React from 'react';
-import './CreateGames.css'
+import styles from './CreateGames.module.css'
 import GamesApiService from '../Services/GamesApiService';
 import GoogleAutocomplete from '../GoogleAutocomplete/GoogleAutocomplete';
 import Context from '../Context/Context';
@@ -191,25 +191,25 @@ static contextType = Context
   
         return (
                 <React.Fragment>
-                    <div className="create-game-wrapper">
+                    <div className={styles["create-game-wrapper"]}>
                         <header><h4>Create a game!</h4></header>
                         <form onSubmit={this.onSubmitHandler}>
-                            <div className="form-row">
+                            <div className={styles["form-row"]}>
                                 <label htmlFor="">Name:</label>
                                 <input type="text" placeholder="Give your game a name" onChange={this.gameNameHandler} value={this.state.game_name}/>
                             </div>
 
-                            <div className="form-row">
+                            <div className={styles["form-row"]}>
                                 <DateTimePicker
                                     gameTimeHandler={this.gameTimeHandler}
                                     gameDateHandler={this.gameDateHandler}
                                 />
                             </div>
 
-                            <div className="map-row">
+                            <div className={styles["map-row"]}>
                                 <h3>Pick a court:</h3>
-                                <div className="map">
-                                    <div className="map-search">
+                                <div className={styles["map"]}>
+                                    <div className={styles["map-search"]}>
                                         <GoogleAutocomplete onSetAddress = {this.onSetAddress}/>
                                     </div>
 
@@ -237,33 +237,33 @@ static contextType = Context
                             </div>
 
                     
-                            <div className="address-manual">
+                            <div className={styles["address-manual"]}>
                                 <h3>Address:</h3>
 
-                                <div className="form-row street">
+                                <div className={styles["form-row street"]}>
                                     <label htmlFor="">Street:</label>
                                     <input type="text" onChange={this.gameStreetHandler} value={this.state.game_street}/>
                                 </div>                      
                                 
-                                <div className="citystatezip">
-                                    <div className="form-row city">
+                                <div className={styles["citystatezip"]}>
+                                    <div className={styles["form-row city"]}>
                                         <label htmlFor="">City:</label>
                                         <input type="text" onChange={this.gameCityHandler} value={this.state.game_city}/>
                                     </div>
-                                    <div className="form-row state">
+                                    <div className={styles["form-row state"]}>
                                         <label htmlFor="">State:</label>
                                         <input type="text" onChange={this.gameStateHandler} value={this.state.game_state}/>
                                     </div>
                                 </div>  
 
-                                <div className="form-row zip">
+                                <div className={styles["form-row zip"]}>
                                     <label htmlFor="">Zip-code:</label>
                                     <input type="text" onChange={this.gameZipHandler} value={this.state.game_zip}/>
                                 </div>
                             </div>
 
 
-                            <div className="btns-panel">
+                            <div className={styles["btns-panel"]}>
                                 <button type="submit">Submit</button>
                                 <button>Cancel</button>
                             </div> 

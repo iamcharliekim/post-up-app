@@ -1,6 +1,6 @@
 import React from 'react';
 import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete';
-import './GoogleAutocomplete.css'
+import styles from './GoogleAutocomplete.module.css'
 
 export default function GoogleAutocomplete(props) {
     const [address, setAddress] = React.useState('')
@@ -46,7 +46,7 @@ export default function GoogleAutocomplete(props) {
 
     return (
 
-        <div className="places-autocomplete">
+        <div className={styles["places-autocomplete"]}>
             <PlacesAutocomplete
                 value={address}
                 onChange={setAddress}
@@ -54,13 +54,13 @@ export default function GoogleAutocomplete(props) {
                 >
                     
                     {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                       <div className="places-search-wrapper">
+                       <div className={styles["places-search-wrapper"]}>
                            <input {...getInputProps({ placeholder: "Search for a court"})}
                                 type="text" 
-                                className="places-search-input"
+                                className={styles["places-search-input"]}
                                 />
 
-                                <div className="places-suggestions-wrapper">
+                                <div className={styles["places-suggestions-wrapper"]}>
                                     {loading ? <div>...loading</div> : null}
 
                                     { 
@@ -71,7 +71,7 @@ export default function GoogleAutocomplete(props) {
                                         }
                                         
                                         return (
-                                            <div className="suggestions-div" {...getSuggestionItemProps(suggestion, {style})}>
+                                            <div className={styles["suggestions-div"]} {...getSuggestionItemProps(suggestion, {style})}>
                                                 {suggestion.description}
                                             </div>
                                         );

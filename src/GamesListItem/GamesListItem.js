@@ -1,5 +1,5 @@
 import React from 'react';
-import './GamesListItem.css'
+import styles from './GamesListItem.module.css'
 import GamesApiService from '../Services/GamesApiService';
 import GoogleMapsComponent from '../GoogleMapsComponent/GoogleMapsComponent'
 import Moment from 'react-moment';
@@ -170,11 +170,11 @@ class GamesListItem extends React.Component {
 
         return (
             <React.Fragment>
-                <div className={!this.state.gamesPage ? "games-search-result" : "games-page"} onClick={this.openGame}> 
+                <div className={!this.state.gamesPage ? styles["games-search-result"] : styles["games-page"]} onClick={this.openGame}> 
   
                         <h1>{this.state.game.game_name}</h1>
-                        <div className="game-when">
-                        <span className="game-date">
+                        <div className={styles["game-when"]}>
+                        <span className={styles["game-date"]}>
                             <Moment format={"dddd, MMMM Do YYYY, h:mm A"}>
                                 {this.state.game.game_date}
 
@@ -185,7 +185,11 @@ class GamesListItem extends React.Component {
 
                         </span> */}
                         </div>
-                        <div className="" style={{width: '100%', height: '100%'}}>
+
+                        {/* <div className="ball-png">
+                            <img alt="ball" src={ require('../../src/ball.png')}></img>
+                        </div> */}
+                        <div className={styles["google-maps-wrapper"]} >
 
                         <GoogleMapsComponent
                             // googleMapURL={'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing&key=AIzaSyDOvfuKaaRuYocVQWNl9ICi3wadIephDyc'}
@@ -203,24 +207,24 @@ class GamesListItem extends React.Component {
                         
                         </div>
 
-                        <div className="address">
+                        <div className={styles["address"]}>
                             <a href={`https://www.google.com/maps/dir/?api=1&origin=${this.context.userCoords.lat},${this.context.userCoords.lng}&destination=${this.state.gameAddressString}`} target="_blank" rel="noopener noreferrer">
                                 <span>{`${this.state.game.game_street} ${this.state.game.game_city} ${this.state.game.game_state} ${this.state.game.game_zip}`}</span>
                             </a>
                         </div>
 
-                        <div className={this.state.gamesPage ? "rsvp-link" : "rsvp"} onClick={this.showRoster}>{this.state.rsvpCount} <i>players attending</i></div>
+                        <div className={this.state.gamesPage ? styles["rsvp-link"] : styles["rsvp"]} onClick={this.showRoster}>{this.state.rsvpCount} <i>players attending</i></div>
 
-                        <ul className={this.state.showRoster && this.state.gamesPage ? "showRoster" : "hideRoster" }>
+                        <ul className={this.state.showRoster && this.state.gamesPage ? styles["showRoster"] : styles["hideRoster"] }>
                             {rosterList}
                         </ul>
 
-                        <div className="rsvp-attending">
+                        <div className={styles["rsvp-attending"]}>
                             <button onClick={(e)=>this.incrementRoster(e)} disabled={this.state.disableCheckInBtn}> Check-in</button>
                             <button onClick={(e)=>this.decrementRoster(e)} disabled={this.state.disableCheckOutBtn}> Check-out</button>
                             {
                                 this.state.pathname === '/my-games' ?
-                                <div className="edit-games-btns-wrapper">
+                                <div className={styles["edit-games-btns-wrapper"]}>
                                     <button onClick={(e)=>this.editGame(e)}> Edit</button>
                                     <button onClick={(e)=>this.deleteGame(e)}> Delete</button>
                                 </div>

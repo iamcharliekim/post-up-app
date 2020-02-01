@@ -2,7 +2,31 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
-    text-align: left;
+    height: 100vh;
+}
+
+.nav-links-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.nav-link {
+    padding: 20px;
+    background-color: white;
+    width: 100%;
+    text-decoration: none;
+    font-size: 30px;
+    border-bottom: 1px solid #FDFFFC;
+    color: white;
+    background-color: #011627
+}
+
+.nav-link:hover {
+    background-color: #FB8B24;
+    color: #453A49;
 }

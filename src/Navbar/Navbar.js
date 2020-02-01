@@ -3,31 +3,40 @@ import styles from './Navbar.module.css';
 import { Link } from 'react-router-dom'
 import TokenService from '../Services/TokenService';
 import { withRouter } from 'react-router-dom'
+import Context from '../Context/Context'
 
 class Navbar extends React.Component {
+    static contextType = Context
+
     onSignOut = (e) => {
         TokenService.clearAuthToken()
     }
 
     render() {
-        let navLinks
+        // let navLinks
 
-        if (!TokenService.hasAuthToken()) {
-            navLinks = [<Link to="/sign-in" key="1">Sign-In</Link>, <Link to="/sign-up" key="2">Sign-Up</Link>] 
-        } else {
-            navLinks = [<Link to="/home" key="0">Home</Link>, <Link to="/create-games" key="3">+ Create</Link>, <Link to="/my-games" key="4">My Games</Link>, <Link to="/sign-in" key="5" onClick={this.onSignOut}>Sign-Out</Link> ] 
-        }
+        // if (!TokenService.hasAuthToken()) {
+        //     navLinks = [<Link to="/sign-in" key="1">Sign-In</Link>, <Link to="/sign-up" key="2">Sign-Up</Link>] 
+        // } else {
+        //     navLinks = [<Link to="/home" key="0">Home</Link>, <Link to="/create-games" key="3">+ Create</Link>, <Link to="/my-games" key="4">My Games</Link>, <Link to="/sign-in" key="5" onClick={this.onSignOut}>Sign-Out</Link> ] 
+        // }
 
         return (
                 <nav className={styles["navbar"]}>
-                    <Link to="/landing" className={styles["logo"]}>
-                        <div>Logo</div> 
-                    </Link>
+                    <div className={styles["inner-nav"]}>
+                        <Link to="/landing" className={styles["logo"]}>
+                            <h1>Post-Up</h1>
+                        </Link>
 
-                    <div className={styles["nav-links-wrapper"]}>
-                        { navLinks.map(link => {
-                            return link
-                        }) }
+                      
+
+                    <div className={styles["hamburger"]} onClick={this.context.onOpenNav}>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+
+
                     </div>
                 </nav>
         );

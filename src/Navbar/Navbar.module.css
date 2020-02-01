@@ -1,17 +1,32 @@
 .navbar {
-    width: 100%;
+  width: 100%;
+  border-bottom: 1px solid #FDFFFC;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #011627;
+  color: #FDFFFC
+}
+
+.inner-nav {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid black;
-  padding: 10px;
+  padding: 10px 0;
+  margin: 0 10px
+}
+
+.inner-nav h1 {
+  margin: 0
 }
 
 .logo {
-    border: 1px solid black;
-    border-radius: 15px;
-    padding: 10px;
-    margin-left: 10px
+  color: #FDFFFC;
+  margin: 5px;
+  text-decoration: none;
+  font-size: 18px
+
   }
   
   .nav-links-wrapper {
@@ -23,3 +38,16 @@
     margin-right: 10px
   }
   
+
+.hamburger {
+    cursor: pointer;
+    
+} 
+
+
+.hamburger div {
+    width: 35px;
+    height: 5px;
+    background-color:#FB8B24;
+    margin: 5px 
+}

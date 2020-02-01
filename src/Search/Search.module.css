@@ -5,9 +5,8 @@
     justify-content: center;
     align-items: center;
     padding-bottom: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-bottom: 2px solid black;
+
+    border-bottom: 2px solid #011627;
 }
 
 .search-games-wrapper input {
@@ -15,7 +14,9 @@
     margin-right: 5px;
     padding: 10px;
     border: 1px solid gray;
-    border-radius: 15px
+    border-radius: 15px;
+    font-size: 18px;
+    position: relative
 }
 
 .search-games-wrapper button {
@@ -23,4 +24,10 @@
     border: 1px solid gray;
     border-radius: 15px;
     padding: 10px;
+
+}
+
+.icon {
+    position: absolute;
+    right: 10%
 }

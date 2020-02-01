@@ -1,13 +1,34 @@
 .games-search-result {
     width: 80%;
-    border: 1px solid black;
+    border: 1px solid #011627;
     margin: 10px auto;
-    padding: 20px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     cursor: pointer;
+    color: #011627;
+    font-size: 16px;
+    background-image: url(/src/orange-court.jpeg);
+    background-color: white;
+}
+
+.games-search-result:hover {
+    border: 2px solid #011627;
+} 
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center
+}
+
+
+h1 {
+    color: #FB8B24;
+    margin: 20px 0
 }
 
 .games-page {
@@ -18,6 +39,8 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    text-align: left;
+    color: #011627;
 }
 
 .game-when {
@@ -29,35 +52,68 @@
   margin-bottom: 10px
 }
 
-.map {
-    /* text-align: center;
-    color: white;
-    width: 95%;
-    height: 100px;
-    border: 1px solid black;
+.game-date {
     margin-bottom: 10px;
-    padding-top: 30px; */
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
+
+.game-time {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px;
+
+}
+
+.google-maps-wrapper {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #011627;
+}
+
 
 .address {
     width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px
+}
+
+.address .map-marker {
+    font-size: 20px;
+    margin-right: 5px
 }
 
 .address a {
+    width: 100%;
+    color: #2EC4B6;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
 }
 
+.game-street {
+}
+
+.game-city-state-zip {
+
+}
+
+
 .rsvp {
-    margin-top: 10px;   
+    margin-bottom: 10px
 }
 
 .rsvp-link {
     margin-top: 10px;   
     cursor:pointer;
-    color: blue
+    margin-bottom: 10px
 }
 
 .rsvp-link:hover {
@@ -65,17 +121,31 @@
 }
 
 .rsvp-attending {
-  margin-top: 10px;
-}
-
-.rsvp-attending button {
-    font-size: 18px
-}
-
-
-.showRoster {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 
 }
+
+button {
+    padding: 7px;
+    margin-right: 5px;
+    font-size: 16px;
+    border-radius: 20px;
+    margin-top: 5px;
+    background-color: #FB8B24;
+    color: white;
+    border: 1px solid #011627;; 
+    padding: 10px
+}
+
+button:hover {
+    filter: brightness(95%);
+    border: 2px solid #011627;; 
+
+}
+
 
 .hideRoster {
     display: none
@@ -83,11 +153,37 @@
 
 .comments-wrapper {
     width: 100%;
+}
+
+.basketball-icon-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.basketball-icon {
+    font-size: 50px
+}
+
+.edit-games-btns-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.edit-games-btns-wrapper button {
+    margin: 15px;
+}
+
+.icon {
+    margin-right: 5px;
+    font-size: 20px;
 
 }
 
-.google-maps-wrapper {
-    width: 50%;
-    height: 20%;
-    
+.caret-down {
+    font-size: 20px;
+    margin-left: 5px
 }

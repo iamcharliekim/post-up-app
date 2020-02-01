@@ -19,7 +19,11 @@ const Context = React.createContext({
     filteredGames: [],
 
     comments: [],
-    addComment: ()=> {}
+    addComment: ()=> {},
+    filteredMyGames: [],
+
+    openNav: '',
+    onOpenNav:()=> {}
 })
 
 export default Context

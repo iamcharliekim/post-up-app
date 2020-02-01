@@ -4,7 +4,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-
 }
 
 .games-search-result {
@@ -16,6 +15,8 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    background: linear-gradient( rgba(29, 30, 34, 0.95), rgba(29, 30, 34, 0.2) ), url(/src/bballcourt.jpeg);
+
 }
 
 .game-when {

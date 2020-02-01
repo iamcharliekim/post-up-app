@@ -3,10 +3,14 @@ import styles from './GamesListItem.module.css'
 import GamesApiService from '../Services/GamesApiService';
 import GoogleMapsComponent from '../GoogleMapsComponent/GoogleMapsComponent'
 import Moment from 'react-moment';
-import 'moment-timezone';
+import moment from 'moment';
 import Context from '../Context/Context'
 import { withRouter } from 'react-router-dom'
 import CommentsBoard from '../CommentsBoard/CommentsBoard';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBasketballBall, faMapMarkerAlt, faCalendarAlt, faClock, faUserCircle, faCaretDown } from '@fortawesome/free-solid-svg-icons'
+//<i class="fas fa-map-marker-alt"></i>
 
 
 
@@ -31,6 +35,7 @@ class GamesListItem extends React.Component {
     }
 
     componentDidMount(){
+        
         let gameObj = this.props.location.state
 
         if (gameObj){ 
@@ -79,6 +84,12 @@ class GamesListItem extends React.Component {
                 
             })
 
+    }
+
+    componentDidUpdate(prevProps){
+        if(this.props.game !== prevProps.game){
+            this.setState({game:this.props.game});
+        }
     }
 
     incrementRoster(e){
@@ -168,52 +179,73 @@ class GamesListItem extends React.Component {
         rosterList = this.state.rosterList ?  this.state.rosterList.map((username, i) => <li key={i}>{username.username}</li>) : null 
         
 
+        let dateTimeParsed = moment(this.state.game.game_date).format("MMMM Do YYYY, h:mm A").split(',')
+        let date = dateTimeParsed[0]
+        let time = dateTimeParsed[1]
+
+        let gameStreet = this.state.game.game_street
+        let gameCityStateZip = `${this.state.game.game_city} ${this.state.game.game_state} ${this.state.game.game_zip}`
+        
+
         return (
             <React.Fragment>
                 <div className={!this.state.gamesPage ? styles["games-search-result"] : styles["games-page"]} onClick={this.openGame}> 
   
-                        <h1>{this.state.game.game_name}</h1>
-                        <div className={styles["game-when"]}>
-                        <span className={styles["game-date"]}>
-                            <Moment format={"dddd, MMMM Do YYYY, h:mm A"}>
-                                {this.state.game.game_date}
+                        <header>
+                            <h1>{this.state.game.game_name}</h1>
+                        </header>
 
-                            </Moment>
-                        </span>
+                            <div className={styles["game-date"]}>
+                                <FontAwesomeIcon icon={faCalendarAlt} className={styles["icon"]}/>
+                                {date}
+                            </div>
                         
-                        {/* <span className="game-time">
+                            <div className={styles["game-time"]}>
+                                <FontAwesomeIcon icon={faClock} className={styles["icon"]}/>
+                                {time}
+                            </div>
 
-                        </span> */}
-                        </div>
 
-                        {/* <div className="ball-png">
-                            <img alt="ball" src={ require('../../src/ball.png')}></img>
-                        </div> */}
+
                         <div className={styles["google-maps-wrapper"]} >
-
-                        <GoogleMapsComponent
-                            // googleMapURL={'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing&key=AIzaSyDOvfuKaaRuYocVQWNl9ICi3wadIephDyc'}
-                            loadingElement={<div style={{ height: '100%'}}/>}
-                            containerElement={<div style={{ height: '400px'}}/>}
-                            mapElement={<div style={{height: '100%'}}/>}
-                            lat={+this.state.game.game_lat}
-                            lng={+this.state.game.game_lng}
-                            gamesList={this.state.selectedGame}
-                            zoom={10}
-
-                        />
-                        
+  
+                            <GoogleMapsComponent
+                                // googleMapURL={'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing&key=AIzaSyDOvfuKaaRuYocVQWNl9ICi3wadIephDyc'}
+                                loadingElement={<div style={{ height: '100%'}}/>}
+                                containerElement={<div style={{ height: '200px'}}/>}
+                                mapElement={<div style={{height: '100%'}}/>}
+                                lat={+this.state.game.game_lat}
+                                lng={+this.state.game.game_lng}
+                                gamesList={this.state.selectedGame}
+                                zoom={10}
+                            />
+                            
                         
                         
                         </div>
 
                         <div className={styles["address"]}>
+                            <FontAwesomeIcon icon={faMapMarkerAlt} className={styles["icon"]}/>
                             <a href={`https://www.google.com/maps/dir/?api=1&origin=${this.context.userCoords.lat},${this.context.userCoords.lng}&destination=${this.state.gameAddressString}`} target="_blank" rel="noopener noreferrer">
-                                <span>{`${this.state.game.game_street} ${this.state.game.game_city} ${this.state.game.game_state} ${this.state.game.game_zip}`}</span>
+                                <span className="game-street">{gameStreet}</span>
+                                <span className="game-city-state-zip">{gameCityStateZip}</span>
                             </a>
                         </div>
 
-                        <div className={this.state.gamesPage ? styles["rsvp-link"] : styles["rsvp"]} onClick={this.showRoster}>{this.state.rsvpCount} <i>players attending</i></div>
+                        <div className={this.state.gamesPage ? styles["rsvp-link"] : styles["rsvp"]} onClick={this.showRoster}>
+                            {
+                                !this.state.gamesPage ?
+                                <FontAwesomeIcon icon={faUserCircle} className={styles["icon"]}/>
+                                : 
+                                <FontAwesomeIcon icon={faCaretDown} className={styles["icon"]}/>
+
+                            }
+                            
+                            {this.state.rsvpCount} 
+                            
+                            <i> players attending</i>
+                            
+                        </div>
 
                         <ul className={this.state.showRoster && this.state.gamesPage ? styles["showRoster"] : styles["hideRoster"] }>
                             {rosterList}

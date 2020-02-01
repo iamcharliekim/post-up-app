@@ -12,8 +12,6 @@ export default class Home extends React.Component {
 
     state = {
         error: null,
-        pathName:this.props.location.pathname,
-        games: this.context.games,
     }
 
     componentDidMount(){
@@ -25,28 +23,38 @@ export default class Home extends React.Component {
     }
 
     render() {
+        console.log(this.context.openNav)
+
         let games;
 
         if (this.props.location.pathname === '/my-games'){
-            games = this.context.myGames
-            
+            games = this.context.filteredGames
         } else {
-            games = this.context.games 
+            games = this.context.filteredMyGames
         }
-
+        
         return (
                 <React.Fragment>
-                    <div className={styles["games-list"]}>
-                        {games.map((game, i) => {
-                            return  <GamesListItem 
-
-                                        key={i} 
-                                        game={game}
-                                        selectedGame={[game]}
-                                        pathname={this.state.pathName}
-                            />
-                        })}
-                    </div>
+                    { 
+                    
+                    !this.context.openNav ?
+                        <React.Fragment>
+                            <Search/>
+                            <div className={styles["games-list"]}>
+                                {games.map((game, i) => {
+                                    return  <GamesListItem 
+                                            key={i} 
+                                            game={game}
+                                            selectedGame={[game]}
+                                            pathname={this.props.location.pathname}
+                                />
+                                })}
+                            </div>
+                        </React.Fragment>                    
+                            
+                            : null
+                    }
+                
                 </React.Fragment>
         );
     }

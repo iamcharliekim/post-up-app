@@ -3,7 +3,10 @@ import styles from './Navbar.module.css';
 import { Link } from 'react-router-dom'
 import TokenService from '../Services/TokenService';
 import { withRouter } from 'react-router-dom'
-import Context from '../Context/Context'
+import Context from '../Context/Context';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faBasketballBall } from '@fortawesome/free-solid-svg-icons'
 
 class Navbar extends React.Component {
     static contextType = Context
@@ -25,6 +28,8 @@ class Navbar extends React.Component {
                 <nav className={styles["navbar"]}>
                     <div className={styles["inner-nav"]}>
                         <Link to="/landing" className={styles["logo"]}>
+                        <FontAwesomeIcon icon={faBasketballBall} className={styles["icon"]}/>
+
                             <h1>Post-Up</h1>
                         </Link>
 

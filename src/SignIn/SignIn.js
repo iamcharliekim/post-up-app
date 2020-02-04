@@ -2,9 +2,11 @@ import React from 'react';
 import styles from './SignIn.module.css'
 import TokenService from '../Services/TokenService'
 import AuthApiService from '../Services/AuthApiService';
-
+import Context from '../Context/Context'
 
 export default class SignIn extends React.Component {
+    static contextType = Context
+
     state = {
         username: '',
         password: '',
@@ -49,27 +51,34 @@ export default class SignIn extends React.Component {
         return (
             <React.Fragment>
 
-                <h1>{this.state.error? this.state.error : null}</h1> 
+                {
+                    !this.context.openNav ?
+                    <div className={styles["sign-in-wrapper"]}>
+                        <form onSubmit={this.onSubmitHandler}>
+                            <fieldset>
+                                <legend>Sign-In</legend>
+        
+                                <label htmlFor="username">
+                                    Username: 
+                                    <input type="text" id="username" onChange={this.userNameHandler} value={this.state.username}/>
+                                </label> 
+        
+                                <label htmlFor="password">
+                                    Password:
+                                    <input type="password" id="password" onChange={this.passwordHandler} value={this.state.password}/>
+                                </label> 
+        
+                                <div className={styles["btns-div"]}>
+                                    <button className={styles["sign-in-btn"]}>Sign In</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    : null
 
-                <form onSubmit={this.onSubmitHandler}>
-                    <fieldset>
-                        <legend>Sign-In</legend>
+                }
 
-                        <label htmlFor="username">
-                            Username: 
-                            <input type="text" id="username" onChange={this.userNameHandler} value={this.state.username}/>
-                        </label> 
 
-                        <label htmlFor="password">
-                            Password:
-                            <input type="password" id="password" onChange={this.passwordHandler} value={this.state.password}/>
-                        </label> 
-
-                        <div className={styles["btns-div"]}>
-                            <button className={styles["sign-in-btn"]}>Sign In</button>
-                        </div>
-                    </fieldset>
-                </form>
             </React.Fragment>
         );
     }

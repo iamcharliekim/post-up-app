@@ -1,25 +1,137 @@
 import React from 'react';
 import styles from './Landing.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faUser, faBasketballBall, faPlus, faMapMarkerAlt} from '@fortawesome/free-solid-svg-icons'
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
+import SignUp from '../SignUp/SignUp'
+import Context from '../Context/Context'
+
 
 export default class Landing extends React.Component {
+    static contextType = Context
+
     render() {
+        
         return (
             <React.Fragment>
-                <main role="main">
-                    <header role="banner">
-                        <h1>Hero</h1>
-                    </header>
+                
+                {
+                
+                !this.context.openNav ?
 
-                    <section>Section 1</section>
+                <main role="main" className={styles["landing-wrapper"]}>
+                    <section className={styles["section-1"]}>
 
-                    <section>Section 2</section>
+                        <div className={styles["section-1-hero-div"]}>
+                           <div className={styles["section-1-hero-text"]}>
+                               <h1>WHO'S GOT NEXT?</h1>
+                               <span>The Post-Up App makes it easier than ever to find and run pickup basketball games in your area</span>
 
-                    <section>Section 3</section>
+                               <button>SIGN-UP NOW</button>
+                            </div>
+                        </div>
+                    </section>
 
-                    <section>Project 3</section>
+                    <section className={styles["section-2"]}>     
+                            <div className={styles["section-2-card"]}>
+                                <div className={styles["players-icon"]}>
+                                    <FontAwesomeIcon icon={faUser} className={styles["icon"]}/>
+                                </div>
+                                <div className={styles["card-text-wrapper"]}>
+                                    <p className={styles["card-text-main"]}>
+                                        Find Players 
+                                    </p>
+                                </div>
+                                <p className={styles["card-text-sub"]}>
+                                    Search for players nearby and invite them to games
+                                </p>
+                            </div>
+                            
+                            <div className={styles["section-2-card"]}>
+                                <div className={styles["players-icon"]}>
+                                    <FontAwesomeIcon icon={faMapMarkerAlt} className={styles["ball-icon"]}/>
+                                    <FontAwesomeIcon icon={faBasketballBall} className={styles["ball-pin"]}/>
+
+                                </div>
+                                <div className={styles["card-text-wrapper"]}>
+
+                                    <p className={styles["card-text-main"]}>
+                                        Find Games 
+                                    </p>
+                                </div>
+                                <p className={styles["card-text-sub"]}>
+                                    Post-Up will automatically search for games near your location 
+                                </p>
+
+                            </div>      
+
+                            <div className={styles["section-2-card"]}>
+
+                                <div className={styles["players-icon"]}>
+                                    <FontAwesomeIcon icon={faBasketballBall} className={styles["ball-icon"]}/>
+                                </div>
+
+                                <div className={styles["card-text-wrapper"]}>
+                                    <p className={styles["card-text-main"]}>
+                                        Create Games 
+                                    </p>
+                                </div>
+                                <p className={styles["card-text-sub"]}>
+                                    Create your own games and invite other players in your area 
+                                </p>
+                            </div>
                     
-                    <section>Section 4</section>
+                        
+                    </section>
+
+                    <section className={styles["section-3"]}>
+                        <div className={styles["section-3-div-wrapper"]}>
+                            <h1>TAKE A PEEK</h1>
+
+                        <Carousel
+                            showArrows={true}
+                            showStatus={false}
+                            showIndicators={false}
+                            showThumbs={false}
+                            infiniteLoop={true}
+                            // autoPlay={true}
+                            // transitionTime={500}
+                            width='280px'
+                            dynamicHeight={true}
+                        >
+                            <div className={styles["create-games-wrapper"]}>
+                                <img src={require('../../src/CREATE-GAMES-SCREENSHOT.png')}
+                                    className={styles["create-screenshot"]}
+                                />
+
+                            </div>                            
+                            <div className={styles["home-games-wrapper"]}>
+                                <img src={require('../../src/HOME-SCREENSHOT.png')}
+                                    className={styles["home-screenshot"]}
+                                />
+                            </div>   
+                            <div className={styles["games-page-wrapper"]}>
+                                <img src={require('../../src/GAMES-PAGE-SCREENSHOT.png')}
+                                    className={styles["create-screenshot"]}
+                                />
+                            </div>
+                            </Carousel>                       
+                        </div>
+                    </section>
+
+                   <section className={styles["section-4"]}>
+                    <h1>SIGN-UP TODAY</h1>
+
+                    <SignUp/>
+
+                   </section>
+                    
                 </main>
+
+                : null
+                
+                }
             </React.Fragment>
         );
     }

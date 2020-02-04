@@ -1,3 +1,12 @@
+.sign-in-wrapper {
+    width: 100%;
+    height: 40vh;
+    display:flex;
+    flex-direction: column;
+    justify-content: center ;
+    align-items: center;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -52,6 +61,5 @@ button {
 }
 
 button:hover {
-    border: 2px solid #2EC4B6;
     color: #011627
 }

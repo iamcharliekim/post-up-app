@@ -7,7 +7,10 @@ const GamesApiService = {
     getAllGames(){
         return fetch(`${config.API_ENDPOINT}/games`, {
           method: 'GET',
-          headers: {}
+          headers: {
+            'content-type': 'application/json',
+            'authorization': `bearer ${TokenService.getAuthToken()}`
+          }
         })
             .then(res => 
                 (!res.ok)

@@ -34,6 +34,7 @@ export default function GoogleAutocomplete(props) {
                             if (comp.types.includes('postal_code')){
                                 zipCode = comp.long_name
                                 setAddress(value)
+
                                 props.onSetAddress(value, zipCode, latLng)
                             }
                         })

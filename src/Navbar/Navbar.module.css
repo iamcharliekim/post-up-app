@@ -1,6 +1,6 @@
 .navbar {
   width: 100%;
-  border-bottom: 1px solid #FDFFFC;
+  border-bottom: 1px solid #C8BFC7;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,15 +18,28 @@
 }
 
 .inner-nav h1 {
-  margin: 0
+  margin: 0;
+  font-size: 40px
+}
+
+.icon {
+  font-size: 30px;
+  margin-right: 5px
 }
 
 .logo {
   color: #FDFFFC;
   margin: 5px;
   text-decoration: none;
-  font-size: 18px
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
+  }
+
+  .logo h1 {
+    
   }
   
   .nav-links-wrapper {

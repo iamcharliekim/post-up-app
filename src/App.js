@@ -37,36 +37,33 @@ export default class App extends React.Component {
   }
 
   componentDidMount(){
-    console.log(this.state.openNav)
     // GET USER-COORDS
     this.getUserCoords();
 
     // GET ALL GAMES
     GamesApiService.getAllGames()
-      .then(games => {
-        if(games){
-          this.setState({games,filteredGames:games})
-        }
-      })
+      .then(res => {
+          // FILTER MY-GAMES USING USER-ID FROM RES 
+          let games = res.games
+          let myGames = games.filter((game)=> game.created_by === res.user_id)
 
-    // GET USER'S GAMES
-    GamesApiService.getGamesByUserId()
-      .then(myGames => {
-        if (myGames){
-          this.setState({myGames, filteredMyGames: myGames})
-        }
-      })
+              // GET ALL COMMENTS
+              CommentsService.getComments()
+              .then(comments => {
 
-    // GET ALL COMMENTS
-    CommentsService.getComments()
-      .then(comments => {
-        this.setState({comments})
-
+                // SET STATE
+                this.setState({
+                  games,
+                  myGames,
+                  filteredGames: games,
+                  filteredMyGames: myGames,
+                  comments
+                })
+              })
       })
   }
 
   onOpenNav = () => {
-    console.log('onOpenNav()', this.state.openNav)
     this.setState({openNav: !this.state.openNav})
   }
 
@@ -90,7 +87,7 @@ export default class App extends React.Component {
   }
 
   updateGames = (games) => {
-    this.setState({games})
+    this.setState({filteredGames: games})
   }
 
   updateUserCoords = (userCoords) => {
@@ -98,7 +95,7 @@ export default class App extends React.Component {
   }
 
   updateMyGames = (myGames) => {
-    this.setState({myGames})
+    this.setState({filteredMyGames: myGames})
   }
 
   getUserCoords = () => {
@@ -116,7 +113,6 @@ export default class App extends React.Component {
   }
 
   setPath = (path) => {
-    console.log('setPath()', path)
     this.setState({path})
   }
   
@@ -157,10 +153,10 @@ export default class App extends React.Component {
         ] 
     } else {
         navLinks = [
-          <Link to="/home" key="0" className={styles["nav-link"]}>Home</Link>, 
-          <Link to="/create-games" key="3" className={styles["nav-link"]}>+ Create</Link>, 
-          <Link to="/my-games" key="4" className={styles["nav-link"]}>My Games</Link>, 
-          <Link to="/sign-in" key="5" onClick={this.onSignOut} className={styles["nav-link"]}>Sign-Out</Link> ] 
+          <Link to="/home" key="0" className={styles["nav-link"]} onClick={this.onOpenNav} >Home</Link>, 
+          <Link to="/create-games" key="3" className={styles["nav-link"]} onClick={this.onOpenNav}>+ Create</Link>, 
+          <Link to="/my-games" key="4" className={styles["nav-link"]} onClick={this.onOpenNav}>My Games</Link>, 
+          <Link to="/sign-in" key="5" className={styles["nav-link"]} onClick={this.onOpenNav}>Sign-Out</Link> ] 
     }
 
 
@@ -183,7 +179,7 @@ export default class App extends React.Component {
         }
 
       
-            { TokenService.hasAuthToken() ? <Redirect to='/home'/> : <Redirect to='/sign-in'/> }
+            { TokenService.hasAuthToken() ? <Redirect to='/landing'/> : <Redirect to='/sign-in'/> }
             
             <Route path="/sign-up" exact component={SignUp}/>
             <Route path="/sign-in" exact component={SignIn}/>

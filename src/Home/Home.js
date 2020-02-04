@@ -23,16 +23,14 @@ export default class Home extends React.Component {
     }
 
     render() {
-        console.log(this.context.openNav)
-
         let games;
 
         if (this.props.location.pathname === '/my-games'){
-            games = this.context.filteredGames
-        } else {
             games = this.context.filteredMyGames
+        } else {
+            games = this.context.filteredGames
         }
-        
+
         return (
                 <React.Fragment>
                     { 

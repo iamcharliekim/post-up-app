@@ -64,7 +64,7 @@ export default class SignUp extends React.Component {
             <React.Fragment>
                 <form onSubmit={this.onSubmitHandler}>
                     <fieldset>
-                        <legend>Sign-Up</legend>
+                        {/* <legend>Sign-Up</legend> */}
 
                         <label htmlFor="firstname">
                             First Name: 

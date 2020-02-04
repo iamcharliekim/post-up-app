@@ -1,12 +1,13 @@
 .search-games-wrapper {
-    margin-top: 20px;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 20px;
     padding-bottom: 20px;
+    background-color: #011627;
 
-    border-bottom: 2px solid #011627;
+    border-bottom: 1px solid #C8BFC7;
 }
 
 .search-games-wrapper input {

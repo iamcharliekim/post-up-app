@@ -1,20 +1,212 @@
 
-main {
+.landing-wrapper {
     width: 100%;
-    text-align: center
+    height: 100vh;
+    /* background-color: #011627; */
+    background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, .4)), url(../postupback.jpeg) no-repeat center center;
+    background-size: cover;
+    background-position: 90% 
+  }
+
+h1 {
+  width: 100%;
+  font-size: 50px;
 }
 
+.section-1 {
+  height: 95vh;
+  color: white;
+  display: flex;
+  justify-content: center;  
+  align-items: center;
+
+}
+
+
+.section-1-hero-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+}
+
+
+.section-1-hero-text span {
+  margin-top: 5px;
+  font-weight: lighter;
+  width: 80%;
+  font-size: 30px
+}
+
+.section-1-hero-text button {
+  background-color: #011627;
+  margin-top: 30px;
+  font-size: 30px;
+  color: #FB8B24;
+  font-weight: bold;
+  padding: 20px; 
+  cursor: pointer
+}
+
+.section-1-hero-text button:hover {
+  background-color:#FB8B24;
+  color: #011627;
+}
+
+
+
+.section-2 {
+  padding-top: 100px;
+  height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;  
+  align-items: center;
+  background-color: #011627;
+  text-align: center;
+}
+
+.section-2-card {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+}
+
+.players-icon {
+  margin-top: 30px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  font-size: 80px;
+  margin: 10px;
+  color: #FB8B24
+}
+
+.create-games-icon {
+  margin-top: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plus-icon {
+  font-size: 30px;  
+  margin-right: 10px;
+
+}
+
+
+.ball-icon {
+font-size: 80px;
+color: #FB8B24;
+margin: 10px;
+
+  
+}
+
+.ball-pin {
+  position: absolute;
+  font-size: 20px;
+  top: 30%
+}
+
+.card-text-wrapper {
+  width: 100%;
+  background-color: white
+}
+
+.card-text-main {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 35px;
+  color: #011627;
+  font-weight: bold
+}
+
+.card-text-sub {
+  width: 75%;
+  font-size: 20px
+}
+
+.section-3 {
+  padding-top: 100px;
+  height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;  
+  align-items: center;
+  background-color: #011627;
+  text-align: center;
+}
+
+.section-3-div-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center
+}
+
+.screens-wrapper  {
+
+  
+}
+
+.home-screenshot, .create-screenshot {
+  width: 20%;
+}
+
+.create-games-wrapper {
+  
+}
+
+.legend {
+  font-size: 40px
+}
+
+
+
+.section-4 {
+  padding-top: 100px;
+  height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, .4)), url(../postupback.jpeg) no-repeat center;
+  background-size: cover;
+  background-position: 80% 
+}
+
+.section-4 button {
+  width: 100%;
+}
+
+
+/* 
 header {
     padding: 12% 0;
-  }
-  
+  } */
+/*   
   section {
     min-height: 200px;
     padding: 6% 0;
-    background-color: #bbb;
-  }
+  } */
   
-  section:nth-child(even) {
-    background-color: #ddd;
+  /* section:nth-child(even) {
+
   }
-  
+   */

@@ -1,6 +1,6 @@
 .games-search-result {
     width: 80%;
-    border: 1px solid #011627;
+    border: 1px solid #C8BFC7;
     margin: 10px auto;
     padding: 15px;
     display: flex;
@@ -8,14 +8,14 @@
     align-items: flex-start;
     justify-content: flex-start;
     cursor: pointer;
-    color: #011627;
-    font-size: 16px;
-    background-image: url(/src/orange-court.jpeg);
-    background-color: white;
+    font-size: 20px;
+    background-color: #011627;
+    color: white
+
 }
 
 .games-search-result:hover {
-    border: 2px solid #011627;
+    border: 2px solid #C8BFC7;
 } 
 
 header {
@@ -40,7 +40,8 @@ h1 {
     align-items: flex-start;
     justify-content: flex-start;
     text-align: left;
-    color: #011627;
+    color: white;
+    background-color: #011627;
 }
 
 .game-when {
@@ -107,12 +108,19 @@ h1 {
 
 
 .rsvp {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     margin-bottom: 10px
 }
 
 .rsvp-link {
-    margin-top: 10px;   
     cursor:pointer;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     margin-bottom: 10px
 }
 
@@ -123,29 +131,36 @@ h1 {
 .rsvp-attending {
   width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-
 }
 
-button {
-    padding: 7px;
-    margin-right: 5px;
-    font-size: 16px;
-    border-radius: 20px;
-    margin-top: 5px;
+.rsvp-attending button {
+    width: 48%;
+    background-color: white;
+    color: #011627;
+}
+
+.rsvp-attending button:hover {
     background-color: #FB8B24;
-    color: white;
-    border: 1px solid #011627;; 
-    padding: 10px
+    color: white
 }
 
-button:hover {
-    filter: brightness(95%);
-    border: 2px solid #011627;; 
 
+.showRoster {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
+.showRoster span {
+    margin-left: 22.5px;
+    font-style: italic;
+    margin-bottom: 20px;
+
+}
 
 .hideRoster {
     display: none
@@ -155,35 +170,47 @@ button:hover {
     width: 100%;
 }
 
-.basketball-icon-wrapper {
+
+.edit-games-btns-wrapper {
+    margin-top: 10px;
     width: 100%;
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
-.basketball-icon {
-    font-size: 50px
-}
-
-.edit-games-btns-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center
-}
-
 .edit-games-btns-wrapper button {
-    margin: 15px;
+    width: 100%;
+    background-color: white;
+    color: #011627;
+    border-radius: 0;
 }
+
+.edit-games-btns-wrapper button:hover {
+    background-color: #FB8B24;
+    color: white
+}
+
 
 .icon {
-    margin-right: 5px;
+    margin-right: 10px;
     font-size: 20px;
-
+    z-index: 0;
 }
 
 .caret-down {
     font-size: 20px;
     margin-left: 5px
 }
+
+/* button {
+    padding: 7px;
+    margin-right: 5px;
+    font-size: 16px;
+    border-radius: 20px;
+    margin-top: 5px;
+    background-color: #FB8B24;
+    color: white;
+    padding: 10px
+} */

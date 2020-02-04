@@ -8,12 +8,13 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    border-bottom: 1px solid black;
 }
 
 .places-search-input {
     padding: 10px;
-    font-size: 16px;
+    border: none;
+    border-bottom: 1px solid black;
+    font-size: 18px;
 }
 
 .places-suggestions-wrapper {

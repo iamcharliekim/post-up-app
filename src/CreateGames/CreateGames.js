@@ -5,6 +5,8 @@ import GoogleAutocomplete from '../GoogleAutocomplete/GoogleAutocomplete';
 import Context from '../Context/Context';
 import GoogleMapsComponent from '../GoogleMapsComponent/GoogleMapsComponent';
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 export default class CreateGames extends React.Component {
 static contextType = Context
@@ -131,7 +133,6 @@ static contextType = Context
 
             GamesApiService.getCoordinates(parsedGeoCodeAddress, this.state.mapsApiKey)
                 .then(coors => {
-                    console.log(coors)
                     newGame.game_lat = coors.results[0].geometry.location.lat
                     newGame.game_lng = coors.results[0].geometry.location.lng
                 })
@@ -191,8 +192,10 @@ static contextType = Context
   
         return (
                 <React.Fragment>
-                    <div className={styles["create-game-wrapper"]}>
-                        <header><h4>Create a game!</h4></header>
+                    {
+                        !this.context.openNav ?
+
+                        <div className={styles["create-game-wrapper"]}>
                         <form onSubmit={this.onSubmitHandler}>
                             <div className={styles["form-row"]}>
                                 <label htmlFor="">Name:</label>
@@ -200,17 +203,20 @@ static contextType = Context
                             </div>
 
                             <div className={styles["form-row"]}>
-                                <DateTimePicker
-                                    gameTimeHandler={this.gameTimeHandler}
-                                    gameDateHandler={this.gameDateHandler}
-                                />
-                            </div>
+                                <label htmlFor="date-picker">Date/Time</label>
 
+                                    <DateTimePicker
+                                        gameTimeHandler={this.gameTimeHandler}
+                                        gameDateHandler={this.gameDateHandler}
+                                    />
+                            </div>
                             <div className={styles["map-row"]}>
-                                <h3>Pick a court:</h3>
                                 <div className={styles["map"]}>
                                     <div className={styles["map-search"]}>
                                         <GoogleAutocomplete onSetAddress = {this.onSetAddress}/>
+                                        <div className={styles["icon-wrapper"]}>
+                                            <FontAwesomeIcon icon={faSearch} className={styles["icon"]}/>
+                                        </div>
                                     </div>
 
                                     <GoogleMapsComponent
@@ -238,25 +244,22 @@ static contextType = Context
 
                     
                             <div className={styles["address-manual"]}>
-                                <h3>Address:</h3>
-
-                                <div className={styles["form-row street"]}>
+                                <div className={styles["form-row"]}>
                                     <label htmlFor="">Street:</label>
                                     <input type="text" onChange={this.gameStreetHandler} value={this.state.game_street}/>
                                 </div>                      
                                 
-                                <div className={styles["citystatezip"]}>
-                                    <div className={styles["form-row city"]}>
-                                        <label htmlFor="">City:</label>
-                                        <input type="text" onChange={this.gameCityHandler} value={this.state.game_city}/>
-                                    </div>
-                                    <div className={styles["form-row state"]}>
-                                        <label htmlFor="">State:</label>
-                                        <input type="text" onChange={this.gameStateHandler} value={this.state.game_state}/>
-                                    </div>
-                                </div>  
+                                <div className={styles["form-row"]}>
+                                    <label htmlFor="">City:</label>
+                                    <input type="text" onChange={this.gameCityHandler} value={this.state.game_city}/>
+                                </div>
 
-                                <div className={styles["form-row zip"]}>
+                                <div className={styles["form-row"]}>
+                                    <label htmlFor="">State:</label>
+                                    <input type="text" onChange={this.gameStateHandler} value={this.state.game_state}/>
+                                </div>                  
+
+                                <div className={styles["form-row"]}>
                                     <label htmlFor="">Zip-code:</label>
                                     <input type="text" onChange={this.gameZipHandler} value={this.state.game_zip}/>
                                 </div>
@@ -265,11 +268,15 @@ static contextType = Context
 
                             <div className={styles["btns-panel"]}>
                                 <button type="submit">Submit</button>
-                                <button>Cancel</button>
                             </div> 
                             
                         </form>    
-                    </div>        
+                    </div>       
+
+                    : null
+
+                    }
+                     
                 </React.Fragment>
         );
     }

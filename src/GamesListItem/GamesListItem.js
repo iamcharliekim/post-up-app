@@ -2,14 +2,13 @@ import React from 'react';
 import styles from './GamesListItem.module.css'
 import GamesApiService from '../Services/GamesApiService';
 import GoogleMapsComponent from '../GoogleMapsComponent/GoogleMapsComponent'
-import Moment from 'react-moment';
 import moment from 'moment';
 import Context from '../Context/Context'
 import { withRouter } from 'react-router-dom'
 import CommentsBoard from '../CommentsBoard/CommentsBoard';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBasketballBall, faMapMarkerAlt, faCalendarAlt, faClock, faUserCircle, faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import {faMapMarkerAlt, faCalendarAlt, faClock, faUserCircle, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 //<i class="fas fa-map-marker-alt"></i>
 
 
@@ -176,7 +175,7 @@ class GamesListItem extends React.Component {
 
     render() {
         let rosterList;
-        rosterList = this.state.rosterList ?  this.state.rosterList.map((username, i) => <li key={i}>{username.username}</li>) : null 
+        rosterList = this.state.rosterList ?  this.state.rosterList.map((username, i) => <span key={i}>{username.username}</span>) : null 
         
 
         let dateTimeParsed = moment(this.state.game.game_date).format("MMMM Do YYYY, h:mm A").split(',')
@@ -196,19 +195,22 @@ class GamesListItem extends React.Component {
                         </header>
 
                             <div className={styles["game-date"]}>
-                                <FontAwesomeIcon icon={faCalendarAlt} className={styles["icon"]}/>
-                                {date}
+                                <div className={styles["icon-wrapper"]}>
+                                    <FontAwesomeIcon icon={faCalendarAlt} className={styles["icon"]}/>
+                                </div>
+                                <span className={styles["text-wrapper"]}>{date}</span>
                             </div>
                         
                             <div className={styles["game-time"]}>
-                                <FontAwesomeIcon icon={faClock} className={styles["icon"]}/>
-                                {time}
+                                <div className={styles["icon-wrapper"]}>
+                                    <FontAwesomeIcon icon={faClock} className={styles["icon"]}/>
+                                </div>
+                                <span className={styles["text-wrapper"]}>{time}</span>
                             </div>
 
 
 
-                        <div className={styles["google-maps-wrapper"]} >
-  
+                        {/* <div className={styles["google-maps-wrapper"]} >
                             <GoogleMapsComponent
                                 // googleMapURL={'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing&key=AIzaSyDOvfuKaaRuYocVQWNl9ICi3wadIephDyc'}
                                 loadingElement={<div style={{ height: '100%'}}/>}
@@ -219,20 +221,26 @@ class GamesListItem extends React.Component {
                                 gamesList={this.state.selectedGame}
                                 zoom={10}
                             />
-                            
-                        
-                        
-                        </div>
+                        </div> */}
 
                         <div className={styles["address"]}>
-                            <FontAwesomeIcon icon={faMapMarkerAlt} className={styles["icon"]}/>
-                            <a href={`https://www.google.com/maps/dir/?api=1&origin=${this.context.userCoords.lat},${this.context.userCoords.lng}&destination=${this.state.gameAddressString}`} target="_blank" rel="noopener noreferrer">
+                            <div className={styles["icon-wrapper"]}>
+                                <FontAwesomeIcon icon={faMapMarkerAlt} className={styles["icon"]}/>
+                            </div>
+
+                            <a href={`https://www.google.com/maps/dir/?api=1&origin=${this.context.userCoords.lat},${this.context.userCoords.lng}&destination=${this.state.gameAddressString}`} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="address-link"
+                                >
                                 <span className="game-street">{gameStreet}</span>
                                 <span className="game-city-state-zip">{gameCityStateZip}</span>
                             </a>
                         </div>
 
                         <div className={this.state.gamesPage ? styles["rsvp-link"] : styles["rsvp"]} onClick={this.showRoster}>
+                            <div className={styles["icon-wrapper"]}>
+
                             {
                                 !this.state.gamesPage ?
                                 <FontAwesomeIcon icon={faUserCircle} className={styles["icon"]}/>
@@ -240,21 +248,22 @@ class GamesListItem extends React.Component {
                                 <FontAwesomeIcon icon={faCaretDown} className={styles["icon"]}/>
 
                             }
-                            
-                            {this.state.rsvpCount} 
-                            
-                            <i> players attending</i>
-                            
+                            </div>
+                            <span className="text-wrapper">
+                            {this.state.rsvpCount} players attending
+                            </span>
                         </div>
 
-                        <ul className={this.state.showRoster && this.state.gamesPage ? styles["showRoster"] : styles["hideRoster"] }>
+                        <div className={this.state.showRoster && this.state.gamesPage ? styles["showRoster"] : styles["hideRoster"] }>
                             {rosterList}
-                        </ul>
+                        </div>
 
                         <div className={styles["rsvp-attending"]}>
                             <button onClick={(e)=>this.incrementRoster(e)} disabled={this.state.disableCheckInBtn}> Check-in</button>
                             <button onClick={(e)=>this.decrementRoster(e)} disabled={this.state.disableCheckOutBtn}> Check-out</button>
-                            {
+                        </div>
+
+                        {
                                 this.state.pathname === '/my-games' ?
                                 <div className={styles["edit-games-btns-wrapper"]}>
                                     <button onClick={(e)=>this.editGame(e)}> Edit</button>
@@ -262,8 +271,7 @@ class GamesListItem extends React.Component {
                                 </div>
                                 : null
                             }
-       
-                        </div>
+
                         {
                             this.state.gamesPage ? 
                             
@@ -273,7 +281,7 @@ class GamesListItem extends React.Component {
                              : null
 
                         }
-                        </div>
+                </div>
             </React.Fragment>
         );
     }

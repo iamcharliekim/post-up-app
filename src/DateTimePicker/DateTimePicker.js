@@ -1,11 +1,8 @@
 import React from "react";
 import DatePicker from "react-datepicker";
+import styles from './DateTimePicker.module.css'
 
 import "react-datepicker/dist/react-datepicker.css";
-
-// CSS Modules, react-datepicker-cssmodules.css
-import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-import styles from './DateTimePicker.module.css'
 
 
 export default class DateTimePicker extends React.Component {
@@ -20,13 +17,11 @@ export default class DateTimePicker extends React.Component {
 
   render() {
     return (
-        <div className={styles["date-time-picker-wrapper"]}>
             <DatePicker
                 selected={this.state.startDate}
                 onChange={this.handleChange}
                 showTimeSelect
             />
-      </div>
     );
   }
 }

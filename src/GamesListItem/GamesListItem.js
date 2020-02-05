@@ -9,9 +9,6 @@ import CommentsBoard from '../CommentsBoard/CommentsBoard';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faMapMarkerAlt, faCalendarAlt, faClock, faUserCircle, faCaretDown } from '@fortawesome/free-solid-svg-icons'
-//<i class="fas fa-map-marker-alt"></i>
-
-
 
 class GamesListItem extends React.Component {
     static contextType = Context
@@ -29,12 +26,13 @@ class GamesListItem extends React.Component {
         rosterList: null,
 
         selectedGame: !this.props.location.state ? this.props.selectedGame : this.props.location.state.gamesList,    
-        game: this.props.location.state ? this.props.location.state.gamesList[0] : this.props.game 
+        game: this.props.location.state ? this.props.location.state.gamesList[0] : this.props.game,
+        userIsAttending: null
+
 
     }
 
-    componentDidMount(){
-        
+    componentDidMount(){        
         let gameObj = this.props.location.state
 
         if (gameObj){ 
@@ -61,10 +59,10 @@ class GamesListItem extends React.Component {
                     let userIsAttending = game.attendance.find(user => user.attending_user === +game.user_id)
 
                     if (userIsAttending){
-                        this.setState({disableCheckInBtn: true, disableCheckOutBtn: false})
+                        this.setState({disableCheckInBtn: true, disableCheckOutBtn: false, userIsAttending: true})
                     }
 
-                    this.setState({attendance: game.attendance})
+                    // this.setState({attendance: game.attendance})
 
                     const rosterList = []
 
@@ -78,7 +76,8 @@ class GamesListItem extends React.Component {
                             })
                     })
 
-                    this.setState({rosterList})
+                    this.setState({rosterList, attendance: game.attendance, })
+
                 }
                 
             })
@@ -134,6 +133,8 @@ class GamesListItem extends React.Component {
 
     deleteGame = (e) => { 
         e.preventDefault()
+        e.stopPropagation()
+
         GamesApiService.deleteGame(this.props.selectedGame[0].id)
             .then(res => {
                 const gameIndex = this.context.games.findIndex(game => game.id === this.props.selectedGame[0].id)
@@ -146,13 +147,15 @@ class GamesListItem extends React.Component {
                 myGamesCopy.splice(myGameIndex, 1)
                 this.context.updateMyGames(myGamesCopy)
 
-                this.props.history.push('/home')
             })
     }
 
     openGame = () => {
+        // IF CLICKING GAME-CARD TO OPEN GAMES-PAGE
         if (!this.state.gamesPage){
-            let gamesList = this.context.games.filter(game => game.id === +this.state.game.id)
+            let gamesList = this.context.games.filter(game => {
+                return game.id === this.state.game.id
+            })
 
             this.props.history.push({
                 pathname: `/games/${this.state.game.id}`,
@@ -193,24 +196,28 @@ class GamesListItem extends React.Component {
                         <header>
                             <h1>{this.state.game.game_name}</h1>
                         </header>
-
-                            <div className={styles["game-date"]}>
-                                <div className={styles["icon-wrapper"]}>
-                                    <FontAwesomeIcon icon={faCalendarAlt} className={styles["icon"]}/>
-                                </div>
-                                <span className={styles["text-wrapper"]}>{date}</span>
+                    
+                        <div className={styles["game-date"]}>
+                            <div className={styles["icon-wrapper"]}>
+                                <FontAwesomeIcon icon={faCalendarAlt} className={styles["icon"]}/>
                             </div>
+                            <span className={styles["text-wrapper"]}>{date}</span>
+                        </div>
+                    
+                        <div className={styles["game-time"]}>
+                            <div className={styles["icon-wrapper"]}>
+                                <FontAwesomeIcon icon={faClock} className={styles["icon"]}/>
+                            </div>
+                            <span className={styles["text-wrapper"]}>{time}</span>
+                        </div>
+
+
+
+                        {
                         
-                            <div className={styles["game-time"]}>
-                                <div className={styles["icon-wrapper"]}>
-                                    <FontAwesomeIcon icon={faClock} className={styles["icon"]}/>
-                                </div>
-                                <span className={styles["text-wrapper"]}>{time}</span>
-                            </div>
-
-
-
-                        {/* <div className={styles["google-maps-wrapper"]} >
+                        this.state.gamesPage ? 
+                        
+                        <div className={styles["google-maps-wrapper"]} >
                             <GoogleMapsComponent
                                 // googleMapURL={'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing&key=AIzaSyDOvfuKaaRuYocVQWNl9ICi3wadIephDyc'}
                                 loadingElement={<div style={{ height: '100%'}}/>}
@@ -221,7 +228,12 @@ class GamesListItem extends React.Component {
                                 gamesList={this.state.selectedGame}
                                 zoom={10}
                             />
-                        </div> */}
+                        </div> 
+
+                        : null 
+                        
+                        
+                        }
 
                         <div className={styles["address"]}>
                             <div className={styles["icon-wrapper"]}>
@@ -232,6 +244,7 @@ class GamesListItem extends React.Component {
                                 target="_blank" 
                                 rel="noopener noreferrer"
                                 className="address-link"
+                                onClick={(e)=> e.stopPropagation()}
                                 >
                                 <span className="game-street">{gameStreet}</span>
                                 <span className="game-city-state-zip">{gameCityStateZip}</span>
@@ -264,11 +277,15 @@ class GamesListItem extends React.Component {
                         </div>
 
                         {
-                                this.state.pathname === '/my-games' ?
+
+                                this.state.game.created_by === this.context.user_id ?
+                                
+
                                 <div className={styles["edit-games-btns-wrapper"]}>
                                     <button onClick={(e)=>this.editGame(e)}> Edit</button>
                                     <button onClick={(e)=>this.deleteGame(e)}> Delete</button>
                                 </div>
+
                                 : null
                             }
 

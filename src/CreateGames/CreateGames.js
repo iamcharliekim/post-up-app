@@ -1,14 +1,20 @@
 import React from 'react';
 import styles from './CreateGames.module.css'
+import DateTimePicker from '../DateTimePicker/DateTimePicker';
+import Context from '../Context/Context';
+
 import GamesApiService from '../Services/GamesApiService';
 import GoogleAutocomplete from '../GoogleAutocomplete/GoogleAutocomplete';
-import Context from '../Context/Context';
 import GoogleMapsComponent from '../GoogleMapsComponent/GoogleMapsComponent';
-import DateTimePicker from '../DateTimePicker/DateTimePicker';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
+import moment from 'moment';
+
+
 export default class CreateGames extends React.Component {
+
 static contextType = Context
 
     state = {
@@ -38,6 +44,7 @@ static contextType = Context
     }
 
     componentDidMount(){
+        // IF USER IS EDITING GAME, FIND GAME USING THE game_id PARAM AND POPULATE FORM FIELDS
         if (this.state.game_id){
             let game = this.context.games.find(game => game.id === this.state.game_id)
 
@@ -56,12 +63,13 @@ static contextType = Context
         }
     }
 
-    onSetAddress = (address, zipCode, coors) => {
-        let addy = address.split(',')
+    onSetAddress = (addressString, zipCode, coors) => {
+        // CALLED WHEN USER USES GOOGLE AUTOCOMPLETE TO AUTOFILL THE ADDRESS FIELDS
+        let address = addressString.split(',')
 
-        let game_street = addy[0]
-        let game_city = addy[1]
-        let game_state = addy[2]
+        let game_street = address[0]
+        let game_city = address[1]
+        let game_state = address[2]
         let game_zip = zipCode
         let game_coors = coors
         let game_lat = coors.lat
@@ -84,12 +92,17 @@ static contextType = Context
         this.setState({game_name: e.target.value})
     }
     
-    gameDateHandler = (date) => {
-        this.setState({game_date: date})
+    gameDateHandler = (game_date) => {
+
+        // PARSE DATE AND TIME IN PROPER FORMATS
+        let date = moment(game_date).toDate()
+        let game_time = new Date(moment(game_date).toDate().getTime()).toTimeString().split(' ')[0]
+        
+        this.setState({game_date: date, game_time})
     }
 
-    gameTimeHandler = (date) => {
-        this.setState({game_time: date})
+    gameTimeHandler = (game_time) => {
+        this.setState({game_time})
     }
 
     gameStreetHandler = (e) => {
@@ -115,7 +128,9 @@ static contextType = Context
     onSubmitHandler = (e) => {
         e.preventDefault();
 
-        let newGame = {
+
+
+        let gameObj = {
             game_name: this.state.game_name,
             game_date: this.state.game_date,
             game_time: this.state.game_time,
@@ -128,42 +143,47 @@ static contextType = Context
         }
 
         if (!this.state.game_coors){
+            // IF USER DOES NOT USE GOOGLE AUTOCOMPLETE TO FILL ADDRESS FIELDS, GRAB THE ADDRESS COORDINATES VIA GOOGLEMAPS API
             let geocodeAddress = `${this.state.game_street} ${this.state.game_city} ${this.state.game_state} ${this.state.game_zip}`
             let parsedGeoCodeAddress = geocodeAddress.split(' ').join('+')
 
             GamesApiService.getCoordinates(parsedGeoCodeAddress, this.state.mapsApiKey)
                 .then(coors => {
-                    newGame.game_lat = coors.results[0].geometry.location.lat
-                    newGame.game_lng = coors.results[0].geometry.location.lng
+                    gameObj.game_lat = coors.results[0].geometry.location.lat
+                    gameObj.game_lng = coors.results[0].geometry.location.lng
+
+                    this.state.edit_game ? this.putGame(this.state.game_id, gameObj) : this.postGame(gameObj)
                 })
         }
         
-        if (this.state.edit_game){
-            // PUT-GAME
-            GamesApiService.putGame(this.state.game_id, newGame)
+        this.state.edit_game ? this.putGame(this.state.game_id, gameObj) : this.postGame(gameObj)
+
+    }
+
+    putGame = (game_id, editedGame) => {
+        return GamesApiService.putGame(game_id, editedGame)
                 .then(res => {
                     this.updateGame(res)
                 })
                 .catch(res => {
                     this.setState({error: res.error})
                 })
-        } else {
-            GamesApiService.postGame(newGame)
-            .then(res => {
-                this.addNewGame(newGame, res) 
-            })
-            .catch(res => {
-                this.setState({error: res.error})
-            })
-        }
-
     }
 
-    
+    postGame = (newGame) => {
+        return GamesApiService.postGame(newGame)
+                .then(res => {
+                    this.addNewGame(newGame, res) 
+                })
+                .catch(res => {
+                    this.setState({error: res.error})
+                })
+    }
 
     addNewGame = (newGame, res) => {
         newGame.id = res[0].id
         newGame.created_by = res[0].created_by
+
         const gamesCopy = [...this.context.games]
         gamesCopy.push(newGame)
         this.context.updateGames(gamesCopy)
@@ -185,7 +205,6 @@ static contextType = Context
         myGamesCopy[myGameIndex] = editedGame
         this.context.updateMyGames(myGamesCopy)
         this.props.history.push('/home')
-
     }
 
     render() {
@@ -196,84 +215,77 @@ static contextType = Context
                         !this.context.openNav ?
 
                         <div className={styles["create-game-wrapper"]}>
-                        <form onSubmit={this.onSubmitHandler}>
-                            <div className={styles["form-row"]}>
-                                <label htmlFor="">Name:</label>
-                                <input type="text" placeholder="Give your game a name" onChange={this.gameNameHandler} value={this.state.game_name}/>
-                            </div>
+                            <form onSubmit={this.onSubmitHandler}>
+                                <div className={styles["form-row"]}>
+                                    <label htmlFor="game_name">Name:</label>
+                                    <input type="text" placeholder="Give your game a name" id="game_name" onChange={this.gameNameHandler} value={this.state.game_name}/>
+                                </div>
 
-                            <div className={styles["form-row"]}>
-                                <label htmlFor="date-picker">Date/Time</label>
+                                <div className={styles["form-row"]}>
+                                    <label htmlFor="date-picker">Date/Time</label>
+                                        <DateTimePicker gameDateHandler={this.gameDateHandler} gameDate={this.state.game_date} gameTimeHandler={this.gameTimeHandler} edit = {this.state.game_id} startDate={this.state.game_date}/>
+                                </div>
 
-                                    <DateTimePicker
-                                        gameTimeHandler={this.gameTimeHandler}
-                                        gameDateHandler={this.gameDateHandler}
-                                    />
-                            </div>
-                            <div className={styles["map-row"]}>
-                                <div className={styles["map"]}>
-                                    <div className={styles["map-search"]}>
-                                        <GoogleAutocomplete onSetAddress = {this.onSetAddress}/>
-                                        <div className={styles["icon-wrapper"]}>
-                                            <FontAwesomeIcon icon={faSearch} className={styles["icon"]}/>
+                                <div className={styles["map-row"]}>
+                                    <div className={styles["map"]}>
+                                        <div className={styles["map-search"]}>
+                                            <GoogleAutocomplete onSetAddress = {this.onSetAddress}/>
+                                            <div className={styles["icon-wrapper"]}>
+                                                <FontAwesomeIcon icon={faSearch} className={styles["icon"]}/>
+                                            </div>
                                         </div>
+
+                                        <GoogleMapsComponent
+                                            loadingElement={<div style={{ height: '100%'}}/>}
+                                            containerElement={<div style={{ height: '100%'}}/>}
+                                            mapElement={<div style={{height: '100%'}}/>}
+                                            lat={this.context.userCoords.lat}
+                                            lng={this.context.userCoords.lng}
+                                            gamesList={[{
+                                                game_name: this.state.game_name,
+                                                game_date: this.state.game_date,
+                                                game_time: this.state.game_time,
+                                                game_street:this.state.game_street,
+                                                game_city: this.state.game_city,
+                                                game_state: this.state.game_state,
+                                                game_zip: this.state.game_zip,
+                                                game_lat: +this.state.game_lat,
+                                                game_lng: +this.state.game_lng,
+                                            }]}
+                                            zoom={this.state.zoom}                          
+                                        /> 
+                                    </div>
+                                </div>
+             
+                                <div className={styles["address-manual"]}>
+                                    <div className={styles["form-row"]}>
+                                        <label htmlFor="street">Street:</label>
+                                        <input type="text" id="street" onChange={this.gameStreetHandler} value={this.state.game_street}/>
+                                    </div>                      
+                                    
+                                    <div className={styles["form-row"]}>
+                                        <label htmlFor="city">City:</label>
+                                        <input type="text" id="city" onChange={this.gameCityHandler} value={this.state.game_city}/>
                                     </div>
 
-                                    <GoogleMapsComponent
-                                        loadingElement={<div style={{ height: '100%'}}/>}
-                                        containerElement={<div style={{ height: '100%'}}/>}
-                                        mapElement={<div style={{height: '100%'}}/>}
-                                        lat={this.context.userCoords.lat}
-                                        lng={this.context.userCoords.lng}
-                                        gamesList={[{
-                                            game_name: this.state.game_name,
-                                            game_date: this.state.game_date,
-                                            game_time: this.state.game_time,
-                                            game_street:this.state.game_street,
-                                            game_city: this.state.game_city,
-                                            game_state: this.state.game_state,
-                                            game_zip: this.state.game_zip,
-                                            game_lat: +this.state.game_lat,
-                                            game_lng: +this.state.game_lng,
-                                        }]}
-                                        zoom={this.state.zoom}                          
-                                    /> 
+                                    <div className={styles["form-row"]}>
+                                        <label htmlFor="state">State:</label>
+                                        <input type="text" id="state" onChange={this.gameStateHandler} value={this.state.game_state}/>
+                                    </div>                  
 
-                                </div>
-                            </div>
-
-                    
-                            <div className={styles["address-manual"]}>
-                                <div className={styles["form-row"]}>
-                                    <label htmlFor="">Street:</label>
-                                    <input type="text" onChange={this.gameStreetHandler} value={this.state.game_street}/>
-                                </div>                      
-                                
-                                <div className={styles["form-row"]}>
-                                    <label htmlFor="">City:</label>
-                                    <input type="text" onChange={this.gameCityHandler} value={this.state.game_city}/>
+                                    <div className={styles["form-row"]}>
+                                        <label htmlFor="zip">Zip-code:</label>
+                                        <input type="text" id="zip" onChange={this.gameZipHandler} value={this.state.game_zip}/>
+                                    </div>
                                 </div>
 
-                                <div className={styles["form-row"]}>
-                                    <label htmlFor="">State:</label>
-                                    <input type="text" onChange={this.gameStateHandler} value={this.state.game_state}/>
-                                </div>                  
+                                <div className={styles["btns-panel"]}>
+                                    <button type="submit">Submit</button>
+                                </div> 
+                            </form>    
+                        </div>       
 
-                                <div className={styles["form-row"]}>
-                                    <label htmlFor="">Zip-code:</label>
-                                    <input type="text" onChange={this.gameZipHandler} value={this.state.game_zip}/>
-                                </div>
-                            </div>
-
-
-                            <div className={styles["btns-panel"]}>
-                                <button type="submit">Submit</button>
-                            </div> 
-                            
-                        </form>    
-                    </div>       
-
-                    : null
+                        : null
 
                     }
                      

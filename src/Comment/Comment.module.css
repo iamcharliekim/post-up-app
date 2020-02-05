@@ -6,6 +6,7 @@
     align-items: flex-start;
     justify-content: flex-start;
     margin-bottom: 50px;
+    font-size: 18px
 }
 
 .user-comment-row-1 {
@@ -22,7 +23,11 @@
 .user-commented-time {
     margin-left: 20px;
     font-size: 14px;
-    color: gray
+    color: lightgray
+}
+
+.comment-text {
+    font-size: 16px;
 }
 
 .comment-reply-btn {

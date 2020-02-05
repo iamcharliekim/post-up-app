@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Landing.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faUser, faBasketballBall, faPlus, faMapMarkerAlt} from '@fortawesome/free-solid-svg-icons'
+import {faUser, faBasketballBall, faMapMarkerAlt} from '@fortawesome/free-solid-svg-icons'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import SignUp from '../SignUp/SignUp'
@@ -89,34 +89,54 @@ export default class Landing extends React.Component {
                         <div className={styles["section-3-div-wrapper"]}>
                             <h1>TAKE A PEEK</h1>
 
-                        <Carousel
-                            showArrows={true}
-                            showStatus={false}
-                            showIndicators={false}
-                            showThumbs={false}
-                            infiniteLoop={true}
-                            // autoPlay={true}
-                            // transitionTime={500}
-                            width='280px'
-                            dynamicHeight={true}
-                        >
-                            <div className={styles["create-games-wrapper"]}>
-                                <img src={require('../../src/CREATE-GAMES-SCREENSHOT.png')}
-                                    className={styles["create-screenshot"]}
-                                />
+                        <div className={styles["carousel-wrapper"]}>
+                            <Carousel
+                                showArrows={true}
+                                showStatus={false}
+                                showIndicators={false}
+                                showThumbs={false}
+                                infiniteLoop={true}
+                                autoPlay={true}
+                                transitionTime={500}
+                                width='300px'
+                                dynamicHeight={true}
+                            > 
+                                <div className={styles["home-games-wrapper"]}>
+                                    <img src={require('../../src/findgames.png')} className={styles["home-screenshot"]} alt="findgames"/>
+                                </div>   
+                    
 
-                            </div>                            
-                            <div className={styles["home-games-wrapper"]}>
-                                <img src={require('../../src/HOME-SCREENSHOT.png')}
-                                    className={styles["home-screenshot"]}
-                                />
-                            </div>   
-                            <div className={styles["games-page-wrapper"]}>
-                                <img src={require('../../src/GAMES-PAGE-SCREENSHOT.png')}
-                                    className={styles["create-screenshot"]}
-                                />
+                                <div className={styles["home-games-wrapper"]}>
+                                    <img src={require('../../src/creategames.png')} className={styles["home-screenshot"]} alt="creategames"/>
+                                </div>   
+                    
+
+                                <div className={styles["home-games-wrapper"]}>
+                                    <img src={require('../../src/getdetails.png')} className={styles["home-screenshot"]} alt="getdetails"/>
+                                </div>   
+
+                                <div className={styles["home-games-wrapper"]}>
+                                    <img src={require('../../src/talktrash.png')} className={styles["create-screenshot"]} alt="talktrash"/>
+                                </div>
+                                </Carousel>                       
                             </div>
-                            </Carousel>                       
+
+                            <div className={styles["screens-wrapper"]}>
+                                    <div className={styles["home-games-wrapper"]}>
+                                        <img src={require('../../src/findgames.png')} className={styles["home-screenshot"]} alt="findgames"/>
+                                    </div>   
+                        
+
+                                    <div className={styles["home-games-wrapper"]}>
+                                        <img src={require('../../src/creategames.png')} className={styles["home-screenshot"]} alt="creategames"/>
+                                    </div>   
+
+
+                                    <div className={styles["home-games-wrapper"]}>
+                                        <img src={require('../../src/getdetails.png')} className={styles["home-screenshot"]} alt="getdetails"/>
+                                    </div>   
+                            </div>
+
                         </div>
                     </section>
 
@@ -136,3 +156,20 @@ export default class Landing extends React.Component {
         );
     }
 }
+
+
+
+
+// <div className={styles["create-games-wrapper"]}>
+// <div className={styles["screen-label"]}>
+//         <h1>
+//             TALK TRASH
+//         </h1>                                    
+        
+//         <span className={styles["card-text-sub"]}>
+//             Work out any details not mentioned in the listing by using the comment board on each game.  Feel free to even talk a little trash :)
+//         </span>
+//     </div>
+//     <img src={require('../../src/COMMENTBOARD-SCREEN.png')} className={styles["screenshot"]}/>
+    
+// </div>           

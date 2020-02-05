@@ -1,5 +1,5 @@
 import React, { useState, useContext} from 'react';
-import styles from './GoogleMapsComponent.module.css'
+// import styles from './GoogleMapsComponent.module.css'
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps"
 import Context from '../Context/Context';
 

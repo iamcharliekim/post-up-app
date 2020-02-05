@@ -33,7 +33,9 @@ export default class App extends React.Component {
 
     searchString: '',
 
-    openNav: false
+    openNav: false,
+
+    user_id: null
   }
 
   componentDidMount(){
@@ -57,11 +59,17 @@ export default class App extends React.Component {
                   myGames,
                   filteredGames: games,
                   filteredMyGames: myGames,
-                  comments
+                  comments,
+                  user_id: res.user_id
                 })
               })
       })
   }
+
+  componentDidUpdate(prevProps, prevState){
+
+  }
+
 
   onOpenNav = () => {
     this.setState({openNav: !this.state.openNav})
@@ -74,8 +82,8 @@ export default class App extends React.Component {
     const myGamesCopy = [...this.state.myGames]
 
     this.setState({
-      filteredGames: gamesCopy.filter(game => game.game_name.includes(searchString)), 
-      filteredMyGames: myGamesCopy.filter(game => game.game_name.includes(searchString)),
+      filteredGames: gamesCopy.filter(game => game.game_name.toLowerCase().includes(searchString.toLowerCase())), 
+      filteredMyGames: myGamesCopy.filter(game => game.game_name.toLowerCase().includes(searchString.toLowerCase())),
       searchString
     });
   }
@@ -87,7 +95,7 @@ export default class App extends React.Component {
   }
 
   updateGames = (games) => {
-    this.setState({filteredGames: games})
+    this.setState({filteredGames: games, games})
   }
 
   updateUserCoords = (userCoords) => {
@@ -95,7 +103,7 @@ export default class App extends React.Component {
   }
 
   updateMyGames = (myGames) => {
-    this.setState({filteredMyGames: myGames})
+    this.setState({filteredMyGames: myGames, myGames})
   }
 
   getUserCoords = () => {
@@ -116,6 +124,10 @@ export default class App extends React.Component {
     this.setState({path})
   }
   
+  signout = () => {
+    TokenService.clearAuthToken()
+    this.onOpenNav()
+  }
 
   render(){
 
@@ -141,7 +153,9 @@ export default class App extends React.Component {
       searchString: this.state.searchString,
 
       openNav: this.state.openNav,
-      onOpenNav: this.onOpenNav 
+      onOpenNav: this.onOpenNav,
+
+      user_id: this.state.user_id
     }
 
     let navLinks
@@ -156,7 +170,7 @@ export default class App extends React.Component {
           <Link to="/home" key="0" className={styles["nav-link"]} onClick={this.onOpenNav} >Home</Link>, 
           <Link to="/create-games" key="3" className={styles["nav-link"]} onClick={this.onOpenNav}>+ Create</Link>, 
           <Link to="/my-games" key="4" className={styles["nav-link"]} onClick={this.onOpenNav}>My Games</Link>, 
-          <Link to="/sign-in" key="5" className={styles["nav-link"]} onClick={this.onOpenNav}>Sign-Out</Link> ] 
+          <Link to="/sign-in" key="5" className={styles["nav-link"]} onClick={this.signout}>Sign-Out</Link> ] 
     }
 
 
@@ -179,7 +193,7 @@ export default class App extends React.Component {
         }
 
       
-            { TokenService.hasAuthToken() ? <Redirect to='/landing'/> : <Redirect to='/sign-in'/> }
+            { TokenService.hasAuthToken() ? <Redirect to='/home'/> : <Redirect to='/sign-in'/> }
             
             <Route path="/sign-up" exact component={SignUp}/>
             <Route path="/sign-in" exact component={SignIn}/>

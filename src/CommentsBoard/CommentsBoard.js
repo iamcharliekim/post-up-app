@@ -35,10 +35,13 @@ export default class CommentsBoard extends React.Component {
             date_created: (moment(moment.now()).format())
         }
 
+
         //POST-request comment 
         CommentsService.postComment(commentObj, this.props.game_id)
             .then(comment => {
                 this.context.addComment(comment)
+
+                console.log(comment)
 
                 let commentsCopy = [...this.state.comments]
                 commentsCopy.push(comment)

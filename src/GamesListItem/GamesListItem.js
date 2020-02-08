@@ -33,6 +33,8 @@ class GamesListItem extends React.Component {
     }
 
     componentDidMount(){        
+        console.log(this.props.game)
+        console.log(this.props.location)
         let gameObj = this.props.location.state
 
         if (gameObj){ 

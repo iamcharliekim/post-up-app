@@ -16,10 +16,9 @@ export default class Search extends React.Component {
                         type="text" 
                         placeholder="Search for games" 
                         onChange={this.context.onSearchGames} 
-                        value={this.context.searchString}/>  
-                    
+                        value={this.context.searchString}
+                        />  
                     <FontAwesomeIcon icon={faSearch} className={styles["icon"]}/>
-
             </div>      
             </React.Fragment>
         );

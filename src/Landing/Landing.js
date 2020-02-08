@@ -156,20 +156,3 @@ export default class Landing extends React.Component {
         );
     }
 }
-
-
-
-
-// <div className={styles["create-games-wrapper"]}>
-// <div className={styles["screen-label"]}>
-//         <h1>
-//             TALK TRASH
-//         </h1>                                    
-        
-//         <span className={styles["card-text-sub"]}>
-//             Work out any details not mentioned in the listing by using the comment board on each game.  Feel free to even talk a little trash :)
-//         </span>
-//     </div>
-//     <img src={require('../../src/COMMENTBOARD-SCREEN.png')} className={styles["screenshot"]}/>
-    
-// </div>           

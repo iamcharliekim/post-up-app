@@ -44,6 +44,21 @@ static contextType = Context
     }
 
     componentDidMount(){
+
+        const gamesList=[{
+            game_name: this.state.game_name,
+            game_date: this.state.game_date,
+            game_time: this.state.game_time,
+            game_street:this.state.game_street,
+            game_city: this.state.game_city,
+            game_state: this.state.game_state,
+            game_zip: this.state.game_zip,
+            game_lat: +this.state.game_lat,
+            game_lng: +this.state.game_lng,
+        }]
+
+        console.log('gameslist', gamesList)
+
         // IF USER IS EDITING GAME, FIND GAME USING THE game_id PARAM AND POPULATE FORM FIELDS
         if (this.state.game_id){
             let game = this.context.games.find(game => game.id === this.state.game_id)

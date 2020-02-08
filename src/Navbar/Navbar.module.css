@@ -87,6 +87,10 @@
   display: none;
 }
 
+.no-auth-nav-links-wrapper {
+  display: none;
+}
+
 @media(min-width: 768px){
 
   

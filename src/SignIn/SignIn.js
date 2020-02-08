@@ -44,10 +44,7 @@ export default class SignIn extends React.Component {
         this.setState({password: e.target.value})
     }
     
-
-
     render() {
-
         return (
             <React.Fragment>
 

@@ -8,13 +8,12 @@ export default class Home extends React.Component {
     static contextType = Context
     _isMounted = false
 
-
-
     state = {
         error: null,
     }
 
     componentDidMount(){
+        
         this._isMounted = true
     }
 

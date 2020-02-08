@@ -21,7 +21,6 @@ class Navbar extends React.Component {
         } 
     }
 
-
     render() {
         let navLinks, signOutLink
 
@@ -64,16 +63,11 @@ class Navbar extends React.Component {
                             {signOutLink}
                         </div>
 
-
-                      
-
-                    <div className={styles["hamburger"]} onClick={this.context.onOpenNav}>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
-
-
+                        <div className={styles["hamburger"]} onClick={this.context.onOpenNav}>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
                     </div>
                 </nav>
         );

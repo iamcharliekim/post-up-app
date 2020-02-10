@@ -13,7 +13,6 @@ export default class Home extends React.Component {
     }
 
     componentDidMount(){
-        
         this._isMounted = true
     }
 

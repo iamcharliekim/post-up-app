@@ -12,7 +12,6 @@
     background-color: #011627;
     color: white;
     max-width: 500px;
-
 }
 
 .games-search-result:hover {
@@ -46,6 +45,8 @@ h1 {
     font-size: 20px;
     max-width: 500px;
     /* background-color: #011627; */
+    padding-bottom: 160px;
+
 }
 
 .games-page h1 {

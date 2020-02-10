@@ -2,7 +2,6 @@ import TokenService from '../Services/TokenService'
 import config from '../config'
 
 const GamesApiService = {
-
     // POST_UP_GAMES METHODS
     getAllGames(){
         return fetch(`${config.API_ENDPOINT}/games`, {
@@ -183,9 +182,6 @@ const GamesApiService = {
           }
       })
   }
-
 }
-
-
 
 export default GamesApiService

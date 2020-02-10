@@ -3,6 +3,7 @@ import styles from './Comment.module.css'
 import moment from 'moment'
 
 export default class Comment extends React.Component {
+    
     state = {
         comment: this.props.userComment
     }    

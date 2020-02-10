@@ -19,7 +19,6 @@ function Map(props){
         <GoogleMap zoom={props.zoom} center={center}>
 
             {
-            
                 props.gamesList.map((game, i) => {
                     return <Marker 
                                 key={i}
@@ -32,7 +31,9 @@ function Map(props){
 
             {selectedGame && (
                 <InfoWindow position={{lat: +selectedGame.game_lat, lng: +selectedGame.game_lng}} onCloseClick={()=> setSelectedGame(null)}>
-                    <div> <h2>Put something useful here</h2> </div>
+                    <div> 
+                        <h2>{selectedGame.game_name}</h2> 
+                    </div>
                 </InfoWindow>
             )}
         </GoogleMap>

@@ -13,6 +13,7 @@ import GamesApiService from './Services/GamesApiService';
 import GamesListItem from './GamesListItem/GamesListItem';
 import CommentsService from './CommentsBoard/CommentsService';
 import styles from './App.module.css'
+import Footer from './Footer/Footer'
 
 
 export default class App extends React.Component {
@@ -65,11 +66,6 @@ export default class App extends React.Component {
               })
       })
   }
-
-  componentDidUpdate(prevProps, prevState){
-
-  }
-
 
   onOpenNav = () => {
     this.setState({openNav: !this.state.openNav})
@@ -130,8 +126,6 @@ export default class App extends React.Component {
   }
 
   render(){
-
-
     const contextVal = {
       updateGames: this.updateGames,
       updateMyGames: this.updateMyGames,
@@ -147,7 +141,6 @@ export default class App extends React.Component {
       
       comments: this.state.comments,
       addComment: this.addComment,
-
 
       onSearchGames: this.onSearchGames,
       searchString: this.state.searchString,
@@ -181,14 +174,14 @@ export default class App extends React.Component {
             <Navbar loggedIn={TokenService.hasAuthToken()}/>
 
         {
-          this.state.openNav ?
-          
-          <div className={styles["nav-links-wrapper"]}>
-          { navLinks.map(link => {
-              return link
-          }) }
-          </div> :
-          null
+            this.state.openNav ?
+            
+            <div className={styles["nav-links-wrapper"]}>
+            { navLinks.map(link => {
+                return link
+            }) }
+            </div> :
+            null
 
         }
 
@@ -204,8 +197,7 @@ export default class App extends React.Component {
             <Route path="/create-games" exact component={CreateGames}/>
             <Route path="/games/:game_id" exact component={GamesListItem}/>
       
-      
-            {/* <Footer/> */}
+            { !this.state.openNav ? <Footer/> : null  }  
           </main>
         </Context.Provider>
       </BrowserRouter>

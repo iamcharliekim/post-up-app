@@ -18,9 +18,14 @@ export default class CreateGames extends React.Component {
 static contextType = Context
 
     state = {
-        mapsApiKey: 'AIzaSyDOvfuKaaRuYocVQWNl9ICi3wadIephDyc',
-        games: [],
-        mapSearchQuery: '',
+        mapsApiKey: 'AIzaSyDOvfuKaaRuYocVQWNl9ICi3wadIephDyc',  // MOVE TO .env
+
+        edit_game: false,
+        error: null,
+        zoom: 8,
+        
+        game_id: +this.props.match.params.game_id,
+
         game_name: '',
         game_date: '',
         game_time: '',
@@ -28,43 +33,23 @@ static contextType = Context
         game_city: '',
         game_state: '',
         game_zip: '',
-        error: null,
-        addressString: '',
         game_lat: null,
         game_lng: null,
+
         game_coors: null,
-        selectedGame: '',
-        zoom: 8,
-
-        path: this.props.location.pathname,
-        game_id: +this.props.match.params.game_id,
-        edit_game: false,
-        gameToEdit: {}
-
     }
 
     componentDidMount(){
-
-        const gamesList=[{
-            game_name: this.state.game_name,
-            game_date: this.state.game_date,
-            game_time: this.state.game_time,
-            game_street:this.state.game_street,
-            game_city: this.state.game_city,
-            game_state: this.state.game_state,
-            game_zip: this.state.game_zip,
-            game_lat: +this.state.game_lat,
-            game_lng: +this.state.game_lng,
-        }]
-
-        console.log('gameslist', gamesList)
 
         // IF USER IS EDITING GAME, FIND GAME USING THE game_id PARAM AND POPULATE FORM FIELDS
         if (this.state.game_id){
             let game = this.context.games.find(game => game.id === this.state.game_id)
 
+            console.log(game)
+
             this.setState({
                 edit_game: true,
+                
                 game_name: game.game_name,
                 game_date: game.game_date,
                 game_time: game.game_time,
@@ -81,25 +66,16 @@ static contextType = Context
     onSetAddress = (addressString, zipCode, coors) => {
         // CALLED WHEN USER USES GOOGLE AUTOCOMPLETE TO AUTOFILL THE ADDRESS FIELDS
         let address = addressString.split(',')
-
-        let game_street = address[0]
-        let game_city = address[1]
-        let game_state = address[2]
-        let game_zip = zipCode
-        let game_coors = coors
-        let game_lat = coors.lat
-        let game_lng =  coors.lng
-
+        
         this.setState({
-            game_street,
-            game_city,
-            game_state,
-            game_zip,
-            game_lat,
-            game_lng,
-            game_coors, 
+            game_street: address[0],
+            game_city: address[1],
+            game_state: address[2],
+            game_zip: zipCode,
+            game_lat: coors.lat,
+            game_lng: coors.lng,
+            game_coors: coors,
             zoom: 10
-
         })
     }
 
@@ -108,11 +84,8 @@ static contextType = Context
     }
     
     gameDateHandler = (game_date) => {
-
-        // PARSE DATE AND TIME IN PROPER FORMATS
         let date = moment(game_date).toDate()
-        let game_time = new Date(moment(game_date).toDate().getTime()).toTimeString().split(' ')[0]
-        
+        let game_time = new Date(date.getTime()).toTimeString().split(' ')[0] 
         this.setState({game_date: date, game_time})
     }
 
@@ -136,14 +109,8 @@ static contextType = Context
         this.setState({game_zip: e.target.value})
     }
 
-    mapSearchHandler = (e) => {
-        this.setState({mapSearchQuery: e.target.value})
-    }
-
     onSubmitHandler = (e) => {
         e.preventDefault();
-
-
 
         let gameObj = {
             game_name: this.state.game_name,
@@ -157,10 +124,9 @@ static contextType = Context
             game_lng: this.state.game_lng
         }
 
+        // IF USER DOES NOT USE GOOGLE AUTOCOMPLETE TO FILL ADDRESS FIELDS, GRAB THE ADDRESS COORDINATES VIA GOOGLEMAPS API
         if (!this.state.game_coors){
-            // IF USER DOES NOT USE GOOGLE AUTOCOMPLETE TO FILL ADDRESS FIELDS, GRAB THE ADDRESS COORDINATES VIA GOOGLEMAPS API
-            let geocodeAddress = `${this.state.game_street} ${this.state.game_city} ${this.state.game_state} ${this.state.game_zip}`
-            let parsedGeoCodeAddress = geocodeAddress.split(' ').join('+')
+            let parsedGeoCodeAddress = `${this.state.game_street} ${this.state.game_city} ${this.state.game_state} ${this.state.game_zip}`.split(' ').join('+')
 
             GamesApiService.getCoordinates(parsedGeoCodeAddress, this.state.mapsApiKey)
                 .then(coors => {
@@ -169,10 +135,12 @@ static contextType = Context
 
                     this.state.edit_game ? this.putGame(this.state.game_id, gameObj) : this.postGame(gameObj)
                 })
+                .catch(res => {
+                    this.setState({error: res.error})
+                })
         }
         
         this.state.edit_game ? this.putGame(this.state.game_id, gameObj) : this.postGame(gameObj)
-
     }
 
     putGame = (game_id, editedGame) => {
@@ -238,7 +206,11 @@ static contextType = Context
 
                                 <div className={styles["form-row"]}>
                                     <label htmlFor="date-picker">Date/Time</label>
-                                        <DateTimePicker gameDateHandler={this.gameDateHandler} gameDate={this.state.game_date} gameTimeHandler={this.gameTimeHandler} edit = {this.state.game_id} startDate={this.state.game_date}/>
+                                        <DateTimePicker 
+                                            gameDateHandler={this.gameDateHandler} 
+                                            gameTimeHandler={this.gameTimeHandler} 
+                                            edit = {this.state.game_id} 
+                                        />
                                 </div>
 
                                 <div className={styles["map-row"]}>

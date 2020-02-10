@@ -34,52 +34,55 @@ export default class Landing extends React.Component {
                     </section>
 
                     <section className={styles["section-2"]}>     
-                            <div className={styles["section-2-card"]}>
-                                <div className={styles["players-icon"]}>
-                                    <FontAwesomeIcon icon={faUser} className={styles["icon"]}/>
-                                </div>
-                                <div className={styles["card-text-wrapper"]}>
-                                    <p className={styles["card-text-main"]}>
-                                        Find Players 
+                            <h1>Post-Up Allows You To...</h1>
+                            <div className={styles["cards-wrapper"]}>
+                                <div className={styles["section-2-card"]}>
+                                    <div className={styles["players-icon"]}>
+                                        <FontAwesomeIcon icon={faUser} className={styles["icon"]}/>
+                                    </div>
+                                    <div className={styles["card-text-wrapper"]}>
+                                        <p className={styles["card-text-main"]}>
+                                            Find Players 
+                                        </p>
+                                    </div>
+                                    <p className={styles["card-text-sub"]}>
+                                        Search for players nearby and invite them to games
                                     </p>
                                 </div>
-                                <p className={styles["card-text-sub"]}>
-                                    Search for players nearby and invite them to games
-                                </p>
-                            </div>
-                            
-                            <div className={styles["section-2-card"]}>
-                                <div className={styles["players-icon"]}>
-                                    <FontAwesomeIcon icon={faMapMarkerAlt} className={styles["ball-icon"]}/>
-                                    <FontAwesomeIcon icon={faBasketballBall} className={styles["ball-pin"]}/>
+                                
+                                <div className={styles["section-2-card"]}>
+                                    <div className={styles["players-icon"]}>
+                                        <FontAwesomeIcon icon={faMapMarkerAlt} className={styles["ball-icon"]}/>
+                                        <FontAwesomeIcon icon={faBasketballBall} className={styles["ball-pin"]}/>
 
-                                </div>
-                                <div className={styles["card-text-wrapper"]}>
+                                    </div>
+                                    <div className={styles["card-text-wrapper"]}>
 
-                                    <p className={styles["card-text-main"]}>
-                                        Find Games 
+                                        <p className={styles["card-text-main"]}>
+                                            Find Games 
+                                        </p>
+                                    </div>
+                                    <p className={styles["card-text-sub"]}>
+                                        Post-Up will automatically search for games near your location 
+                                    </p>
+
+                                </div>      
+
+                                <div className={styles["section-2-card"]}>
+
+                                    <div className={styles["players-icon"]}>
+                                        <FontAwesomeIcon icon={faBasketballBall} className={styles["ball-icon"]}/>
+                                    </div>
+
+                                    <div className={styles["card-text-wrapper"]}>
+                                        <p className={styles["card-text-main"]}>
+                                            Create Games 
+                                        </p>
+                                    </div>
+                                    <p className={styles["card-text-sub"]}>
+                                        Create your own games and invite other players in your area 
                                     </p>
                                 </div>
-                                <p className={styles["card-text-sub"]}>
-                                    Post-Up will automatically search for games near your location 
-                                </p>
-
-                            </div>      
-
-                            <div className={styles["section-2-card"]}>
-
-                                <div className={styles["players-icon"]}>
-                                    <FontAwesomeIcon icon={faBasketballBall} className={styles["ball-icon"]}/>
-                                </div>
-
-                                <div className={styles["card-text-wrapper"]}>
-                                    <p className={styles["card-text-main"]}>
-                                        Create Games 
-                                    </p>
-                                </div>
-                                <p className={styles["card-text-sub"]}>
-                                    Create your own games and invite other players in your area 
-                                </p>
                             </div>
                     
                         

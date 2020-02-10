@@ -33,8 +33,6 @@ class GamesListItem extends React.Component {
     }
 
     componentDidMount(){        
-        console.log(this.props.game)
-        console.log(this.props.location)
         let gameObj = this.props.location.state
 
         if (gameObj){ 
@@ -48,42 +46,39 @@ class GamesListItem extends React.Component {
 
         this.formatAddressURI()
 
-        // get and set rsvpCount
+        let rsvpCount, attendance, disableCheckInBtn, disableCheckOutBtn, userIsAttending
+        const rosterList = []
+
         GamesApiService.getAttendanceCount(this.state.game.id)
-            .then(rsvpCount => {
-                this.setState({rsvpCount})
-            })
+            .then(rsvp => {
+                rsvpCount = rsvp
 
-        // check and see if user is already attending and update check-in/out btn's disabled state 
-        GamesApiService.getGameAttendance(this.state.game.id)
-            .then(game => {     
-                if (game){
-                    let userIsAttending = game.attendance.find(user => user.attending_user === +game.user_id)
+                GamesApiService.getGameAttendance(this.state.game.id)
+                    .then(game => {     
+                        if (game){
+                            attendance = game.attendance
 
-                    if (userIsAttending){
-                        this.setState({disableCheckInBtn: true, disableCheckOutBtn: false, userIsAttending: true})
-                    }
+                            userIsAttending = game.attendance.find(user => user.attending_user === +game.user_id)
 
-                    // this.setState({attendance: game.attendance})
+                            if (userIsAttending){
+                                disableCheckInBtn = true;
+                                disableCheckOutBtn = false;
+                                userIsAttending = true
+                            }    
 
-                    const rosterList = []
-
-                    game.attendance.forEach(game=> {
-                        GamesApiService.getUserName(game.attending_user)
-                            .then(username => {
-                                rosterList.push({
-                                    username: username.username,
-                                    id: +game.attending_user
-                                })
+                            game.attendance.forEach(game=> {
+                                GamesApiService.getUserName(game.attending_user)
+                                    .then(username => {
+                                        rosterList.push({
+                                            username: username.username,
+                                            id: +game.attending_user
+                                        })
+                                    })
                             })
+                            this.setState({rosterList, attendance, rsvpCount, disableCheckInBtn, disableCheckOutBtn, userIsAttending })
+                        } 
                     })
-
-                    this.setState({rosterList, attendance: game.attendance, })
-
-                }
-                
             })
-
     }
 
     componentDidUpdate(prevProps){
@@ -117,8 +112,6 @@ class GamesListItem extends React.Component {
 
                 this.setState({rsvpCount: this.state.rsvpCount -1, disableCheckInBtn: false, disableCheckOutBtn: true, rosterList: rosterCopy})
             })
-
-
     }
 
     formatAddressURI = () => {
@@ -148,21 +141,18 @@ class GamesListItem extends React.Component {
                 let myGamesCopy = [...this.context.myGames]
                 myGamesCopy.splice(myGameIndex, 1)
                 this.context.updateMyGames(myGamesCopy)
-
             })
     }
 
     openGame = () => {
         // IF CLICKING GAME-CARD TO OPEN GAMES-PAGE
         if (!this.state.gamesPage){
-            let gamesList = this.context.games.filter(game => {
-                return game.id === this.state.game.id
-            })
+            let gamesList = this.context.games.filter(game => game.id === this.state.game.id)
 
             this.props.history.push({
                 pathname: `/games/${this.state.game.id}`,
                 state: {
-                    gamesList: gamesList,
+                    gamesList,
                     lat: +gamesList[0].game_lat,
                     lng: +gamesList[0].game_lng,
                     zoom: 10
@@ -181,7 +171,6 @@ class GamesListItem extends React.Component {
     render() {
         let rosterList;
         rosterList = this.state.rosterList ?  this.state.rosterList.map((username, i) => <span key={i}>{username.username}</span>) : null 
-        
 
         let dateTimeParsed = moment(this.state.game.game_date).format("MMMM Do YYYY, h:mm A").split(',')
         let date = dateTimeParsed[0]
@@ -190,7 +179,6 @@ class GamesListItem extends React.Component {
         let gameStreet = this.state.game.game_street
         let gameCityStateZip = `${this.state.game.game_city} ${this.state.game.game_state} ${this.state.game.game_zip}`
         
-
         return (
             <React.Fragment>
                 <div className={!this.state.gamesPage ? styles["games-search-result"] : styles["games-page"]} onClick={this.openGame}> 
@@ -213,8 +201,6 @@ class GamesListItem extends React.Component {
                             <span className={styles["text-wrapper"]}>{time}</span>
                         </div>
 
-
-
                         {
                         
                         this.state.gamesPage ? 
@@ -233,7 +219,6 @@ class GamesListItem extends React.Component {
                         </div> 
 
                         : null 
-                        
                         
                         }
 
@@ -263,6 +248,7 @@ class GamesListItem extends React.Component {
                                 <FontAwesomeIcon icon={faCaretDown} className={styles["icon"]}/>
 
                             }
+
                             </div>
                             <span className="text-wrapper">
                             {this.state.rsvpCount} players attending
@@ -279,7 +265,6 @@ class GamesListItem extends React.Component {
                         </div>
 
                         {
-
                                 this.state.game.created_by === this.context.user_id ?
                                 
 
@@ -289,17 +274,9 @@ class GamesListItem extends React.Component {
                                 </div>
 
                                 : null
-                            }
-
-                        {
-                            this.state.gamesPage ? 
-                            
-                                <CommentsBoard
-                                    game_id={this.state.game.id}
-                                />                    
-                             : null
-
                         }
+
+                        { this.state.gamesPage ?  <CommentsBoard game_id={this.state.game.id} /> : null }
                 </div>
             </React.Fragment>
         );

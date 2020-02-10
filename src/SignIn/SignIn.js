@@ -18,7 +18,7 @@ export default class SignIn extends React.Component {
         const {username, password} = e.target
         const user = {user_name: username.value, password: password.value }
         
-        AuthApiService.loginUser(user)
+        AuthApiService.postUserSignIn(user)
             .then(res => {
                 if (!res.ok){
                     throw new Error('Something went wrong!')

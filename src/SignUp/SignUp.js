@@ -43,7 +43,7 @@ export default class SignUp extends React.Component {
             password: this.state.password
         }
 
-        AuthApiService.postUser(newUser)
+        AuthApiService.postUserSignUp(newUser)
             .then((res )=> {
 
                 this.setState({

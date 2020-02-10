@@ -6,7 +6,9 @@
     justify-content: flex-start;
     background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, .9)), url(../postupback.jpeg) no-repeat center center;
     background-size: cover;
-    background-position: 90% 
+    background-position: 90% ;
+    padding-bottom: 160px;
+
 }
 
 .games-search-result {

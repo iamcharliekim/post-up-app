@@ -18,7 +18,7 @@ export default function GoogleAutocomplete(props) {
                 setAddress(value)
                 props.onSetAddress(value, zipCode, latLng)
             } else {
-                const apiKey = 'AIzaSyDOvfuKaaRuYocVQWNl9ICi3wadIephDyc'
+                const apiKey = 'AIzaSyDOvfuKaaRuYocVQWNl9ICi3wadIephDyc' // SET ON .env
                 let apiCall = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng.lat},${latLng.lng}&key=${apiKey}`              
                 
                 fetch(apiCall).then(res => {
@@ -43,7 +43,6 @@ export default function GoogleAutocomplete(props) {
             }
         })
     }
-
 
     return (
 

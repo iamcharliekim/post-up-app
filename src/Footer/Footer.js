@@ -12,10 +12,14 @@ export default function Footer(props) {
 
                     <div className={styles["footer-links"]}>
                         <span>
-                            <img src={require('../githubIcon.png')}/>
+                            <a href="http://www.github.com/iamcharliekim" target="_blank" rel="noopener noreferrer">
+                                <img src={require('../githubIcon.png')} alt="github"/>
+                            </a>
                         </span>                    
                         <span>
-                            <img src={require('../linkedInIcon.png')}/>
+                            <a href="https://www.linkedin.com/in/charleswkim/" target="_blank" rel="noopener noreferrer">
+                                <img src={require('../linkedInIcon.png')} alt="linkedin"/>
+                            </a>
                         </span>
                         
                     </div>

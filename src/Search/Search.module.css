@@ -30,6 +30,7 @@
 }
 
 .icon {
-    position: absolute;
+    position: relative;
     right: 10%
 }
+

@@ -40,31 +40,33 @@ export default class App extends React.Component {
   }
 
   componentDidMount(){
-    // GET USER-COORDS
-    this.getUserCoords();
+    if (TokenService.hasAuthToken()){
+      // GET USER-COORDS
+      this.getUserCoords();
 
-    // GET ALL GAMES
-    GamesApiService.getAllGames()
-      .then(res => {
-          // FILTER MY-GAMES USING USER-ID FROM RES 
-          let games = res.games
-          let myGames = games.filter((game)=> game.created_by === res.user_id)
+      // GET ALL GAMES
+      GamesApiService.getAllGames()
+        .then(res => {
+            // FILTER MY-GAMES USING USER-ID FROM RES 
+            let games = res.games
+            let myGames = games.filter((game)=> game.created_by === res.user_id)
 
-              // GET ALL COMMENTS
-              CommentsService.getComments()
-              .then(comments => {
+                // GET ALL COMMENTS
+                CommentsService.getComments()
+                .then(comments => {
 
-                // SET STATE
-                this.setState({
-                  games,
-                  myGames,
-                  filteredGames: games,
-                  filteredMyGames: myGames,
-                  comments,
-                  user_id: res.user_id
+                  // SET STATE
+                  this.setState({
+                    games,
+                    myGames,
+                    filteredGames: games,
+                    filteredMyGames: myGames,
+                    comments,
+                    user_id: res.user_id
+                  })
                 })
-              })
-      })
+        })
+    }
   }
 
   onOpenNav = () => {

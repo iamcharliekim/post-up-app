@@ -41,8 +41,6 @@ export default class CommentsBoard extends React.Component {
             .then(comment => {
                 this.context.addComment(comment)
 
-                console.log(comment)
-
                 let commentsCopy = [...this.state.comments]
                 commentsCopy.push(comment)
                 this.setState({comments: commentsCopy, comment: ''})

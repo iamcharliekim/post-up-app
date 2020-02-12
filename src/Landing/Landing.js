@@ -7,9 +7,17 @@ import { Carousel } from 'react-responsive-carousel';
 import SignUp from '../SignUp/SignUp'
 import Context from '../Context/Context'
 
-
 export default class Landing extends React.Component {
     static contextType = Context
+
+    signUpButton = (e) => {
+        e.preventDefault();
+        this.props.history.push('/sign-up')
+    }
+
+    toSignIn = () => {
+        this.props.history.push('/sign-in')
+    }
 
     render() {
         
@@ -28,7 +36,9 @@ export default class Landing extends React.Component {
                                <h1>WHO'S GOT NEXT?</h1>
                                <span>The Post-Up App makes it easier than ever to find and run pickup basketball games in your area</span>
 
-                               <button>SIGN-UP NOW</button>
+                               <button onClick={this.signUpButton}>
+                                   SIGN-UP NOW
+                                   </button>
                             </div>
                         </div>
                     </section>
@@ -146,7 +156,9 @@ export default class Landing extends React.Component {
                    <section className={styles["section-4"]}>
                     <h1>SIGN-UP TODAY</h1>
 
-                    <SignUp/>
+                    <SignUp
+                        toSignIn={this.toSignIn}
+                    />
 
                    </section>
                     

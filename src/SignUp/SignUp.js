@@ -54,7 +54,7 @@ export default class SignUp extends React.Component {
                     password: '',
                 })
 
-                this.props.history.push('/sign-in')
+               this.props.history ? this.props.history.push('/sign-in') : this.props.toSignIn()
 
             })
     }
@@ -62,40 +62,42 @@ export default class SignUp extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <form onSubmit={this.onSubmitHandler}>
-                    <fieldset>
-                        {/* <legend>Sign-Up</legend> */}
+                <div className={styles["sign-up-wrapper"]}>
+                    <form onSubmit={this.onSubmitHandler}>
+                        <fieldset>
+                            <legend>Sign-Up</legend>
 
-                        <label htmlFor="firstname">
-                            First Name: 
-                            <input type="text" id="firstname" onInput={this.firstNameHandler}/>
-                        </label> 
+                            <label htmlFor="firstname">
+                                First Name: 
+                                <input type="text" id="firstname" onChange={this.firstNameHandler} value={this.state.first_name}/>
+                            </label> 
 
-                        <label htmlFor="lastname">
-                            Last Name: 
-                            <input type="text" id="lastname" onInput={this.lastNameHandler}/>
-                        </label> 
+                            <label htmlFor="lastname">
+                                Last Name: 
+                                <input type="text" id="lastname" onChange={this.lastNameHandler} value={this.state.last_name}/>
+                            </label> 
 
-                        <label htmlFor="email">
-                            Email: 
-                            <input type="email" id="email" onInput={this.emailHandler}/>
-                        </label> 
+                            <label htmlFor="email">
+                                Email: 
+                                <input type="email" id="email" onChange={this.emailHandler} value={this.state.email}/>
+                            </label> 
 
-                        <label htmlFor="username">
-                            Username: 
-                            <input type="text" id="username" onInput={this.userNameHandler}/>
-                        </label> 
+                            <label htmlFor="username">
+                                Username: 
+                                <input type="text" id="username" onChange={this.userNameHandler} value={this.state.user_name}/>
+                            </label> 
 
-                        <label htmlFor="password">
-                            Password:
-                            <input type="password" id="password" onInput={this.passwordHandler}/>
-                        </label> 
+                            <label htmlFor="password">
+                                Password:
+                                <input type="password" id="password" onChange={this.passwordHandler} value={this.state.password}/>
+                            </label> 
 
-                        <div className={styles["btns-div"]}>
-                            <button className={styles["sign-up-btn"]}>Sign Up</button>
-                        </div>
-                    </fieldset>
-                </form>            
+                            <div className={styles["btns-div"]}>
+                                <button className={styles["sign-up-btn"]}>Sign Up</button>
+                            </div>
+                        </fieldset>
+                    </form>     
+                </div>       
                 </React.Fragment>
         );
     }

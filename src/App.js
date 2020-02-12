@@ -155,8 +155,8 @@ export default class App extends React.Component {
 
     if (!TokenService.hasAuthToken()) {
         navLinks = [
-          <Link to="/sign-in" key="1" className={styles["nav-link"]}>Sign-In</Link>, 
-          <Link to="/sign-up" key="2" className={styles["nav-link"]}>Sign-Up</Link>
+          <Link to="/sign-in" key="1" className={styles["nav-link"]} onClick={this.onOpenNav}>Sign-In</Link>, 
+          <Link to="/sign-up" key="2" className={styles["nav-link"]} onClick={this.onOpenNav}>Sign-Up</Link>
         ] 
     } else {
         navLinks = [

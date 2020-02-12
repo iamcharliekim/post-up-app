@@ -207,7 +207,6 @@ class GamesListItem extends React.Component {
                         
                         <div className={styles["google-maps-wrapper"]} >
                             <GoogleMapsComponent
-                                // googleMapURL={'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing&key=AIzaSyDOvfuKaaRuYocVQWNl9ICi3wadIephDyc'}
                                 loadingElement={<div style={{ height: '100%'}}/>}
                                 containerElement={<div style={{ height: '200px'}}/>}
                                 mapElement={<div style={{height: '100%'}}/>}

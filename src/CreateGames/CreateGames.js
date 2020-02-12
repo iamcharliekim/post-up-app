@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './CreateGames.module.css'
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
 import Context from '../Context/Context';
+import config from '../config'
 
 import GamesApiService from '../Services/GamesApiService';
 import GoogleAutocomplete from '../GoogleAutocomplete/GoogleAutocomplete';
@@ -12,14 +13,10 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import moment from 'moment';
 
-
 export default class CreateGames extends React.Component {
-
 static contextType = Context
 
     state = {
-        mapsApiKey: 'AIzaSyDOvfuKaaRuYocVQWNl9ICi3wadIephDyc',  // MOVE TO .env
-
         edit_game: false,
         error: null,
         zoom: 8,
@@ -44,8 +41,6 @@ static contextType = Context
         // IF USER IS EDITING GAME, FIND GAME USING THE game_id PARAM AND POPULATE FORM FIELDS
         if (this.state.game_id){
             let game = this.context.games.find(game => game.id === this.state.game_id)
-
-            console.log(game)
 
             this.setState({
                 edit_game: true,
@@ -128,7 +123,7 @@ static contextType = Context
         if (!this.state.game_coors){
             let parsedGeoCodeAddress = `${this.state.game_street} ${this.state.game_city} ${this.state.game_state} ${this.state.game_zip}`.split(' ').join('+')
 
-            GamesApiService.getCoordinates(parsedGeoCodeAddress, this.state.mapsApiKey)
+            GamesApiService.getCoordinates(parsedGeoCodeAddress, config.GOOGLE_MAPS_API_KEY)
                 .then(coors => {
                     gameObj.game_lat = coors.results[0].geometry.location.lat
                     gameObj.game_lng = coors.results[0].geometry.location.lng

@@ -1,5 +1,6 @@
 import React from 'react';
 import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete';
+import config from '../config'
 import styles from './GoogleAutocomplete.module.css'
 
 export default function GoogleAutocomplete(props) {
@@ -18,8 +19,7 @@ export default function GoogleAutocomplete(props) {
                 setAddress(value)
                 props.onSetAddress(value, zipCode, latLng)
             } else {
-                const apiKey = 'AIzaSyDOvfuKaaRuYocVQWNl9ICi3wadIephDyc' // SET ON .env
-                let apiCall = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng.lat},${latLng.lng}&key=${apiKey}`              
+                let apiCall = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng.lat},${latLng.lng}&key=${config.GOOGLE_MAPS_API_KEY}`              
                 
                 fetch(apiCall).then(res => {
                     if(res.status ===200){

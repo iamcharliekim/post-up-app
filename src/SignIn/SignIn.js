@@ -8,8 +8,8 @@ export default class SignIn extends React.Component {
     static contextType = Context
 
     state = {
-        username: '',
-        password: '',
+        username: 'demouser',
+        password: 'password',
         error: null
     }
 
@@ -26,9 +26,8 @@ export default class SignIn extends React.Component {
                 return res.json()
             })
             .then(res => {
-
                 TokenService.saveAuthToken(res.authToken)
-                this.props.history.push('/home')
+                window.location.assign('https://iamcharliekim-post-up-app.now.sh/home')
                 
             })
             .catch(res => {

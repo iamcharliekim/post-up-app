@@ -39,6 +39,7 @@ export default class Landing extends React.Component {
                                <button onClick={this.signUpButton}>
                                    SIGN-UP NOW
                                    </button>
+
                             </div>
                         </div>
                     </section>

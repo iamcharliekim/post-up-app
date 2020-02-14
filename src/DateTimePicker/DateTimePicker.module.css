@@ -1,0 +1,17 @@
+.date-picker-wrapper {
+    position: relative;
+}
+
+.date-picker-wrapper input {
+    cursor: pointer
+}
+
+.icon {
+    color: black;
+    position: absolute;
+    left: 85%;
+    top: 25%;
+    font-size: 25px;
+    cursor: pointer
+}
+

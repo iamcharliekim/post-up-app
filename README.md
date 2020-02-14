@@ -1,68 +1,45 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Post-Up App
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-## Available Scripts
+### Demo: https://iamcharliekim-post-up-app.now.sh/
 
-In the project directory, you can run:
+Post-Up App allows you to create, organize and find pickup basketball games in your area.  Each game has a roster-list of players who will be attending and also a commentboard to allow players to communicate and discuss anything they want before the game.
 
-### `npm start`
+  - Users can create their own games by specifying a date, time, and place to play
+  - Users can search for available games and 'Check-In' to confirm their attendance
+  - Each game page also has a commentboard to allow users to communicate with each other 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Screenshots
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+#### Home Screen:
 
-### `npm test`
+![home screen](findgames.png)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Create Games:
 
-### `npm run build`
+![create games screen](creategames.png)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Talk Trash:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+![comment board](talktrash.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+# How To Use
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. Once you sign-up for an account, use your username and password to sign-in 
+2. Once you sign-in, a list of games will be populated on the home screen
+3. To see more details, click on the game-card 
+4. If you plan on attending, click "Check-In"
+5. You can "Check-Out" at anytime if plans change
+6. Navigate to the game via Google Maps by clicking on the address-link
+7. Communicate with others using the commentboard on the game page 
+8. Create your own game by clicking '+ Create' in the navbar
+9. Fill in all fields on the form and click 'Submit' to make your listing active
+10. Click 'My Games' in the navbar to see a list of games you have created 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Tech
+* HTML
+* CSS
+* Javascript
+* React 
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

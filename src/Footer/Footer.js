@@ -9,7 +9,6 @@ export default function Footer(props) {
                     <div className={styles["footer-links"]}>
                         Created by Charlie Kim
                         </div>
-
                     <div className={styles["footer-links"]}>
                         <span>
                             <a href="http://www.github.com/iamcharliekim" target="_blank" rel="noopener noreferrer">
@@ -21,16 +20,12 @@ export default function Footer(props) {
                                 <img src={require('../linkedInIcon.png')} alt="linkedin"/>
                             </a>
                         </span>
-                        
                     </div>
-
                     <div className={styles["footer-copyright"]}>
                         <span>Copyright © 2020 All Rights Reserved</span>
                     </div>    
-
                 </div>
-            </footer>
-            
+            </footer>           
         </React.Fragment>
     );
 }

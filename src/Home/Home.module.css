@@ -1,79 +1,65 @@
 .games-list {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, .9)), url(../postupback.jpeg) no-repeat center center;
-    background-size: cover;
-    background-position: 90% ;
-    padding-bottom: 160px;
-
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, .9)), url(../postupback.jpeg) no-repeat center center;
+	background-size: cover;
+	background-position: 90%;
+	padding-bottom: 160px;
 }
 
 .games-search-result {
-    width: 80%;
-    border: 1px solid black;
-    margin: 10px auto;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-
+	width: 80%;
+	border: 1px solid black;
+	margin: 10px auto;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
 }
 
 .game-when {
-  width: 95%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  margin-bottom: 10px
+	width: 95%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	margin-bottom: 10px
 }
 
 .map {
-    text-align: center;
-    color: white;
-    width: 95%;
-    height: 100px;
-    background-color: gray;
-    border: 1px solid black;
-    margin-bottom: 10px;
-    padding-top: 30px;
+	text-align: center;
+	color: white;
+	width: 95%;
+	height: 100px;
+	background-color: gray;
+	border: 1px solid black;
+	margin-bottom: 10px;
+	padding-top: 30px;
 }
 
 .address {
-    width: 100%;
+	width: 100%;
 }
 
 .address a {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
 }
 
 .rsvp {
-    margin-top: 10px;
-    
+	margin-top: 10px;
 }
 
 .rsvp-attending {
-  margin-top: 10px;
+	margin-top: 10px;
 }
 
 .rsvp-attending button {
-    font-size: 18px
-}
-
-hero {
-    width: 80%
-}
-
-hero span{
-    width: 80%;
-    font-size: 18px;
-    font-weight: 100;
-    margin-right: 0 
+	font-size: 18px
 }

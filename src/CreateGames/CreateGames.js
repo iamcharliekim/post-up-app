@@ -14,15 +14,14 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import moment from 'moment';
 
 export default class CreateGames extends React.Component {
-static contextType = Context
+    
+    static contextType = Context
 
     state = {
         edit_game: false,
         error: null,
         zoom: 8,
-        
         game_id: +this.props.match.params.game_id,
-
         game_name: '',
         game_date: '',
         game_time: '',
@@ -32,12 +31,10 @@ static contextType = Context
         game_zip: '',
         game_lat: null,
         game_lng: null,
-
         game_coors: null,
     }
 
     componentDidMount(){
-
         // IF USER IS EDITING GAME, FIND GAME USING THE game_id PARAM AND POPULATE FORM FIELDS
         if (this.state.game_id){
             let game = this.context.games.find(game => game.id === this.state.game_id)
@@ -186,7 +183,6 @@ static contextType = Context
     }
 
     render() {
-  
         return (
                 <React.Fragment>
                     {
@@ -269,8 +265,7 @@ static contextType = Context
 
                         : null
 
-                    }
-                     
+                    }                   
                 </React.Fragment>
         );
     }

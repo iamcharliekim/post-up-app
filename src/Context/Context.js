@@ -3,9 +3,7 @@ import React from 'react'
 const Context = React.createContext({
     user_id: '',
     games: [],
-    userCoords: {
-        lat: null, lng: null
-    },
+    userCoords: { lat: null, lng: null },
     myGames: [],
     searchString: '',
     filteredGames: [],

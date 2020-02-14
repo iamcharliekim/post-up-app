@@ -5,7 +5,6 @@ import Comment from '../Comment/Comment';
 import Context from '../Context/Context'
 import moment from 'moment'
 
-
 export default class CommentsBoard extends React.Component {
     static contextType = Context
     
@@ -35,7 +34,6 @@ export default class CommentsBoard extends React.Component {
             date_created: (moment(moment.now()).format())
         }
 
-
         //POST-request comment 
         CommentsService.postComment(commentObj, this.props.game_id)
             .then(comment => {
@@ -61,7 +59,6 @@ export default class CommentsBoard extends React.Component {
                             <button className={styles["submit-comment-btn"]} onClick={this.onSubmitComment}>Submit</button>
                         </div>
                     </div>
-
                     <div className={styles["user-comments"]}>
                         {  this.state.comments ? this.state.comments.map((comment, i) => <Comment key={i} userComment={comment}/>) : null }           
                     </div>

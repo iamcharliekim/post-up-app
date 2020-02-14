@@ -9,13 +9,11 @@ export default function GoogleAutocomplete(props) {
     const handleSelect = async value => {
         const results = await geocodeByAddress(value)
         const latLng = await getLatLng(results[0])
-
         let zipCode;
 
         results[0].address_components.forEach((comp)=> {
             if (comp.types.includes('postal_code')){
                 zipCode = comp.long_name
-
                 setAddress(value)
                 props.onSetAddress(value, zipCode, latLng)
             } else {
@@ -34,7 +32,6 @@ export default function GoogleAutocomplete(props) {
                             if (comp.types.includes('postal_code')){
                                 zipCode = comp.long_name
                                 setAddress(value)
-
                                 props.onSetAddress(value, zipCode, latLng)
                             }
                         })
@@ -45,7 +42,6 @@ export default function GoogleAutocomplete(props) {
     }
 
     return (
-
         <div className={styles["places-autocomplete"]}>
             <PlacesAutocomplete
                 value={address}
@@ -53,7 +49,9 @@ export default function GoogleAutocomplete(props) {
                 onSelect={handleSelect}
                 >
                     
-                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                    {
+                    
+                    ({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                        <div className={styles["places-search-wrapper"]}>
                            <input {...getInputProps({ placeholder: "Search for a court"})}
                                 type="text" 
@@ -80,7 +78,9 @@ export default function GoogleAutocomplete(props) {
                                     }
                                 </div>
                        </div>
-                    )}
+                    )
+                    
+                    }
             </PlacesAutocomplete>
         </div>
     );

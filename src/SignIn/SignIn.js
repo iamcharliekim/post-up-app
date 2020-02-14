@@ -8,11 +8,11 @@ export default class SignIn extends React.Component {
     static contextType = Context
 
     state = {
-        username: 'demouser',
-        password: 'password',
+        username: this.props.match.path === '/demo' ? 'demouser' : '',
+        password: this.props.match.path === '/demo' ? 'password' : '',
         error: null
     }
-
+    
     onSubmitHandler = (e) => {
         e.preventDefault()
         const {username, password} = e.target
@@ -46,10 +46,15 @@ export default class SignIn extends React.Component {
     render() {
         return (
             <React.Fragment>
-
                 {
                     !this.context.openNav ?
+
                     <div className={styles["sign-in-wrapper"]}>
+
+                        {
+                            this.props.match.path === '/demo' ? <h2>Sign in with the login below to try Post-Up for free!</h2> : null
+                        }
+
                         <form onSubmit={this.onSubmitHandler}>
                             <fieldset>
                                 <legend>Sign-In</legend>
@@ -70,11 +75,10 @@ export default class SignIn extends React.Component {
                             </fieldset>
                         </form>
                     </div>
+
                     : null
 
                 }
-
-
             </React.Fragment>
         );
     }

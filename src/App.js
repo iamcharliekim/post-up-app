@@ -15,27 +15,21 @@ import CommentsService from './CommentsBoard/CommentsService';
 import styles from './App.module.css'
 import Footer from './Footer/Footer'
 
-
 export default class App extends React.Component {
   static contextType = Context
 
   state = {
     games: [],
     filteredGames: [],
-
     myGames: [],
     filteredMyGames: [],
-
     comments: [],
     userCoords: {
         lat: null,
         lng: null
     },
-
     searchString: '',
-
     openNav: false,
-
     user_id: null
   }
 
@@ -50,23 +44,22 @@ export default class App extends React.Component {
             // FILTER MY-GAMES USING USER-ID FROM RES 
             let games = res.games
             let myGames = games.filter((game)=> game.created_by === res.user_id)
-
-                // GET ALL COMMENTS
-                CommentsService.getComments()
-                .then(comments => {
-
-                  // SET STATE
-                  this.setState({
-                    games,
-                    myGames,
-                    filteredGames: games,
-                    filteredMyGames: myGames,
-                    comments,
-                    user_id: res.user_id
-                  })
+            
+            // GET ALL COMMENTS
+            CommentsService.getComments()
+              .then(comments => {
+                // SET STATE
+                this.setState({
+                  games,
+                  myGames,
+                  filteredGames: games,
+                  filteredMyGames: myGames,
+                  comments,
+                  user_id: res.user_id
                 })
-        })
-    }
+            })
+          })
+      }
   }
 
   onOpenNav = () => {
@@ -131,25 +124,18 @@ export default class App extends React.Component {
     const contextVal = {
       updateGames: this.updateGames,
       updateMyGames: this.updateMyGames,
-
       games: this.state.games,
       filteredGames: this.state.filteredGames,
-
       myGames: this.state.myGames,
       filteredMyGames: this.state.filteredMyGames,
-
       userCoords: this.state.userCoords,
-      getUserCoords: this.getUserCoords,
-      
+      getUserCoords: this.getUserCoords,  
       comments: this.state.comments,
       addComment: this.addComment,
-
       onSearchGames: this.onSearchGames,
       searchString: this.state.searchString,
-
       openNav: this.state.openNav,
       onOpenNav: this.onOpenNav,
-
       user_id: this.state.user_id
     }
 
@@ -168,30 +154,28 @@ export default class App extends React.Component {
           <Link to="/sign-in" key="5" className={styles["nav-link"]} onClick={this.signout}>Sign-Out</Link> ] 
     }
 
-
     return (
       <BrowserRouter>
         <Context.Provider value={contextVal}>
           <main className={styles["App"]}>
             <Navbar loggedIn={TokenService.hasAuthToken()}/>
+            {
+              this.state.openNav ?
+              
+              <div className={styles["nav-links-wrapper"]}>
+              { navLinks.map(link => {
+                  return link
+              }) }
+              </div> :
+              null
 
-        {
-            this.state.openNav ?
-            
-            <div className={styles["nav-links-wrapper"]}>
-            { navLinks.map(link => {
-                return link
-            }) }
-            </div> :
-            null
+            }
 
-        }
-
-      
             { TokenService.hasAuthToken() ? <Redirect to='/home'/> : <Redirect to='/landing'/> }
             
             <Route path="/sign-up" exact component={SignUp}/>
             <Route path="/sign-in" exact component={SignIn}/>
+            <Route path="/demo" exact component={SignIn}/>
             <Route path="/home" exact component={Home}/>
             <Route path="/my-games" exact component={Home}/>
             <Route path="/edit-games/:game_id" exact component={CreateGames}/>
@@ -204,8 +188,6 @@ export default class App extends React.Component {
         </Context.Provider>
       </BrowserRouter>
     );
-
   }
-
 }
 

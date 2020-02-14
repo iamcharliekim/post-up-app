@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './SignUp.module.css'
 import AuthApiService from '../../src/Services/AuthApiService';
 
-
 export default class SignUp extends React.Component {
     state = {
         first_name: '',
@@ -10,6 +9,7 @@ export default class SignUp extends React.Component {
         email: '',
         user_name: '',
         password: '',
+        error: ''
     }
 
     firstNameHandler = (e) => {
@@ -45,7 +45,6 @@ export default class SignUp extends React.Component {
 
         AuthApiService.postUserSignUp(newUser)
             .then((res )=> {
-
                 this.setState({
                     first_name: '',
                     last_name: '',
@@ -57,12 +56,18 @@ export default class SignUp extends React.Component {
                this.props.history ? this.props.history.push('/sign-in') : this.props.toSignIn()
 
             })
+            .catch(res => {
+                this.setState({error: res.error})
+            })
     }
 
     render() {
         return (
             <React.Fragment>
                 <div className={styles["sign-up-wrapper"]}>
+                    {
+                        this.state.error ? <h1 className={styles["error"]}> {this.state.error}</h1> : null
+                    }
                     <form onSubmit={this.onSubmitHandler}>
                         <fieldset>
                             <legend>Sign-Up</legend>
@@ -98,7 +103,7 @@ export default class SignUp extends React.Component {
                         </fieldset>
                     </form>     
                 </div>       
-                </React.Fragment>
+            </React.Fragment>
         );
     }
 }

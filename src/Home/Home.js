@@ -6,19 +6,6 @@ import Context from '../Context/Context'
 
 export default class Home extends React.Component {
     static contextType = Context
-    _isMounted = false
-
-    state = {
-        error: null,
-    }
-
-    componentDidMount(){
-        this._isMounted = true
-    }
-
-    componentWillUnmount(){
-        this._isMounted = false
-    }
 
     render() {
         let games;
@@ -47,10 +34,10 @@ export default class Home extends React.Component {
                                 })}
                             </div>
                         </React.Fragment>                    
-                            
-                            : null
+                        
+                        : null
+
                     }
-                
                 </React.Fragment>
         );
     }

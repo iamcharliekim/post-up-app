@@ -1,6 +1,9 @@
 import React from "react";
 import Context from '../Context/Context'
 import DatePicker from "react-datepicker";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import styles from './DateTimePicker.module.css'
 import "react-datepicker/dist/react-datepicker.css";
 
 export default class DateTimePicker extends React.Component {
@@ -28,12 +31,15 @@ export default class DateTimePicker extends React.Component {
 
   render() {
     return (
-            <DatePicker
-                selected={this.state.startDate}
-                onChange={this.handleChange}
-                showTimeSelect
-                id="date-picker"
-            />
-    );
+            <div className={styles["date-picker-wrapper"]}>
+              <DatePicker
+                  selected={this.state.startDate}
+                  onChange={this.handleChange}
+                  showTimeSelect
+                  id="date-picker"
+              />
+              <FontAwesomeIcon icon={faCaretDown} className={styles["icon"]}/>
+            </div>
+            );
   }
 }

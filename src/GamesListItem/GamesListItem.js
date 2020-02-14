@@ -28,8 +28,6 @@ class GamesListItem extends React.Component {
         selectedGame: !this.props.location.state ? this.props.selectedGame : this.props.location.state.gamesList,    
         game: this.props.location.state ? this.props.location.state.gamesList[0] : this.props.game,
         userIsAttending: null
-
-
     }
 
     componentDidMount(){        
@@ -167,7 +165,6 @@ class GamesListItem extends React.Component {
         this.setState({showRoster: !this.state.showRoster})
     }
 
-
     render() {
         let rosterList;
         rosterList = this.state.rosterList ?  this.state.rosterList.map((username, i) => <span key={i}>{username.username}</span>) : null 
@@ -182,7 +179,6 @@ class GamesListItem extends React.Component {
         return (
             <React.Fragment>
                 <div className={!this.state.gamesPage ? styles["games-search-result"] : styles["games-page"]} onClick={this.openGame}> 
-  
                         <header>
                             <h1>{this.state.game.game_name}</h1>
                         </header>
@@ -207,6 +203,7 @@ class GamesListItem extends React.Component {
                         
                         <div className={styles["google-maps-wrapper"]} >
                             <GoogleMapsComponent
+                                // googleMapURL={'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing&key=AIzaSyDOvfuKaaRuYocVQWNl9ICi3wadIephDyc'}
                                 loadingElement={<div style={{ height: '100%'}}/>}
                                 containerElement={<div style={{ height: '200px'}}/>}
                                 mapElement={<div style={{height: '100%'}}/>}
@@ -241,9 +238,13 @@ class GamesListItem extends React.Component {
                             <div className={styles["icon-wrapper"]}>
 
                             {
-                                !this.state.gamesPage ?
-                                <FontAwesomeIcon icon={faUserCircle} className={styles["icon"]}/>
+                            
+                                !this.state.gamesPage ? 
+                                
+                                <FontAwesomeIcon icon={faUserCircle} className={styles["icon"]}/> 
+                                
                                 : 
+                                
                                 <FontAwesomeIcon icon={faCaretDown} className={styles["icon"]}/>
 
                             }
@@ -264,15 +265,16 @@ class GamesListItem extends React.Component {
                         </div>
 
                         {
-                                this.state.game.created_by === this.context.user_id ?
-                                
-
-                                <div className={styles["edit-games-btns-wrapper"]}>
-                                    <button onClick={(e)=>this.editGame(e)}> Edit</button>
-                                    <button onClick={(e)=>this.deleteGame(e)}> Delete</button>
-                                </div>
-
-                                : null
+                        
+                        this.state.game.created_by === this.context.user_id ?
+                        
+                        <div className={styles["edit-games-btns-wrapper"]}>
+                            <button onClick={(e)=>this.editGame(e)}> Edit</button>
+                            <button onClick={(e)=>this.deleteGame(e)}> Delete</button>
+                        </div>
+                        
+                        : null
+                        
                         }
 
                         { this.state.gamesPage ?  <CommentsBoard game_id={this.state.game.id} /> : null }

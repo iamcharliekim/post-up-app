@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import TokenService from '../Services/TokenService';
 import { withRouter } from 'react-router-dom'
 import Context from '../Context/Context';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faBasketballBall, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 
@@ -42,7 +41,6 @@ class Navbar extends React.Component {
         return (
                 <nav className={styles["navbar"]}>
                     <div className={styles["inner-nav"]}>
-
                         <Link to="/landing" className={styles["logo"]} onClick={this.onClickLogo}>
                             <div className={styles["players-icon"]}>
                                 <FontAwesomeIcon icon={faMapMarkerAlt} className={styles["logo-pin"]}/>
@@ -56,7 +54,6 @@ class Navbar extends React.Component {
                             {
                                 navLinks.map(link => link)
                             }
-
                         </div>
 
                         <div className={ TokenService.hasAuthToken() ? styles["sign-out-link"] : styles["display-none"]} >

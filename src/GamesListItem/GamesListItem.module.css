@@ -25,7 +25,7 @@ header {
   align-items: center;
 }
 
-h1 {
+header h1 {
   color: #fb8b24;
   margin: 20px 0;
   font-size: 30px;

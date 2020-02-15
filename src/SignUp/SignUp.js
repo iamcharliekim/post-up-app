@@ -1,15 +1,15 @@
-import React from "react";
-import AuthApiService from "../../src/Services/AuthApiService";
-import styles from "./SignUp.module.css";
+import React from 'react';
+import AuthApiService from '../../src/Services/AuthApiService';
+import styles from './SignUp.module.css';
 
 export default class SignUp extends React.Component {
   state = {
-    first_name: "",
-    last_name: "",
-    email: "",
-    user_name: "",
-    password: "",
-    error: "",
+    first_name: '',
+    last_name: '',
+    email: '',
+    user_name: '',
+    password: '',
+    error: ''
   };
 
   firstNameHandler = e => {
@@ -40,22 +40,20 @@ export default class SignUp extends React.Component {
       last_name: this.state.last_name,
       email: this.state.email,
       user_name: this.state.user_name,
-      password: this.state.password,
+      password: this.state.password
     };
 
     AuthApiService.postUserSignUp(newUser)
       .then(res => {
         this.setState({
-          first_name: "",
-          last_name: "",
-          email: "",
-          user_name: "",
-          password: "",
+          first_name: '',
+          last_name: '',
+          email: '',
+          user_name: '',
+          password: ''
         });
 
-        this.props.history
-          ? this.props.history.push("/sign-in")
-          : this.props.toSignIn();
+        this.props.history ? this.props.history.push('/sign-in') : this.props.toSignIn();
       })
       .catch(res => {
         this.setState({ error: res.error });
@@ -65,10 +63,8 @@ export default class SignUp extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className={styles["sign-up-wrapper"]}>
-          {this.state.error ? (
-            <h1 className={styles["error"]}> {this.state.error}</h1>
-          ) : null}
+        <div className={styles['sign-up-wrapper']}>
+          {this.state.error ? <h1 className={styles['error']}> {this.state.error}</h1> : null}
           <form onSubmit={this.onSubmitHandler}>
             <fieldset>
               <legend>Sign-Up</legend>
@@ -123,8 +119,8 @@ export default class SignUp extends React.Component {
                 />
               </label>
 
-              <div className={styles["btns-div"]}>
-                <button className={styles["sign-up-btn"]}>Sign Up</button>
+              <div className={styles['btns-div']}>
+                <button className={styles['sign-up-btn']}>Sign Up</button>
               </div>
             </fieldset>
           </form>

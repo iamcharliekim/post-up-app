@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
 const Context = React.createContext({
-  user_id: "",
+  user_id: '',
   games: [],
   userCoords: { lat: null, lng: null },
   myGames: [],
-  searchString: "",
+  searchString: '',
   filteredGames: [],
   comments: [],
   filteredMyGames: [],
-  openNav: "",
+  openNav: '',
   onOpenNav: () => {},
   updateGames: () => {},
   updateMyGames: () => {},
@@ -19,7 +19,7 @@ const Context = React.createContext({
   getUserCoords: () => {},
   addComment: () => {},
   onSearchGames: () => {},
-  filterGames: () => {},
+  filterGames: () => {}
 });
 
 export default Context;

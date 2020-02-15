@@ -1,214 +1,214 @@
 .games-search-result {
-	width: 80%;
-	border: 1px solid #C8BFC7;
-	margin: 10px auto;
-	padding: 15px;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: flex-start;
-	cursor: pointer;
-	font-size: 20px;
-	background-color: #011627;
-	color: white;
-	max-width: 500px;
+  width: 80%;
+  border: 1px solid #c8bfc7;
+  margin: 10px auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  cursor: pointer;
+  font-size: 20px;
+  background-color: #011627;
+  color: white;
+  max-width: 500px;
 }
 
 .games-search-result:hover {
-	border: 2px solid #C8BFC7;
+  border: 2px solid #c8bfc7;
 }
 
 header {
-	width: 100%;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 h1 {
-	color: #FB8B24;
-	margin: 20px 0;
-	font-size: 30px;
+  color: #fb8b24;
+  margin: 20px 0;
+  font-size: 30px;
 }
 
 .games-page {
-	width: 80%;
-	margin: 10px auto;
-	padding: 20px;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: flex-start;
-	text-align: left;
-	color: white;
-	font-size: 20px;
-	max-width: 500px;
-	padding-bottom: 160px;
+  width: 80%;
+  margin: 10px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  color: white;
+  font-size: 20px;
+  max-width: 500px;
+  padding-bottom: 160px;
 }
 
 .games-page h1 {
-	font-size: 40px
+  font-size: 40px;
 }
 
 .game-when {
-	width: 95%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: flex-start;
-	margin-bottom: 10px
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 10px;
 }
 
 .game-date {
-	margin-bottom: 10px;
-	width: 100%;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .game-time {
-	width: 100%;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .google-maps-wrapper {
-	width: 100%;
-	margin-bottom: 10px;
-	border: 1px solid white;
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid white;
 }
 
 .address {
-	width: 100%;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	margin-bottom: 10px
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .address .icon {
-	font-size: 20px;
-	margin-right: 15px
+  font-size: 20px;
+  margin-right: 15px;
 }
 
 .address a {
-	width: 100%;
-	color: #2EC4B6;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: center;
+  width: 100%;
+  color: #2ec4b6;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .rsvp {
-	width: 100%;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	margin-bottom: 10px
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .rsvp-link {
-	cursor: pointer;
-	width: 100%;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	margin-bottom: 10px
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .rsvp-link:hover {
-	font-weight: bold
+  font-weight: bold;
 }
 
 .rsvp-attending {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .rsvp-attending button {
-	width: 48%;
-	background-color: white;
-	color: #011627;
+  width: 48%;
+  background-color: white;
+  color: #011627;
 }
 
 .rsvp-attending button:hover {
-	background-color: #FB8B24;
-	color: white
+  background-color: #fb8b24;
+  color: white;
 }
 
 .showRoster {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: flex-start;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .showRoster span {
-	margin-left: 22.5px;
-	font-style: italic;
-	margin-bottom: 20px;
+  margin-left: 22.5px;
+  font-style: italic;
+  margin-bottom: 20px;
 }
 
 .hideRoster {
-	display: none
+  display: none;
 }
 
 .comments-wrapper {
-	width: 100%;
+  width: 100%;
 }
 
 .edit-games-btns-wrapper {
-	margin-top: 10px;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .edit-games-btns-wrapper button {
-	width: 100%;
-	background-color: white;
-	color: #011627;
-	border-radius: 0;
+  width: 100%;
+  background-color: white;
+  color: #011627;
+  border-radius: 0;
 }
 
 .edit-games-btns-wrapper button:hover {
-	background-color: #FB8B24;
-	color: white
+  background-color: #fb8b24;
+  color: white;
 }
 
 .icon {
-	margin-right: 10px;
-	font-size: 20px;
-	z-index: 0;
+  margin-right: 10px;
+  font-size: 20px;
+  z-index: 0;
 }
 
 .caret-down {
-	font-size: 20px;
-	margin-left: 5px
+  font-size: 20px;
+  margin-left: 5px;
 }
 
 @media (min-width: 768px) {
-	.games-search-result {
-		width: 80%;
-		border: 1px solid #C8BFC7;
-		margin: 10px auto;
-		padding: 15px;
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		justify-content: flex-start;
-		cursor: pointer;
-		font-size: 18px;
-		background-color: #011627;
-		color: white
-	}
+  .games-search-result {
+    width: 80%;
+    border: 1px solid #c8bfc7;
+    margin: 10px auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    cursor: pointer;
+    font-size: 18px;
+    background-color: #011627;
+    color: white;
+  }
 }

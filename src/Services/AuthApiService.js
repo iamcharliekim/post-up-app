@@ -1,25 +1,25 @@
-import config from "../config";
+import config from '../config';
 
 const AuthApiService = {
   postUserSignUp(user) {
     return fetch(`${config.API_ENDPOINT}/users`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "content-type": "application/json",
+        'content-type': 'application/json'
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(user)
     }).then(res => (!res.ok ? res.json().then(e => Promise.reject(e)) : res));
   },
 
   postUserSignIn(user) {
     return fetch(`${config.API_ENDPOINT}/auth/login`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "content-type": "application/json",
+        'content-type': 'application/json'
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(user)
     }).then(res => (!res.ok ? res.json().then(e => Promise.reject(e)) : res));
-  },
+  }
 };
 
 export default AuthApiService;

@@ -1,16 +1,15 @@
-
 body {
   font-family: 'Pathway Gothic One', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0 auto;
   height: 100vh;
-  background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, .9)), url(./postupback.jpeg) no-repeat center center;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
+    url(./postupback.jpeg) no-repeat center center;
   background-size: cover;
-  background-position: 90% 
+  background-position: 90%;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

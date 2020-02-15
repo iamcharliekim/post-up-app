@@ -1,11 +1,6 @@
-import React, { useState, useContext } from "react";
-import {
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-  InfoWindow,
-} from "react-google-maps";
-import Context from "../Context/Context";
+import React, { useState, useContext } from 'react';
+import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
+import Context from '../Context/Context';
 
 function Map(props) {
   const [selectedGame, setSelectedGame] = useState(null);
@@ -16,12 +11,12 @@ function Map(props) {
   if (!props.gamesList[0].game_lat) {
     center = {
       lat: userContext.userCoords.lat,
-      lng: userContext.userCoords.lng,
+      lng: userContext.userCoords.lng
     };
   } else {
     center = {
       lat: +props.gamesList[0].game_lat,
-      lng: +props.gamesList[0].game_lng,
+      lng: +props.gamesList[0].game_lng
     };
   }
 
@@ -41,7 +36,7 @@ function Map(props) {
         <InfoWindow
           position={{
             lat: +selectedGame.game_lat,
-            lng: +selectedGame.game_lng,
+            lng: +selectedGame.game_lng
           }}
           onCloseClick={() => setSelectedGame(null)}
         >

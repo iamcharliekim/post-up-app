@@ -1,13 +1,10 @@
-import React from "react";
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from "react-places-autocomplete";
-import config from "../config";
-import styles from "./GoogleAutocomplete.module.css";
+import React from 'react';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import config from '../config';
+import styles from './GoogleAutocomplete.module.css';
 
 export default function GoogleAutocomplete(props) {
-  const [address, setAddress] = React.useState("");
+  const [address, setAddress] = React.useState('');
 
   const handleSelect = async value => {
     const results = await geocodeByAddress(value);
@@ -15,7 +12,7 @@ export default function GoogleAutocomplete(props) {
     let zipCode;
 
     results[0].address_components.forEach(comp => {
-      if (comp.types.includes("postal_code")) {
+      if (comp.types.includes('postal_code')) {
         zipCode = comp.long_name;
         setAddress(value);
         props.onSetAddress(value, zipCode, latLng);
@@ -33,7 +30,7 @@ export default function GoogleAutocomplete(props) {
           .then(res => {
             res.results.forEach(result => {
               result.address_components.forEach(comp => {
-                if (comp.types.includes("postal_code")) {
+                if (comp.types.includes('postal_code')) {
                   zipCode = comp.long_name;
                   setAddress(value);
                   props.onSetAddress(value, zipCode, latLng);
@@ -46,31 +43,27 @@ export default function GoogleAutocomplete(props) {
   };
 
   return (
-    <div className={styles["places-autocomplete"]}>
-      <PlacesAutocomplete
-        value={address}
-        onChange={setAddress}
-        onSelect={handleSelect}
-      >
+    <div className={styles['places-autocomplete']}>
+      <PlacesAutocomplete value={address} onChange={setAddress} onSelect={handleSelect}>
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div className={styles["places-search-wrapper"]}>
+          <div className={styles['places-search-wrapper']}>
             <input
-              {...getInputProps({ placeholder: "Search for a court" })}
+              {...getInputProps({ placeholder: 'Search for a court' })}
               type="text"
-              className={styles["places-search-input"]}
+              className={styles['places-search-input']}
             />
 
-            <div className={styles["places-suggestions-wrapper"]}>
+            <div className={styles['places-suggestions-wrapper']}>
               {loading ? <div>...loading</div> : null}
 
               {suggestions.map(suggestion => {
                 const style = {
-                  backgroundColor: suggestion.active ? "lightgray" : "white",
+                  backgroundColor: suggestion.active ? 'lightgray' : 'white'
                 };
 
                 return (
                   <div
-                    className={styles["suggestions-div"]}
+                    className={styles['suggestions-div']}
                     {...getSuggestionItemProps(suggestion, { style })}
                   >
                     {suggestion.description}

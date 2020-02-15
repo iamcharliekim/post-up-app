@@ -1,20 +1,20 @@
-import React from "react";
-import { BrowserRouter } from "react-router-dom";
-import { Link, Route } from "react-router-dom";
-import styles from "./App.module.css";
-import CommentsService from "./CommentsBoard/CommentsService";
-import Context from "./Context/Context";
-import CreateGames from "./CreateGames/CreateGames";
-import Footer from "./Footer/Footer";
-import GamesListItem from "./GamesListItem/GamesListItem";
-import Home from "./Home/Home";
-import Landing from "./Landing/Landing";
-import Navbar from "./Navbar/Navbar";
-import PrivateRoute from "./PrivateRoute/PrivateRoute";
-import GamesApiService from "./Services/GamesApiService";
-import TokenService from "./Services/TokenService";
-import SignIn from "./SignIn/SignIn";
-import SignUp from "./SignUp/SignUp";
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
+import styles from './App.module.css';
+import CommentsService from './CommentsBoard/CommentsService';
+import Context from './Context/Context';
+import CreateGames from './CreateGames/CreateGames';
+import Footer from './Footer/Footer';
+import GamesListItem from './GamesListItem/GamesListItem';
+import Home from './Home/Home';
+import Landing from './Landing/Landing';
+import Navbar from './Navbar/Navbar';
+import PrivateRoute from './PrivateRoute/PrivateRoute';
+import GamesApiService from './Services/GamesApiService';
+import TokenService from './Services/TokenService';
+import SignIn from './SignIn/SignIn';
+import SignUp from './SignUp/SignUp';
 
 export default class App extends React.Component {
   static contextType = Context;
@@ -27,11 +27,11 @@ export default class App extends React.Component {
     comments: [],
     userCoords: {
       lat: null,
-      lng: null,
+      lng: null
     },
-    searchString: "",
+    searchString: '',
     openNav: false,
-    user_id: null,
+    user_id: null
   };
 
   componentDidMount() {
@@ -54,7 +54,7 @@ export default class App extends React.Component {
             filteredGames: games,
             filteredMyGames: myGames,
             comments,
-            user_id: res.user_id,
+            user_id: res.user_id
           });
         });
       });
@@ -78,7 +78,7 @@ export default class App extends React.Component {
       filteredMyGames: myGamesCopy.filter(game =>
         game.game_name.toLowerCase().includes(searchString.toLowerCase())
       ),
-      searchString,
+      searchString
     });
   };
 
@@ -106,12 +106,12 @@ export default class App extends React.Component {
         this.setState({
           userCoords: {
             lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          },
+            lng: position.coords.longitude
+          }
         });
       });
     } else {
-      console.log("Geolocation is not supported by this browser");
+      console.log('Geolocation is not supported by this browser');
     }
   };
 
@@ -140,74 +140,44 @@ export default class App extends React.Component {
       searchString: this.state.searchString,
       openNav: this.state.openNav,
       onOpenNav: this.onOpenNav,
-      user_id: this.state.user_id,
+      user_id: this.state.user_id
     };
 
     let navLinks;
 
     if (!TokenService.hasAuthToken()) {
       navLinks = [
-        <Link
-          to="/sign-in"
-          key="1"
-          className={styles["nav-link"]}
-          onClick={this.onOpenNav}
-        >
+        <Link to="/sign-in" key="1" className={styles['nav-link']} onClick={this.onOpenNav}>
           Sign-In
         </Link>,
-        <Link
-          to="/sign-up"
-          key="2"
-          className={styles["nav-link"]}
-          onClick={this.onOpenNav}
-        >
+        <Link to="/sign-up" key="2" className={styles['nav-link']} onClick={this.onOpenNav}>
           Sign-Up
-        </Link>,
+        </Link>
       ];
     } else {
       navLinks = [
-        <Link
-          to="/home"
-          key="0"
-          className={styles["nav-link"]}
-          onClick={this.onOpenNav}
-        >
+        <Link to="/home" key="0" className={styles['nav-link']} onClick={this.onOpenNav}>
           Home
         </Link>,
-        <Link
-          to="/create-games"
-          key="3"
-          className={styles["nav-link"]}
-          onClick={this.onOpenNav}
-        >
+        <Link to="/create-games" key="3" className={styles['nav-link']} onClick={this.onOpenNav}>
           + Create
         </Link>,
-        <Link
-          to="/my-games"
-          key="4"
-          className={styles["nav-link"]}
-          onClick={this.onOpenNav}
-        >
+        <Link to="/my-games" key="4" className={styles['nav-link']} onClick={this.onOpenNav}>
           My Games
         </Link>,
-        <Link
-          to="/sign-in"
-          key="5"
-          className={styles["nav-link"]}
-          onClick={this.signout}
-        >
+        <Link to="/sign-in" key="5" className={styles['nav-link']} onClick={this.signout}>
           Sign-Out
-        </Link>,
+        </Link>
       ];
     }
 
     return (
       <BrowserRouter>
         <Context.Provider value={contextVal}>
-          <main className={styles["App"]}>
+          <main className={styles['App']}>
             <Navbar loggedIn={TokenService.hasAuthToken()} />
             {this.state.openNav ? (
-              <div className={styles["nav-links-wrapper"]}>
+              <div className={styles['nav-links-wrapper']}>
                 {navLinks.map(link => {
                   return link;
                 })}
@@ -220,14 +190,11 @@ export default class App extends React.Component {
             <Route path="/" exact component={Landing} />
             <Route path="/landing" exact component={Landing} />
 
-            <PrivateRoute path={"/home"} component={Home} />
-            <PrivateRoute path={"/my-games"} component={Home} />
-            <PrivateRoute
-              path={"/edit-games/:game_id"}
-              component={CreateGames}
-            />
-            <PrivateRoute path={"/create-games"} component={CreateGames} />
-            <PrivateRoute path={"/games/:game_id"} component={GamesListItem} />
+            <PrivateRoute path={'/home'} component={Home} />
+            <PrivateRoute path={'/my-games'} component={Home} />
+            <PrivateRoute path={'/edit-games/:game_id'} component={CreateGames} />
+            <PrivateRoute path={'/create-games'} component={CreateGames} />
+            <PrivateRoute path={'/games/:game_id'} component={GamesListItem} />
 
             {!this.state.openNav ? <Footer /> : null}
           </main>

@@ -1,38 +1,39 @@
 .App {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-start;
-	height: 100%;
-	min-height: 100vh;
-	background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, .9)), url(./postupback.jpeg) no-repeat center center;
-	background-size: cover;
-	background-position: 90%;
-	position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  min-height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
+    url(./postupback.jpeg) no-repeat center center;
+  background-size: cover;
+  background-position: 90%;
+  position: relative;
 }
 
 .nav-links-wrapper {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-start;
-	text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
 }
 
 .nav-link {
-	padding: 20px 0;
-	background-color: rgba(255, 255, 255, 0.605);
-	width: 100%;
-	text-decoration: none;
-	font-size: 30px;
-	border-bottom: 1px solid #FDFFFC;
-	color: white;
-	background-color: #011627
+  padding: 20px 0;
+  background-color: rgba(255, 255, 255, 0.605);
+  width: 100%;
+  text-decoration: none;
+  font-size: 30px;
+  border-bottom: 1px solid #fdfffc;
+  color: white;
+  background-color: #011627;
 }
 
 .nav-link:hover {
-	background-color: #FB8B24;
-	color: #453A49;
+  background-color: #fb8b24;
+  color: #453a49;
 }

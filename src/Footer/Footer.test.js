@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Signup from './Signup';
+import Footer from './Footer';
 
-describe('Signup component', () => {
+describe('Footer Component', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<Signup />, div);
+    ReactDOM.render(<Footer />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 });

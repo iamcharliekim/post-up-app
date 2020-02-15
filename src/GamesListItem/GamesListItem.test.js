@@ -28,9 +28,10 @@ describe('GamesListItem component', () => {
         }
 
         const div = document.createElement('div');
+
         ReactDOM.render(
             <BrowserRouter>
-                <GamesListItem game = {game} location = {location}  />
+                <GamesListItem game = {game} location = {location} />
             </BrowserRouter>, div);
         ReactDOM.unmountComponentAtNode(div)
     })

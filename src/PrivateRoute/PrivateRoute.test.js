@@ -1,14 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Navbar from './Navbar';
+import PrivateRoute from './PrivateRoute';
 import {BrowserRouter} from 'react-router-dom'
+import Home from '../Home/Home';
 
-describe('Navbar component', () => {
+describe.only('PrivateRoute component', () => {
     it('renders without crashing', ()=> {
         const div = document.createElement('div');
         ReactDOM.render(
         <BrowserRouter>
-            <Navbar/>
+            <PrivateRoute 
+                path={"/home"} 
+                component={Home}
+            />
         </BrowserRouter>, div);
         ReactDOM.unmountComponentAtNode(div)
     })

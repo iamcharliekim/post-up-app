@@ -57,6 +57,11 @@ form {
 	padding: 5px;
 }
 
+.date-input {
+    font-family: 'Pathway Gothic One', sans-serif;
+    font-size: 18px;
+}
+
 .form-row select {
 	margin-top: 5px
 }

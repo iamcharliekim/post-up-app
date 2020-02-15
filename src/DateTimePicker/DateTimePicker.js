@@ -1,45 +1,45 @@
 import React from "react";
-import Context from '../Context/Context'
 import DatePicker from "react-datepicker";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
-import styles from './DateTimePicker.module.css'
+import Context from "../Context/Context";
+import styles from "./DateTimePicker.module.css";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default class DateTimePicker extends React.Component {
-  static contextType = Context
+  static contextType = Context;
 
   state = {
-    startDate: new Date()
-  }
+    startDate: new Date(),
+  };
 
-  componentDidMount(){
-    if (this.props.edit){
-      let game = this.context.games.find(game => game.id === this.props.edit)
-      this.setState({startDate: new Date(game.game_date)})
+  componentDidMount() {
+    if (this.props.edit) {
+      let game = this.context.games.find(game => game.id === this.props.edit);
+      this.setState({ startDate: new Date(game.game_date) });
     }
   }
 
   handleChange = date => {
-    this.setState({startDate: date})
+    this.setState({ startDate: date });
 
-    let time = new Date(date).toTimeString().split(' ')[0]
+    let time = new Date(date).toTimeString().split(" ")[0];
 
-    this.props.gameDateHandler(date)
-    this.props.gameTimeHandler(time)
+    this.props.gameDateHandler(date);
+    this.props.gameTimeHandler(time);
   };
 
   render() {
     return (
-            <div className={styles["date-picker-wrapper"]}>
-              <DatePicker
-                  selected={this.state.startDate}
-                  onChange={this.handleChange}
-                  showTimeSelect
-                  id="date-picker"
-              />
-              <FontAwesomeIcon icon={faCaretDown} className={styles["icon"]}/>
-            </div>
-            );
+      <div className={styles["date-picker-wrapper"]}>
+        <DatePicker
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+          showTimeSelect
+          id="date-picker"
+        />
+        <FontAwesomeIcon icon={faCaretDown} className={styles["icon"]} />
+      </div>
+    );
   }
 }

@@ -22,6 +22,7 @@ export default class Home extends React.Component {
           <React.Fragment>
             <Search />
             <div className={styles['games-list']}>
+              {games.length === 0 ? <h1 className={styles['no-games']}>No games listed!</h1> : null}
               {games.map((game, i) => {
                 return (
                   <GamesListItem

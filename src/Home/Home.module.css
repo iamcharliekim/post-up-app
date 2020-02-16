@@ -11,6 +11,11 @@
   padding-bottom: 160px;
 }
 
+.no-games {
+  color: white;
+  text-align: center;
+}
+
 .games-search-result {
   width: 80%;
   border: 1px solid black;

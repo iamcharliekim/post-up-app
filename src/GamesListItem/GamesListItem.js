@@ -23,15 +23,11 @@ class GamesListItem extends React.Component {
   state = {
     showRoster: false,
     rsvpCount: '',
-    disableCheckInBtn: false,
-    disableCheckOutBtn: true,
     addressString: '',
     pathname: this.props.pathname,
     gamesPage: this.props.location.state,
-
     attendance: null,
     rosterList: null,
-
     selectedGame: !this.props.location.state
       ? this.props.selectedGame
       : this.props.location.state.gamesList,
@@ -53,7 +49,7 @@ class GamesListItem extends React.Component {
 
     this.formatAddressURI();
 
-    let rsvpCount, attendance, disableCheckInBtn, disableCheckOutBtn, userIsAttending;
+    let rsvpCount, attendance, userIsAttending;
     const rosterList = [];
 
     GamesApiService.getAttendanceCount(this.state.game.id).then(rsvp => {
@@ -66,8 +62,6 @@ class GamesListItem extends React.Component {
           userIsAttending = game.attendance.find(user => user.attending_user === +game.user_id);
 
           if (userIsAttending) {
-            disableCheckInBtn = true;
-            disableCheckOutBtn = false;
             userIsAttending = true;
           }
 
@@ -79,12 +73,11 @@ class GamesListItem extends React.Component {
               });
             });
           });
+
           this.setState({
             rosterList,
             attendance,
             rsvpCount,
-            disableCheckInBtn,
-            disableCheckOutBtn,
             userIsAttending
           });
         }
@@ -109,9 +102,8 @@ class GamesListItem extends React.Component {
       rosterCopy.push(userObj);
       this.setState({
         rsvpCount: this.state.rsvpCount + 1,
-        disableCheckInBtn: true,
-        disableCheckOutBtn: false,
-        rosterList: rosterCopy
+        rosterList: rosterCopy,
+        userIsAttending: !this.state.userIsAttending
       });
     });
   }
@@ -127,9 +119,8 @@ class GamesListItem extends React.Component {
       rosterCopy.splice(userIndex, 1);
 
       this.setState({
-        rsvpCount: this.state.rsvpCount - 1,
-        disableCheckInBtn: false,
-        disableCheckOutBtn: true,
+        rsvpCount: this.state.rsvpCount > 0 ? this.state.rsvpCount - 1 : 0,
+        userIsAttending: !this.state.userIsAttending,
         rosterList: rosterCopy
       });
     });
@@ -144,27 +135,31 @@ class GamesListItem extends React.Component {
   editGame = e => {
     e.preventDefault();
     e.stopPropagation();
-    this.props.history.push(`/edit-games/${this.props.selectedGame[0].id}`);
+    this.props.history.push(`/edit-games/${this.state.selectedGame[0].id}`);
   };
 
   deleteGame = e => {
     e.preventDefault();
     e.stopPropagation();
 
-    GamesApiService.deleteGame(this.props.selectedGame[0].id).then(res => {
+    let selectedGame = this.state.selectedGame[0];
+
+    GamesApiService.deleteGame(selectedGame.id).then(res => {
       const gameIndex = this.context.games.findIndex(
-        game => game.id === this.props.selectedGame[0].id
+        game => game.id === this.state.selectedGame[0].id
       );
       let gamesCopy = [...this.context.games];
       gamesCopy.splice(gameIndex, 1);
       this.context.updateGames(gamesCopy);
 
-      const myGameIndex = this.context.myGames.findIndex(
-        game => game.id === this.props.selectedGame[0].id
-      );
+      const myGameIndex = this.context.myGames.findIndex(game => game.id === selectedGame.id);
       let myGamesCopy = [...this.context.myGames];
       myGamesCopy.splice(myGameIndex, 1);
       this.context.updateMyGames(myGamesCopy);
+
+      if (this.props.match.path === '/games/:game_id') {
+        this.props.history.push('/home');
+      }
     });
   };
 
@@ -283,10 +278,18 @@ class GamesListItem extends React.Component {
           </div>
 
           <div className={styles['rsvp-attending']}>
-            <button onClick={e => this.incrementRoster(e)} disabled={this.state.disableCheckInBtn}>
+            <button
+              className={this.state.userIsAttending ? styles['disabled'] : styles['']}
+              onClick={e => this.incrementRoster(e)}
+              disabled={this.state.userIsAttending}
+            >
               Check-in
             </button>
-            <button onClick={e => this.decrementRoster(e)} disabled={this.state.disableCheckOutBtn}>
+            <button
+              className={!this.state.userIsAttending ? styles['disabled'] : styles['']}
+              onClick={e => this.decrementRoster(e)}
+              disabled={!this.state.userIsAttending}
+            >
               Check-out
             </button>
           </div>

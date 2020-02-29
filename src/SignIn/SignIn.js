@@ -49,11 +49,10 @@ export default class SignIn extends React.Component {
           <div className={styles['sign-in-wrapper']}>
             {this.props.match.path === '/demo' ? (
               <h2>Sign in with the login below to try Post-Up for free!</h2>
-            ) : null}
+            ) : <h1>Sign In</h1>}
 
             <form onSubmit={this.onSubmitHandler}>
               <fieldset>
-                <legend>Sign-In</legend>
 
                 <label htmlFor="username">
                   Username:

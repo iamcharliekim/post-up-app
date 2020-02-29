@@ -42,8 +42,10 @@ export default class Landing extends React.Component {
             </section>
 
             <section className={styles['section-2']}>
-              <h1>Post-Up Allows You To...</h1>
+                            <h1>Post-Up Allows You To...</h1>
+
               <div className={styles['cards-wrapper']}>
+
                 <div className={styles['section-2-card']}>
                   <div className={styles['players-icon']}>
                     <FontAwesomeIcon icon={faUser} className={styles['icon']} />
@@ -95,7 +97,7 @@ export default class Landing extends React.Component {
                     showThumbs={false}
                     infiniteLoop={true}
                     autoPlay={true}
-                    transitionTime={500}
+                    transitionTime={300}
                     width="300px"
                     dynamicHeight={true}
                   >
@@ -162,7 +164,6 @@ export default class Landing extends React.Component {
             </section>
 
             <section className={styles['section-4']}>
-              <h1>SIGN-UP TODAY</h1>
 
               <SignUp toSignIn={this.toSignIn} />
             </section>

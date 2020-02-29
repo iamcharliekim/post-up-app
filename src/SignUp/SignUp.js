@@ -65,10 +65,11 @@ export default class SignUp extends React.Component {
       <React.Fragment>
         <div className={styles['sign-up-wrapper']}>
           {this.state.error ? <h1 className={styles['error']}> {this.state.error}</h1> : null}
+          
+          <h1>SIGN-UP TODAY</h1>
+
           <form onSubmit={this.onSubmitHandler}>
             <fieldset>
-              <legend>Sign-Up</legend>
-
               <label htmlFor="firstname">
                 First Name:
                 <input

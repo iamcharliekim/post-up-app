@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Signin from './Signin';
 
-describe.only('Signin component', () => {
+describe('Signin component', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     const match = { path: '/demo' };
